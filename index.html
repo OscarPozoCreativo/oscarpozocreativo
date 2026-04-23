@@ -99,7 +99,7 @@
         .cursor-text { font-family: var(--font-display); font-size: 8px; font-weight: 700; color: #000; opacity: 0; transition: opacity 0.3s; text-transform: uppercase; letter-spacing: 1px; position: absolute; }
         .cursor-ring.active .cursor-text { opacity: 1; }
 
-        /* 5. HUD NAVEGACIÓN + CTA DIRECTO (INDEX 2) */
+        /* 5. HUD NAVEGACIÓN + CTA DIRECTO */
         nav { position: fixed; top: 0; width: 100%; padding: clamp(20px, 3vh, 30px) clamp(20px, 4vw, 40px); display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; transform: translateZ(0); }
         .hud-left { display: flex; flex-direction: row; align-items: center; gap: 40px; pointer-events: auto; }
         .hud-logo { display: flex; align-items: center; }
@@ -273,7 +273,7 @@
             .lightbox__side { border-left: none; border-top: 1px solid var(--border); padding: 30px; }
         }
         
-        /* FIX MOBILE Y RENDIMIENTO EXTREMO */
+        /* FIX MOBILE PERFECTO COMPACTO Y SIN TEMBLOR */
         @media (max-width: 768px) {
             nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
             .hud-left { gap: 0; }
@@ -282,22 +282,31 @@
             .cursor-dot, .cursor-ring { display: none !important; }
             body.custom-cursor * { cursor: auto !important; }
             
-            /* Anulando animaciones pesadas en móvil */
-            .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 100px 20px 40px; pointer-events: auto; }
-            .z-layer { position: relative; height: auto; transform: none !important; opacity: 1 !important; filter: none !important; margin-bottom: 40px; display: block; }
+            /* COMPACTACIÓN MOBILE Y BLOQUEO DE TEMBLOR (JITTER) */
+            .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 80px 15px 30px; pointer-events: auto; }
+            .z-layer { position: relative; height: auto; transform: none !important; opacity: 1 !important; filter: none !important; margin-bottom: 25px; display: block; }
             .layer-hero { min-height: 60vh; padding: 0; display: flex; justify-content: center; }
-            .monolith { height: auto; display: flex; flex-direction: column; transform: none !important; }
-            .m-img-wrap { height: 300px; }
-            .h-wrapper { height: auto; overflow: visible; padding: 40px 20px; pointer-events: auto; }
-            .h-container { width: 100%; height: auto; flex-direction: column; gap: 40px; transform: none !important; }
+            
+            .m-img-wrap { height: 220px; }
+            .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; }
+            .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; transform: none !important; }
             .h-panel { width: 100%; height: auto; padding: 0; transform: none !important; }
-            .h-card { height: auto; display: flex; flex-direction: column; transform: none !important; }
-            .h-img-wrap { height: 300px; }
-            .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 60px 20px; pointer-events: auto; }
-            .vault-grid { grid-template-columns: 1fr; }
-            .v-item, .v-bg { transform: none !important; }
-            .p-card, .profile-sidebar, .t-panel { padding: 30px; }
+            .h-img-wrap { height: 220px; }
+            
+            /* PADDINGS Y MARGENES AJUSTADOS */
+            .m-content, .h-info { padding: 20px; }
+            .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
+            .m-summary { font-size: 0.85rem; margin-bottom: 15px; padding-bottom: 10px; }
+            .m-item { margin-bottom: 15px; }
+            
+            .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 50px 15px; pointer-events: auto; }
+            .vault-grid { gap: 15px; }
+            .p-card, .profile-sidebar, .t-panel { padding: 20px; }
             .t-meta-grid { grid-template-columns: 1fr; }
+            
+            /* DESTRUCCIÓN TOTAL DEL EFECTO 3D/TILT EN MOBILE PARA EVITAR JITTER */
+            .tilt-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; will-change: auto !important; }
+            .v-bg { transform: none !important; }
             
             .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 95vh; border-radius: 12px; }
             .lightbox__main { padding: 15px; }
@@ -336,7 +345,7 @@
         <span class="cursor-text" id="cursor-text-ui">Explorar</span>
     </div>
 
-    <!-- HUD NAVEGACIÓN (HEADER DEL INDEX 2) -->
+    <!-- HUD NAVEGACIÓN -->
     <nav>
         <div class="hud-left">
             <a href="#" class="hud-logo hover-target magnetic-target" tabindex="0" aria-label="Inicio">
@@ -1001,6 +1010,7 @@
         }
         function initGyroscope() {
             window.addEventListener('deviceorientation', (e) => {
+                if(window.innerWidth <= 768) return; /* FIX: BLOQUEO DE GIROSCOPIO EN MÓVIL PARA EVITAR JITTER */
                 const x = e.gamma; const y = e.beta;  
                 const moveX = Math.max(-15, Math.min(15, x)); const moveY = Math.max(-15, Math.min(15, y - 45)); 
                 gsap.to('.tilt-target', { x: moveX, y: moveY, rotationY: moveX * 0.1, rotationX: -moveY * 0.1, duration: 1, ease: 'power1.out', overwrite: "auto", force3D: true });
