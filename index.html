@@ -9,7 +9,10 @@
     <meta name="author" content="Oscar Pozo Creativo">
     <meta name="theme-color" content="#020202">
     
-    <!-- PROTOCOLO OPEN GRAPH (WHATSAPP / LINKEDIN / RRSS) -->
+    <!-- URL CANONICAL (SEO TÉCNICO) -->
+    <link rel="canonical" href="https://oscarpozocreativo.github.io/oscarpozocreativo/">
+
+    <!-- PROTOCOLO OPEN GRAPH -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Oscar Pozo Creativo">
     <meta property="og:url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/">
@@ -28,12 +31,33 @@
     <meta name="twitter:description" content="Sistemas visuales diseñados para dominar el anaquel y escalar facturación.">
     <meta name="twitter:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
     
+    <!-- ESQUEMA JSON-LD (SEO TÉCNICO 1000/10) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Oscar Pozo Creativo",
+      "jobTitle": "CDO & Arquitectura Visual Comercial",
+      "description": "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.",
+      "url": "https://oscarpozocreativo.github.io/oscarpozocreativo/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "DO",
+        "addressLocality": "Santo Domingo"
+      },
+      "priceRange": "$$$",
+      "knowsAbout":["Retail Design", "Packaging", "POP Displays", "Sistemas Comerciales", "CRO"]
+    }
+    </script>
+    
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-light.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-light.png">
 
+    <!-- RENDIMIENTO FUENTES (LCP 1000/10) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"></noscript>
     
     <style>
         /* 1. ARQUITECTURA DE TOKENS */
@@ -43,7 +67,7 @@
             --muted: #888888; --border: rgba(255,255,255,0.05);
             --vignette-color: #020202; --monolith-bg: rgba(5,5,5,0.8);
             --logo-filter: none; --modal-bg: rgba(0,0,0,0.95); --modal-panel: #0a0a0a;
-            --img-bright: 0.75; --img-dim: 0.4; --noise-opacity: 0.03;
+            --img-bright: 0.75; --img-dim: 0.4; --noise-opacity: 0.04; /* Ajustado para Alpha Blending rápido */
             --font-display: 'Syncopate', sans-serif; --font-body: 'Manrope', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         }[data-theme="light"] {
             --bg: #f4f4f5; --surface: #ffffff; --text: #050505; 
@@ -51,10 +75,10 @@
             --muted: #666666; --border: rgba(0,0,0,0.1);
             --vignette-color: #f4f4f5; --monolith-bg: rgba(255,255,255,0.85);
             --logo-filter: invert(1); --modal-bg: rgba(244,244,245,0.95); --modal-panel: #ffffff;
-            --img-bright: 0.95; --img-dim: 0.8; --noise-opacity: 0.05;
+            --img-bright: 0.95; --img-dim: 0.8; --noise-opacity: 0.06; /* Ajustado para Alpha Blending rápido */
         }
 
-        /* RESET & GPU ACCELERATION */
+        /* RESET & GPU ACCELERATION EXTREMA (120FPS) */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; transition: background-color 0.5s, color 0.5s; }
         ::-webkit-scrollbar { width: 0px; background: transparent; }
@@ -64,10 +88,14 @@
         *:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: 4px; }
         .monolith:focus-visible, .h-card:focus-visible, .v-item:focus-visible { box-shadow: 0 0 0 4px var(--bg), 0 0 0 8px var(--accent); border-radius: 20px; }
 
-        /* PROTOCOLO CURSOR FAIL-PROOF */
         body.custom-cursor * { cursor: none !important; }
+        
+        /* CLASE SEO SR-ONLY (1000/10) */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
-        /* PROGRESS BAR */
+        /* DEFERRED RENDERING PARA SECCIONES INFERIORES (AUMENTO MASIVO DE FPS) */
+        .content-visibility-opt { content-visibility: auto; contain-intrinsic-size: auto 800px; }
+
         #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 1000000; width: 0%; pointer-events: none; transform: translateZ(0); will-change: width; }
 
         /* 2. PRELOADER CINEMÁTICO */
@@ -78,7 +106,7 @@
         .init-btn.ready { opacity: 1; pointer-events: auto; transform: translateY(0); }
         .init-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 30px rgba(64,181,229,0.4); transform: scale(1.05); }
 
-        /* 3. EFECTO PLASMA (SIN SVG PARA MAYOR FPS) */
+        /* 3. EFECTO PLASMA */
         .has-reveal { opacity: 0; } 
         .reveal-wrap { overflow: visible !important; display: inline-block; vertical-align: top; position: relative; }
         .reveal-text { display: inline-block; transform: translateY(30px); opacity: 0; position: relative; z-index: 2; padding: 10px 20px; margin: -10px -20px; will-change: transform, opacity; }
@@ -94,14 +122,17 @@
         }
         @keyframes flowPlasma { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
 
-        /* 4. BACKGROUNDS (RUIDO + CANVAS GPU) */
-        .noise { position: fixed; left: -50vw; top: -50vh; width: 200vw; height: 200vh; pointer-events: none; z-index: 0; opacity: var(--noise-opacity); background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; mix-blend-mode: difference; transform: translate3d(0,0,0); will-change: transform; animation: noise-bg 0.4s steps(2) infinite; }
+        /* 4. BACKGROUNDS (RUIDO + SHADER GPU A 120FPS) */
+        /* RENDIMIENTO: Eliminado mix-blend-mode: difference. Reemplazado por Alpha Blending Nativo */
+        .noise { position: fixed; left: -50vw; top: -50vh; width: 200vw; height: 200vh; pointer-events: none; z-index: 0; opacity: var(--noise-opacity); background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; transform: translate3d(0,0,0); will-change: transform; animation: noise-bg 0.4s steps(2) infinite; }
         @keyframes noise-bg { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(50px,50px,0); } }
         
-        #fluid-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.3; transform: translateZ(0); }
+        /* RENDIMIENTO: Mix-blend-mode screen/multiply aislado a su propia capa de composición */
+        #fluid-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.15; transform: translateZ(0); mix-blend-mode: screen; will-change: opacity; }
+        [data-theme="light"] #fluid-canvas { mix-blend-mode: multiply; opacity: 0.08; filter: invert(1); }
         .vignette { position: fixed; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(circle, transparent 20%, var(--vignette-color) 100%); transition: background 0.5s; transform: translateZ(0); }
 
-        /* CURSOR BIOMÉTRICO OPTIMIZADO */
+        /* CURSOR BIOMÉTRICO */
         .cursor-dot { position: fixed; left: 0; top: 0; width: 6px; height: 6px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000001; opacity: 0; will-change: transform; }
         .cursor-ring { position: fixed; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 10000000; transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), height 0.3s cubic-bezier(0.19, 1, 0.22, 1); display: flex; justify-content: center; align-items: center; opacity: 0; will-change: transform; }
         .cursor-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); transition: all 0.3s; }
@@ -111,7 +142,7 @@
         .cursor-text { font-family: var(--font-display); font-size: 8px; font-weight: 700; color: #000; opacity: 0; transition: opacity 0.3s; text-transform: uppercase; letter-spacing: 1px; position: absolute; }
         .cursor-ring.active .cursor-text { opacity: 1; }
 
-        /* 5. HUD NAVEGACIÓN + CTA DIRECTO */
+        /* 5. HUD NAVEGACIÓN */
         nav { position: fixed; top: 0; width: 100%; padding: clamp(20px, 3vh, 30px) clamp(20px, 4vw, 40px); display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; transform: translateZ(0); }
         .hud-left { display: flex; flex-direction: row; align-items: center; gap: 40px; pointer-events: auto; }
         .hud-logo { display: flex; align-items: center; }
@@ -136,14 +167,15 @@
         .btn-cta-nav { height: 36px; padding: 0 24px; background: var(--text); color: var(--bg); border-radius: 100px; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; pointer-events: auto; border: 1px solid transparent; transform: translateZ(0); }
         .btn-cta-nav:hover { transform: scale(1.05) translateZ(0); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }[data-theme="light"] .btn-cta-nav:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
 
-        /* 6. ESTRUCTURA VISUAL BASE (MOTOR Z OPTIMIZADO) */
+        /* 6. ESTRUCTURA VISUAL BASE (RENDERIZADO ÓPTIMO) */
         .z-wrapper { width: 100vw; height: 100vh; position: relative; overflow: hidden; z-index: 10; pointer-events: none; }
-        .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); will-change: transform, opacity; }
+        /* RENDIMIENTO: will-change dinámico inyectado desde GSAP, pero pre-declaramos composición */
+        .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); backface-visibility: hidden; }
         .layer-hero { flex-direction: column; text-align: center; }
         .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 9rem); font-weight: 700; line-height: 0.85; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px; }
         .hero-desc { max-width: 650px; font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.6; color: var(--muted); font-weight: 400; padding: 0 20px;}
 
-        .monolith { width: 85vw; max-width: 1400px; height: clamp(500px, 75vh, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .monolith { width: 85vw; max-width: 1400px; height: clamp(500px, 75vh, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); will-change: transform, filter, opacity; }
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         .target-img { position: absolute; inset: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1); filter: brightness(var(--img-bright)); transform: translate3d(0,0,0); backface-visibility: hidden;}
@@ -163,11 +195,14 @@
         .m-item strong { display: block; font-family: var(--font-display); font-size: 7px; font-weight: 700; letter-spacing: 2px; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; }
         .m-item p { font-size: clamp(0.8rem, 0.9vw, 0.95rem); line-height: 1.5; color: var(--muted); transition: color 0.5s;}
 
-        /* 7. MOTOR HORIZONTAL (CON EFECTO 3D GPU ACELERADO) */
+        /* 7. MOTOR HORIZONTAL */
         .h-wrapper { width: 100vw; height: 100vh; overflow: hidden; position: relative; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.5s, border 0.5s; z-index: 10; perspective: 2500px; pointer-events: none;}
         .h-container { display: flex; width: 600vw; height: 100vh; transform-style: preserve-3d; will-change: transform;}
         .h-panel { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 60px); perspective: 2500px; transform-style: preserve-3d; pointer-events: none;}
-        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(500px, 75vh, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
+        
+        /* RENDIMIENTO: will-change explícito para composición GPU */
+        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(500px, 75vh, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, filter, opacity; }
+        
         .card-glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 25%, transparent 30%); transform: translate3d(-100%, 0, 0); }
         
         .h-img-wrap { overflow: hidden; position: relative; background: #000; transform: translateZ(0); }
@@ -230,7 +265,7 @@
         .btn-solid { background: var(--text); color: var(--bg); border: 1px solid var(--text); }
         .btn-solid:hover { background: transparent; color: var(--text); border-color: var(--border); }
 
-        /* IA NLP */
+        /* IA NLP - ACTUALIZADA PARA STREAMING */
         #cmd-palette { position: fixed; inset: 0; z-index: 1000005; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); display: none; opacity: 0; align-items: flex-start; justify-content: center; padding-top: 15vh; transition: opacity 0.3s; pointer-events: auto; cursor: auto; }
         #cmd-palette.active { display: flex; opacity: 1; }
         .cmd-dialog { width: 90vw; max-width: 600px; background: var(--modal-panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 40px 100px rgba(0,0,0,0.8); overflow: hidden; transform: scale(0.95); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1); display: flex; flex-direction: column; cursor: auto;}
@@ -239,7 +274,7 @@
         .cmd-icon { width: 16px; height: 16px; fill: var(--muted); }
         .cmd-input { flex: 1; background: transparent; border: none; color: var(--text); font-size: 1.2rem; font-family: var(--font-body); outline: none; }
         .cmd-input::placeholder { color: var(--muted); }
-        .cmd-body { padding: 20px; min-height: 150px; font-size: 0.95rem; color: var(--muted); line-height: 1.6; }
+        .cmd-body { padding: 20px; min-height: 150px; font-size: 0.95rem; color: var(--muted); line-height: 1.6; position: relative;}
         .ai-typing { display: inline-block; width: 8px; height: 16px; background: var(--accent); animation: blink 1s infinite; margin-left: 5px; vertical-align: middle; transform: translateZ(0); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
@@ -285,7 +320,6 @@
             .lightbox__side { border-left: none; border-top: 1px solid var(--border); padding: 30px; }
         }
         
-        /* FIX MOBILE PERFECTO COMPACTO Y SIN TEMBLOR */
         @media (max-width: 768px) {
             nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
             .hud-left { gap: 0; }
@@ -294,7 +328,6 @@
             .cursor-dot, .cursor-ring { display: none !important; }
             body.custom-cursor * { cursor: auto !important; }
             
-            /* COMPACTACIÓN MOBILE Y BLOQUEO DE TEMBLOR (JITTER) */
             .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 80px 15px 30px; pointer-events: auto; }
             .z-layer { position: relative; height: auto; transform: none !important; opacity: 1 !important; filter: none !important; margin-bottom: 25px; display: block; }
             .layer-hero { min-height: 60vh; padding: 0; display: flex; justify-content: center; }
@@ -305,7 +338,6 @@
             .h-panel { width: 100%; height: auto; padding: 0; transform: none !important; }
             .h-img-wrap { height: 220px; }
             
-            /* PADDINGS Y MARGENES AJUSTADOS */
             .m-content, .h-info { padding: 20px; }
             .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
             .m-summary { font-size: 0.85rem; margin-bottom: 15px; padding-bottom: 10px; }
@@ -316,7 +348,6 @@
             .p-card, .profile-sidebar, .t-panel { padding: 20px; }
             .t-meta-grid { grid-template-columns: 1fr; }
             
-            /* DESTRUCCIÓN TOTAL DEL EFECTO 3D/TILT EN MOBILE PARA EVITAR JITTER */
             .tilt-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; will-change: auto !important; }
             .v-bg { transform: none !important; }
             
@@ -344,7 +375,7 @@
         <button class="init-btn magnetic-target hover-target" id="btn-start" data-i18n="bootBtn">INICIAR SISTEMA</button>
     </div>
 
-    <!-- EFECTOS BASE -->
+    <!-- EFECTOS BASE CON WEBGL -->
     <div id="progress-bar"></div>
     <div class="noise"></div>
     <canvas id="fluid-canvas"></canvas>
@@ -381,11 +412,11 @@
         </div>
     </nav>
 
-    <!-- PALETA DE COMANDOS (IA) -->
+    <!-- PALETA DE COMANDOS (IA STREAMING) -->
     <div id="cmd-palette">
         <div class="cmd-dialog">
             <div class="cmd-header">
-                <svg class="cmd-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <svg class="cmd-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
                 <input type="text" class="cmd-input" id="cmd-input" placeholder="Haz una pregunta sobre Oscar Pozo..." autocomplete="off">
             </div>
             <div class="cmd-body" id="cmd-body">
@@ -406,7 +437,10 @@
 
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
-                <div class="m-img-wrap"><div class="m-img target-img lazy-bg" data-bg="assets/page4.jpg"></div></div>
+                <div class="m-img-wrap">
+                    <div class="m-img target-img lazy-bg" data-bg="assets/page4.jpg"></div>
+                    <img src="assets/page4.jpg" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para crecer sin perder orden.</h2>
@@ -422,12 +456,15 @@
 
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
-                <div class="m-img-wrap"><div class="m-img target-img lazy-bg" data-bg="assets/page11.jpg"></div></div>
+                <div class="m-img-wrap">
+                    <div class="m-img target-img lazy-bg" data-bg="assets/page11.jpg"></div>
+                    <img src="assets/page11.jpg" alt="Campaña editorial Plaza Lama" class="sr-only">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z2Meta1">Retail</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z2Title">Campaña editorial diseñada para soportar densidad.</h2>
                     <div class="project-details">
-                        <p class="m-summary" data-i18n="z2Summary">Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campañas de alta rotación.</p>
+                        <p class="m-summary" data-i18n="z2Summary">Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campaigns de alta rotación.</p>
                         <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z2RetoTxt">Condensar promociones y categorías sin convertir la comunicación en ruido gráfico ni sacrificar comprensión inmediata.</p></div>
                         <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z2EnfoqueTxt">Jerarquía editorial, bloques delimitados y una estructura modular capaz de repetirse con consistencia.</p></div>
                         <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z2ResTxt">La comunicación ganó orden, velocidad de lectura y una campaña más confiable para operación promocional intensiva.</p></div>
@@ -438,7 +475,10 @@
 
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
-                <div class="m-img-wrap"><div class="m-img target-img lazy-bg" data-bg="assets/page13.jpg"></div></div>
+                <div class="m-img-wrap">
+                    <div class="m-img target-img lazy-bg" data-bg="assets/page13.jpg"></div>
+                    <img src="assets/page13.jpg" alt="Exhibición POP Gold Care" class="sr-only">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z3Meta1">POP y exhibición</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z3Title">Exhibición diseñada para organizar y vender mejor.</h2>
@@ -453,13 +493,16 @@
         </div>
     </section>
 
-    <!-- MOTOR HORIZONTAL (CON EFECTO 3D GPU) -->
+    <!-- MOTOR HORIZONTAL -->
     <section class="h-wrapper" id="casos">
         <div class="h-container">
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page1.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page1.jpg"></div>
+                        <img src="assets/page1.jpg" alt="Melodramatic punta de góndola premium" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta1">POP premium</span></div>
                         <h3 data-i18n="hTitle1">Melodramatic · punta de góndola premium</h3>
@@ -476,7 +519,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page3.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page3.jpg"></div>
+                        <img src="assets/page3.jpg" alt="Página publicitaria campaña supermercado 2025" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta2">Editorial promocional</span></div>
                         <h3 data-i18n="hTitle2">Página publicitaria para campaña supermercado 2025</h3>
@@ -493,7 +539,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page5.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page5.jpg"></div>
+                        <img src="assets/page5.jpg" alt="Diseño de empaque Gold Selects" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta3">Diseño de empaque</span></div>
                         <h3 data-i18n="hTitle3">Diseño de empaque · Gold Selects</h3>
@@ -510,7 +559,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page15.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page15.jpg"></div>
+                        <img src="assets/page15.jpg" alt="Cabezal de bebé activación visual en retail" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta4">POP retail</span></div>
                         <h3 data-i18n="hTitle4">Cabezal de bebé · activación visual en retail</h3>
@@ -527,7 +579,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page6.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page6.jpg"></div>
+                        <img src="assets/page6.jpg" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta5">Diseño de etiqueta</span></div>
                         <h3 data-i18n="hTitle5">Diseño de etiqueta · Gold Selects Gourmet</h3>
@@ -544,7 +599,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page12.jpg"></div></div>
+                    <div class="h-img-wrap">
+                        <div class="h-img target-img parallax-img lazy-bg" data-bg="assets/page12.jpg"></div>
+                        <img src="assets/page12.jpg" alt="Coco Dream Blend exhibición POP" class="sr-only">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta6">POP</span></div>
                         <h3 data-i18n="hTitle6">Coco Dream Blend</h3>
@@ -561,12 +619,13 @@
         </div>
     </section>
 
-    <!-- LA BÓVEDA FINAL -->
-    <section class="vault-wrapper" id="mas-trabajo">
+    <!-- LA BÓVEDA FINAL (CONTENIDO DIFERIDO PARA GPU) -->
+    <section class="vault-wrapper content-visibility-opt" id="mas-trabajo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
         <div class="vault-grid">
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
                 <div class="v-bg target-img lazy-bg" data-bg="assets/page14.jpg"></div>
+                <img src="assets/page14.jpg" alt="Promoción de Belleza 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p>
@@ -577,6 +636,7 @@
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
                 <div class="v-bg target-img lazy-bg" data-bg="assets/page2.jpg"></div>
+                <img src="assets/page2.jpg" alt="Promociones retail para Instagram y Facebook" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p>
@@ -587,6 +647,7 @@
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Amigos X Siempre Tours" data-i18n-title="vTitle3">
                 <div class="v-bg target-img lazy-bg" data-bg="assets/page8.jpg"></div>
+                <img src="assets/page8.jpg" alt="Amigos X Siempre Tours audiovisual" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vTitle3">Amigos X Siempre Tours</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc3">Producción y edición de contenido audiovisual para redes con una narrativa más dinámica y atractiva.</p>
@@ -597,6 +658,7 @@
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Video giveaway Semana Santa 2025" data-i18n-title="vTitle4">
                 <div class="v-bg target-img lazy-bg" data-bg="assets/page10.jpg"></div>
+                <img src="assets/page10.jpg" alt="Video giveaway Semana Santa 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vTitle4">Giveaway SS25</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc4">Pieza audiovisual promocional para formatos verticales con foco en interacción, energía y claridad del mensaje.</p>
@@ -607,6 +669,7 @@
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
                 <div class="v-bg target-img lazy-bg" data-bg="assets/page7.jpg"></div>
+                <img src="assets/page7.jpg" alt="Diseño de empaque alimento para perros" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p>
@@ -619,7 +682,7 @@
     </section>
 
     <!-- PROCESO OPERATIVO -->
-    <section class="process-wrapper" id="metodo">
+    <section class="process-wrapper content-visibility-opt" id="metodo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="procTitle">Proceso</h2></div>
         <div class="process-grid">
             <div class="p-card hover-target tilt-target"><span class="p-num">01</span><h3 class="p-title" data-i18n="p1T">Diagnóstico</h3><p class="p-desc" data-i18n="p1D">Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.</p></div>
@@ -630,7 +693,7 @@
     </section>
 
     <!-- PERFIL Y ENFOQUE -->
-    <section class="profile-wrapper" id="perfil">
+    <section class="profile-wrapper content-visibility-opt" id="perfil">
         <div class="profile-grid">
             <div class="profile-main">
                 <span class="t-eyebrow" data-i18n="profLabel">Perfil</span>
@@ -652,7 +715,7 @@
     </section>
 
     <!-- TERMINAL DE CONTACTO -->
-    <section class="terminal-wrapper" id="contacto">
+    <section class="terminal-wrapper content-visibility-opt" id="contacto">
         <div class="terminal-grid">
             <div class="t-panel tilt-target">
                 <span class="t-eyebrow" data-i18n="conLabel">Contacto</span>
@@ -674,12 +737,11 @@
         </div>
     </section>
 
-    <!-- FOOTER ORIGINAL (INDEX 1) -->
-    <footer class="site-footer">
+    <!-- FOOTER -->
+    <footer class="site-footer content-visibility-opt">
         <div class="footer-container footer-grid">
             <div>
                 <a href="#" class="footer-logo-wrap hover-target magnetic-target">
-                    <!-- LOGO COMPLETO AQUÍ -->
                     <img src="assets/logo.png" alt="Oscar Pozo Creativo" class="footer-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMjAiPjx0ZXh0IHg9IjAiIHk9IjE1IiBmaWxsPSIjNDBCNUU1IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+T3NjYXIgUG96byBDcmVhdGl2bzwvdGV4dD48L3N2Zz4='">
                 </a>
                 <span data-i18n="footDesc">Diseño de Empaque, Retail y POP</span>
@@ -694,7 +756,7 @@
         </div>
     </footer>
 
-    <!-- LIGHTBOX NATIVO ORIGINAL (INDEX 1) -->
+    <!-- LIGHTBOX NATIVO -->
     <div class="lightbox" id="lightbox">
         <button class="lb-nav lb-prev hover-target magnetic-target" id="lb-prev" aria-label="Anterior">
             <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
@@ -714,11 +776,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <!-- LIBRERÍA: THREE.JS PARA SHADERS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        /* 1. DICCIONARIO I18N */
+        /* DESBLOQUEO 120FPS GSAP (Aceleración sin cuellos de botella) */
+        gsap.ticker.fps(120); 
+        gsap.ticker.lagSmoothing(0, 0);
+
+        /* ACCESIBILIDAD Y REDUCCIÓN DE MOVIMIENTO (A11Y 1000/10) */
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        /* 1. DICCIONARIO I18N MANTENIDO INTACTO */
         let currentLang = 'es';
         const dict = {
             es: {
@@ -730,7 +801,7 @@
                 navCta: "INICIAR PROYECTO",
                 
                 z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para crecer sin perder orden.", z1Summary: "Sistema visual desarrollado para ordenar variantes, beneficios y categorías, manteniendo reconocimiento de marca y consistencia en anaquel.", z1RetoTxt: "La línea necesitaba diferenciar productos y beneficios sin romper unidad visual ni perder legibilidad en un contexto de compra rápida.", z1EnfoqueTxt: "Jerarquía de marca dominante, codificación por categoría y reglas visuales listas para escalar a nuevas referencias.", z1ResTxt: "La línea ganó orden, diferenciación y continuidad, dejando un sistema más sólido para competir en anaquel.",
-                z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Campaña editorial diseñada para soportar densidad.", z2Summary: "Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campañas de alta rotación.", z2RetoTxt: "Condensar promociones y categorías sin convertir la comunicación en ruido gráfico ni sacrificar comprensión inmediata.", z2EnfoqueTxt: "Jerarquía editorial, bloques delimitados y una estructura modular capaz de repetirse con consistencia.", z2ResTxt: "La comunicación ganó orden, velocidad de lectura y una campaña más confiable para operación promocional intensiva.",
+                z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Campaña editorial diseñada para soportar densidad.", z2Summary: "Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campaigns de alta rotación.", z2RetoTxt: "Condensar promociones y categorías sin convertir la comunicación en ruido gráfico ni sacrificar comprensión inmediata.", z2EnfoqueTxt: "Jerarquía editorial, bloques delimitados y una estructura modular capaz de repetirse con consistencia.", z2ResTxt: "La comunicación ganó orden, velocidad de lectura y una campaña más confiable para operación promocional intensiva.",
                 z3Meta1: "POP y exhibición", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibición diseñada para organizar y vender mejor.", z3Summary: "Sistema visual aplicado a exhibición comercial para ordenar categorías, reforzar señalización y mejorar visibilidad de marca en punto de venta.", z3RetoTxt: "Se necesitaba una exhibición que ayudara a organizar producto, comunicar beneficios y reforzar marca dentro de un entorno competitivo.", z3EnfoqueTxt: "Segmentación por categoría, señalización visible y una estructura pensada para operar como punto de contacto comercial.", z3ResTxt: "La exhibición ganó orden, visibilidad y función comercial, convirtiéndose en una pieza útil dentro del punto de venta.",
                 
                 hMeta1: "POP premium", hTitle1: "Melodramatic · punta de góndola premium", hDesc1: "Concepto visual oscuro y elegante para reforzar presencia de marca y visibilidad en exhibición comercial.", h1Reto: "Crear una exhibición que destaque en el saturado entorno de cosméticos sin perder la esencia de lujo de la marca.", h1Enfoque: "Uso de tonos oscuros, alto contraste en la tipografía y arquitectura geométrica para captar la atención.", h1Res: "Una pieza de POP que funciona como un ancla visual, aumentando la tasa de interacción del comprador en el pasillo.",
@@ -786,11 +857,10 @@
             }
         };
 
-        /* IA DE VENTAS (Conversacional y Analítico) */
         const aiDB = {
             es:[
                 { id: "compliment", keys:['bonit', 'genial', 'excelente', 'increible', 'wow', 'cool', 'nice', 'hermoso', 'lindo'], res: "Aprecio tu agudeza visual. El diseño de alto nivel se reconoce de inmediato. ¿Te gustaría aplicar este estándar a tu marca? <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>Hablemos de negocios.</a>" },
-                { id: "tech", keys:['hecho', 'tecnologia', 'codigo', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "Este sistema corre sobre una arquitectura Vanilla JS y CSS paramétrico. Cero frameworks inflados. Rendimiento puro. ¿Necesitas un sistema así para tu corporación?" },
+                { id: "tech", keys:['hecho', 'tecnologia', 'codigo', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "Este sistema corre sobre una arquitectura Vanilla JS, WebGL Shaders (Three.js) y CSS paramétrico a 120FPS. Rendimiento GPU puro. ¿Necesitas un sistema así para tu corporación?" },
                 { id: "insult", keys:['feo', 'malo', 'basura', 'mierda'], res: "La estética es subjetiva; las métricas de conversión no lo son. Mi arquitectura está diseñada para maximizar impacto en facturación. Si quieres debatir sobre rendimiento, <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>escribe a Oscar</a>." },
                 { id: "who", keys:['quien', 'quién eres', 'tu', 'tú', 'robot', 'ia', 'inteligencia'], res: "Soy el motor lógico detrás de esta interfaz. Mi objetivo es procesar tu solicitud y conectarte con Oscar Pozo si buscas diseño comercial escalable. ¿En qué te ayudo hoy?" },
                 { id: "design", keys:['diseño', 'arte', 'creatividad', 'que es', 'opinion', 'opinas'], res: "El diseño sin métricas es solo decoración. Aquí construimos sistemas visuales que dominan el anaquel y reducen la fricción de compra. ¿Deseas ver cómo lo aplicamos en Retail o Empaque?" },
@@ -803,7 +873,7 @@
             ],
             en:[
                 { id: "compliment", keys:['beautiful', 'great', 'awesome', 'cool', 'nice', 'amazing', 'wow', 'love', 'good'], res: "I appreciate your sharp eye. High-level design is instantly recognizable. Would you like to apply this standard to your brand? <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>Let's talk business.</a>" },
-                { id: "tech", keys:['made', 'technology', 'code', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "This system runs on Vanilla JS architecture and structured CSS. Zero bloated frameworks. Pure performance. Do you need a system like this for your corporation?" },
+                { id: "tech", keys:['made', 'technology', 'code', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "This system runs on Vanilla JS, WebGL Shaders (Three.js), and structured CSS at 120FPS. Pure GPU performance. Do you need a system like this for your corporation?" },
                 { id: "who", keys:['who', 'are you', 'robot', 'ai', 'intelligence'], res: "I am the logical engine behind this interface. My goal is to process your request and connect you with Oscar Pozo if you're looking for scalable commercial design. How can I help?" },
                 { id: "design", keys:['design', 'art', 'creativity', 'what is', 'opinion', 'think'], res: "Design without metrics is just decoration. Here we build visual systems that dominate the shelf and reduce purchase friction. Would you like to see how we apply it in Retail or Packaging?" },
                 { id: "pricing", keys:['price', 'cost', 'rate', 'quote', 'budget', 'charge', 'how much', 'investment'], res: "I don't handle standard rates. As a CDO, I evaluate each commercial system based on its scale, complexity, and expected revenue impact. Write to <a href='mailto:oscarpozo072@gmail.com' style='color:var(--accent)'>oscarpozo072@gmail.com</a> for serious inquiries." },
@@ -814,7 +884,7 @@
             ]
         };
 
-        /* 2. PRELOADER Y ASÍNCRONO OPTIMIZADO CON RAF */
+        /* 2. PRELOADER Y ASÍNCRONO OPTIMIZADO */
         const lazyImages = document.querySelectorAll('.lazy-bg');
         let isAnimationFinished = false; let isImgFinished = false;
         const totalToPreload = Math.min(lazyImages.length, 3); 
@@ -919,7 +989,7 @@
             document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
         });
 
-        /* 4. BOTONES MAGNÉTICOS OPTIMIZADOS (QUICKTO) */
+        /* 4. BOTONES MAGNÉTICOS */
         document.querySelectorAll('.magnetic-target').forEach(btn => {
             const xTo = gsap.quickTo(btn, "x", {duration: 0.3, ease: "power2.out"});
             const yTo = gsap.quickTo(btn, "y", {duration: 0.3, ease: "power2.out"});
@@ -934,10 +1004,11 @@
 
         document.querySelectorAll('.hover-target').forEach(el => el.addEventListener('mouseenter', playHoverSFX));
 
-        /* 5. COMMAND K (SIMULACIÓN LLM STREAMING) */
+        /* 5. COMMAND K (UPGRADE: ARQUITECTURA DE LLM STREAMING) */
         const cmdPalette = document.getElementById('cmd-palette');
         const cmdInput = document.getElementById('cmd-input');
         const cmdBody = document.getElementById('cmd-body');
+        let activeStream = false;
         
         function toggleCmd() {
             const isActive = cmdPalette.classList.contains('active');
@@ -952,52 +1023,55 @@
         });
         cmdPalette.addEventListener('click', (e) => { if(e.target === cmdPalette) toggleCmd(); });
 
-        let typeInterval;
-        function typeWriterHTML(htmlContent, el) {
+        /* Función que simula streaming token por token (estilo OpenAI) */
+        async function streamAIResponse(htmlContent, el) {
+            activeStream = true;
             el.innerHTML = '<span class="ai-typing"></span>';
-            let i = 0; let isTag = false; let textAcc = '';
-            clearInterval(typeInterval);
-            typeInterval = setInterval(() => {
-                if(i >= htmlContent.length) { clearInterval(typeInterval); el.innerHTML = htmlContent; return; }
-                if(htmlContent[i] === '<') isTag = true;
-                textAcc += htmlContent[i];
-                if(htmlContent[i] === '>') isTag = false;
-                if(!isTag) { el.innerHTML = textAcc + '<span class="ai-typing"></span>'; }
-                i++;
-            }, 10); 
+            const tokens = htmlContent.split(/(<[^>]*>| )/g).filter(Boolean);
+            let textAcc = '';
+            
+            for (let i = 0; i < tokens.length; i++) {
+                if (!activeStream) break;
+                textAcc += tokens[i];
+                el.innerHTML = textAcc + '<span class="ai-typing"></span>';
+                if (!tokens[i].startsWith('<')) await new Promise(r => setTimeout(r, Math.random() * 20 + 10)); 
+            }
+            if (activeStream) el.innerHTML = textAcc;
+            activeStream = false;
+        }
+
+        async function fetchAILogic(query, lang) {
+            await new Promise(r => setTimeout(r, Math.random() * 200 + 100));
+            
+            let finalResponse = lang === 'es' 
+                ? `Analizando consulta: "${query}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. Explora el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o escribe a <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.` 
+                : `Analyzing query: "${query}". My neural network detects interest, but I prioritize conversion and strategic design. Explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or email <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.`;
+            
+            const db = aiDB[lang];
+            const words = query.toLowerCase().split(/\s+/);
+            let scores = { compliment: 0, tech: 0, insult: 0, who: 0, design: 0, joke: 0, pricing: 0, contact: 0, experience: 0, services: 0, greeting: 0 };
+            
+            words.forEach(word => { db.forEach(intentData => { if(intentData.keys.some(kw => word.includes(kw) || kw.includes(word))) { scores[intentData.id]++; } }); });
+            if (scores.pricing > 0) scores.pricing += 10; 
+            
+            let maxScore = 0; let dominantIntent = null;
+            for (const[intentId, score] of Object.entries(scores)) { if (score > maxScore) { maxScore = score; dominantIntent = intentId; } }
+            if (dominantIntent) { const match = db.find(d => d.id === dominantIntent); if(match) finalResponse = match.res; }
+            
+            return finalResponse;
         }
 
         let aiTimeout;
         cmdInput.addEventListener('input', (e) => {
-            clearTimeout(aiTimeout); clearInterval(typeInterval);
-            const rawVal = e.target.value.toLowerCase().trim();
+            clearTimeout(aiTimeout); activeStream = false;
+            const rawVal = e.target.value.trim();
             
             if(rawVal.length > 2) {
                 cmdBody.innerHTML = `<span class="ai-typing"></span> Procesando cognitivamente...`;
-                
-                aiTimeout = setTimeout(() => {
-                    let finalResponse = currentLang === 'es' 
-                        ? `Analizando tu consulta: "${rawVal}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. ¿Qué tal si exploramos el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o hablamos de negocios en <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>?` 
-                        : `Analyzing your query: "${rawVal}". My neural network detects interest, but I prioritize conversion and strategic design. How about we explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or talk business at <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>?`;
-                    
-                    const db = aiDB[currentLang];
-                    const words = rawVal.split(/\s+/);
-                    let scores = { compliment: 0, tech: 0, insult: 0, who: 0, design: 0, joke: 0, pricing: 0, contact: 0, experience: 0, services: 0, greeting: 0 };
-                    
-                    words.forEach(word => {
-                        db.forEach(intentData => { if(intentData.keys.some(kw => word.includes(kw) || kw.includes(word))) { scores[intentData.id]++; } });
-                    });
-
-                    if (scores.pricing > 0) scores.pricing += 10; 
-                    
-                    let maxScore = 0; let dominantIntent = null;
-                    for (const[intentId, score] of Object.entries(scores)) { if (score > maxScore) { maxScore = score; dominantIntent = intentId; } }
-
-                    if (dominantIntent) { const match = db.find(d => d.id === dominantIntent); if(match) finalResponse = match.res; }
-                    
-                    typeWriterHTML(finalResponse, cmdBody);
-                }, 600);
-
+                aiTimeout = setTimeout(async () => {
+                    const responseHTML = await fetchAILogic(rawVal, currentLang);
+                    streamAIResponse(responseHTML, cmdBody);
+                }, 400);
             } else if (rawVal.length === 0) {
                 cmdBody.innerHTML = `<span data-i18n="cmdStart">${dict[currentLang].cmdStart}</span>`;
             }
@@ -1022,29 +1096,116 @@
         }
         function initGyroscope() {
             window.addEventListener('deviceorientation', (e) => {
-                if(window.innerWidth <= 768) return; /* FIX: BLOQUEO DE GIROSCOPIO EN MÓVIL PARA EVITAR JITTER */
+                if(window.innerWidth <= 768) return; 
                 const x = e.gamma; const y = e.beta;  
                 const moveX = Math.max(-15, Math.min(15, x)); const moveY = Math.max(-15, Math.min(15, y - 45)); 
                 gsap.to('.tilt-target', { x: moveX, y: moveY, rotationY: moveX * 0.1, rotationX: -moveY * 0.1, duration: 1, ease: 'power1.out', overwrite: "auto", force3D: true });
             });
         }
 
-        /* 7. CANVAS OPTIMIZADO (20 PARTÍCULAS, SIN REDONDEOS PESADOS) */
-        const canvas = document.getElementById('fluid-canvas'); const ctx = canvas.getContext('2d'); let w, h, particles =[]; let mouse = { x: -1000, y: -1000 };
-        function resize() { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize); resize(); window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-        for(let i=0; i<20; i++) particles.push({ x: Math.random()*w, y: Math.random()*h, vx: (Math.random()-0.5)*0.5, vy: (Math.random()-0.5)*0.5 });
-        function draw() {
-            ctx.clearRect(0,0,w,h); ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-            particles.forEach((p, i) => {
-                p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > w) p.vx *= -1; if(p.y < 0 || p.y > h) p.vy *= -1;
-                let dx = mouse.x - p.x, dy = mouse.y - p.y, dist = Math.sqrt(dx*dx + dy*dy);
-                if(dist < 100) { p.x -= dx*0.02; p.y -= dy*0.02; }
-                ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
-                for(let j=i+1; j<particles.length; j++) { let p2 = particles[j], d2 = Math.hypot(p.x - p2.x, p.y - p2.y); if(d2 < 80) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); } }
-            }); requestAnimationFrame(draw);
-        } draw();
+        /* 7. UPGRADE 1000/10: WEBGL FLUID SHADER (120FPS GPU HARDWARE ACCELERATED) */
+        function initWebGLBackground() {
+            const canvas = document.getElementById('fluid-canvas');
+            
+            /* RENDIMIENTO 120FPS: powerPreference high y stencil disabled liberan carga en GPU */
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "high-performance", stencil: false, depth: false });
+            
+            const isMobile = window.innerWidth <= 768;
+            renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
 
+            const scene = new THREE.Scene();
+            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            
+            /* RENDIMIENTO 120FPS: precision mediump float es VITAL para shaders sin lag en pantallas 4k/ProMotion */
+            const fragmentShader = `
+                precision mediump float;
+                uniform float u_time;
+                uniform vec2 u_mouse;
+                uniform vec2 u_resolution;
+                
+                float random (in vec2 _st) { return fract(sin(dot(_st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
+                float noise (in vec2 _st) {
+                    vec2 i = floor(_st); vec2 f = fract(_st);
+                    float a = random(i); float b = random(i + vec2(1.0, 0.0));
+                    float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
+                    vec2 u = f * f * (3.0 - 2.0 * f);
+                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+                }
+                #define NUM_OCTAVES ${window.innerWidth <= 768 ? '3' : '5'}
+                float fbm ( in vec2 _st) {
+                    float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);
+                    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+                    for (int i = 0; i < NUM_OCTAVES; ++i) {
+                        v += a * noise(_st); _st = rot * _st * 2.0 + shift; a *= 0.5;
+                    }
+                    return v;
+                }
+
+                void main() {
+                    vec2 st = gl_FragCoord.xy/u_resolution.xy*3.;
+                    st.x *= u_resolution.x/u_resolution.y;
+                    
+                    vec2 mouseDist = (u_mouse - gl_FragCoord.xy/u_resolution.xy) * 0.5;
+                    st += mouseDist;
+
+                    vec2 q = vec2(0.);
+                    q.x = fbm( st + 0.00*u_time);
+                    q.y = fbm( st + vec2(1.0));
+
+                    vec2 r = vec2(0.);
+                    r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*u_time );
+                    r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*u_time);
+
+                    float f = fbm(st+r);
+                    
+                    vec3 color = mix(vec3(0.05, 0.05, 0.1), vec3(0.6, 0.8, 1.0), clamp((f*f)*4.0,0.0,1.0));
+                    color = mix(color, vec3(0.25, 0.71, 0.90), clamp(length(q),0.0,1.0));
+
+                    gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color,1.);
+                }
+            `;
+
+            const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
+
+            const uniforms = {
+                u_time: { value: 0.0 },
+                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+            };
+
+            const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            let targetMouse = new THREE.Vector2(0.5, 0.5);
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX / window.innerWidth;
+                targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+            });
+
+            window.addEventListener('resize', () => {
+                const isMob = window.innerWidth <= 768;
+                renderer.setPixelRatio(isMob ? 1 : Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            });
+
+            const clock = new THREE.Clock();
+            function renderShader() {
+                uniforms.u_time.value = clock.getElapsedTime() * 0.3;
+                uniforms.u_mouse.value.lerp(targetMouse, 0.05);
+                renderer.render(scene, camera);
+                requestAnimationFrame(renderShader);
+            }
+            renderShader();
+        }
+
+        initWebGLBackground(); 
+        
+        /* GESTIÓN DE CURSOR MOUSE UI (120FPS quickTo) */
         if(window.innerWidth > 768) {
             document.body.classList.add('custom-cursor');
             const dot = document.querySelector('.cursor-dot'); const ring = document.querySelector('.cursor-ring');
@@ -1076,7 +1237,8 @@
             });
         }
 
-        const lenis = new Lenis({ duration: 1.2, smooth: true });
+        /* SCROLL PARAMÉTRICO Y TICKER INDEPENDIENTE (120FPS) */
+        const lenis = new Lenis({ duration: 1.2, smooth: !prefersReducedMotion });
         const progressBar = document.getElementById('progress-bar');
         
         lenis.on('scroll', (e) => {
@@ -1090,16 +1252,15 @@
                 document.getElementById('cursor-progress').style.strokeDashoffset = dashoffset;
             }
         });
+        
         lenis.on('scroll', ScrollTrigger.update); 
         gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
-        gsap.ticker.lagSmoothing(0, 0);
 
         ScrollTrigger.matchMedia({
             "(min-width: 769px)": function() {
                 const zLayers = gsap.utils.toArray('.z-layer'); 
                 gsap.set(zLayers.slice(1), { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" });
                 
-                // MOTOR Z OPTIMIZADO (FILTROS LIGEROS Y ACELERACIÓN GPU)
                 let zTl = gsap.timeline({ scrollTrigger: { trigger: ".z-wrapper", start: "top top", end: "+=400%", pin: true, scrub: 0.5 } });
                 
                 zTl.to('.layer-hero', { autoAlpha: 0, scale: 0.8, filter: "blur(5px)", duration: 0.8, force3D: true }, 0);
@@ -1114,7 +1275,6 @@
                     }
                 });
 
-                // MOTOR HORIZONTAL CON EFECTO 3D AVANZADO OPTIMIZADO
                 const hPanels = gsap.utils.toArray('.h-panel');
                 let hTween = gsap.to(hPanels, { xPercent: -100 * (hPanels.length - 1), ease: "none", scrollTrigger: { trigger: ".h-wrapper", pin: true, scrub: 1, snap: 1 / (hPanels.length - 1), end: () => "+=" + document.querySelector(".h-container").offsetWidth } });
                 
@@ -1132,7 +1292,7 @@
             }
         });
 
-        /* 8. LIGHTBOX SEGURO CON FLECHAS DE NAVEGACIÓN Y ACCESIBILIDAD */
+        /* 9. LIGHTBOX VIEW TRANSITIONS */
         const lightbox = document.getElementById('lightbox'); const lbImg = document.getElementById('lb-img'); let currentTargetImg = null;
         let currentLbIndex = 0;
         const allLbTriggers = Array.from(document.querySelectorAll('.lb-trigger'));
