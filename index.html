@@ -18,18 +18,18 @@
     <meta property="og:url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/">
     <meta property="og:title" content="Oscar Pozo | CDO & Arquitectura Visual Comercial">
     <meta property="og:description" content="Sistemas visuales diseñados para dominar el anaquel y escalar facturación.">
-    <meta property="og:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
-    <meta property="og:image:secure_url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
+    <meta property="og:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.webp">
+    <meta property="og:image:secure_url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.webp">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:type" content="image/webp">
 
     <!-- PROTOCOLO TWITTER / X CARDS -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/">
     <meta name="twitter:title" content="Oscar Pozo | CDO & Arquitectura Visual Comercial">
     <meta name="twitter:description" content="Sistemas visuales diseñados para dominar el anaquel y escalar facturación.">
-    <meta name="twitter:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
+    <meta name="twitter:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.webp">
     
     <!-- ESQUEMA JSON-LD (SEO TÉCNICO 1000/10) -->
     <script type="application/ld+json">
@@ -90,6 +90,9 @@
 
         body.custom-cursor * { cursor: none !important; }
         
+        /* CLASE SEO SR-ONLY */
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
         /* DEFERRED RENDERING PARA SECCIONES INFERIORES */
         .content-visibility-opt { content-visibility: auto; contain-intrinsic-size: auto 800px; }
 
@@ -169,7 +172,7 @@
         .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 9rem); font-weight: 700; line-height: 0.85; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px; }
         .hero-desc { max-width: 650px; font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.6; color: var(--muted); font-weight: 400; padding: 0 20px;}
 
-        .monolith { width: 85vw; max-width: 1400px; height: clamp(500px, 75vh, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); will-change: transform, filter, opacity; }
+        .monolith { width: 85vw; max-width: 1400px; height: clamp(500px, 75vh, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); will-change: transform, opacity; }
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         
@@ -181,7 +184,7 @@
             height: 100%; 
             object-fit: cover; 
             object-position: center; 
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
+            transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
             filter: brightness(var(--img-bright)); 
             transform: translate3d(0,0,0); 
             backface-visibility: hidden;
@@ -203,33 +206,35 @@
         .m-item strong { display: block; font-family: var(--font-display); font-size: 7px; font-weight: 700; letter-spacing: 2px; color: var(--accent); margin-bottom: 4px; text-transform: uppercase; }
         .m-item p { font-size: clamp(0.8rem, 0.9vw, 0.95rem); line-height: 1.5; color: var(--muted); transition: color 0.5s;}
 
-        /* 7. MOTOR HORIZONTAL PARALLAX SIN BORDES NEGROS */
+        /* 7. MOTOR HORIZONTAL PARALLAX */
         .h-wrapper { width: 100vw; height: 100vh; overflow: hidden; position: relative; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.5s, border 0.5s; z-index: 10; perspective: 2500px; pointer-events: none;}
         .h-container { display: flex; width: 600vw; height: 100vh; transform-style: preserve-3d; will-change: transform;}
         .h-panel { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 60px); perspective: 2500px; transform-style: preserve-3d; pointer-events: none;}
         
-        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(500px, 75vh, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, filter, opacity; }
+        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(500px, 75vh, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
         
         .card-glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 25%, transparent 30%); transform: translate3d(-100%, 0, 0); }
         
         .h-img-wrap { overflow: hidden; position: relative; background: #000; transform: translateZ(0); }
         
-        /* LA MAGIA DEL PARALLAX: Margen del 15% simétrico para que el translate de GSAP no exponga bordes */
-        .h-img { 
-            position: absolute;
-            top: 0;
-            left: -15%;
-            right: auto;
-            height: 100%; 
-            width: 130%; 
-            object-fit: cover;
-            object-position: center;
-            filter: grayscale(0.2) brightness(var(--img-bright)); 
-            pointer-events: auto; 
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), filter 0.8s; 
-            transform: translate3d(0,0,0); 
-            backface-visibility: hidden; 
-            will-change: transform;
+        /* LA MAGIA DEL PARALLAX: Margen del 15% simétrico para Desktop */
+        @media (min-width: 769px) {
+            .h-img { 
+                position: absolute;
+                top: 0;
+                left: -15%;
+                right: auto;
+                height: 100%; 
+                width: 130%; 
+                object-fit: cover;
+                object-position: center;
+                filter: grayscale(0.2) brightness(var(--img-bright)); 
+                pointer-events: auto; 
+                transition: filter 0.8s; 
+                transform: translate3d(0,0,0); 
+                backface-visibility: hidden; 
+                will-change: transform;
+            }
         }
 
         .h-info { padding: clamp(20px, 4vw, 50px); display: flex; flex-direction: column; justify-content: center; overflow-y: auto; position: relative; z-index: 5;}
@@ -242,7 +247,7 @@
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-header h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); text-transform: uppercase; }
         .vault-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
-        .v-item { position: relative; height: 280px; border-radius: 12px; overflow: hidden; pointer-events: auto; border: 1px solid var(--border); transition: border 0.5s; transform: translate3d(0,0,0); backface-visibility: hidden; }
+        .v-item { position: relative; height: 280px; border-radius: 12px; overflow: hidden; pointer-events: auto; border: 1px solid var(--border); transition: border 0.5s; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
         
         .v-bg { 
             position: absolute; 
@@ -265,7 +270,7 @@
 
         .process-wrapper { padding: 120px 5vw; background: var(--surface); border-top: 1px solid var(--border); transition: background 0.5s, border 0.5s; position: relative; z-index: 10; transform: translateZ(0);}
         .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; max-width: 1400px; margin: 0 auto; }
-        .p-card { padding: 40px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.3s, background 0.5s; pointer-events: auto; transform: translate3d(0,0,0); }
+        .p-card { padding: 40px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.3s, background 0.5s; pointer-events: auto; transform: translate3d(0,0,0); will-change: transform, opacity; }
         .p-card:hover { transform: translate3d(0, -10px, 0); border-color: var(--accent); }
         .p-num { font-family: var(--font-display); font-size: 3rem; color: transparent; -webkit-text-stroke: 1px var(--border); display: block; margin-bottom: 20px; font-weight: 700; transition: all 0.3s; }
         .p-card:hover .p-num { -webkit-text-stroke: 1px var(--accent); color: rgba(64,181,229,0.1); }
@@ -277,7 +282,7 @@
         .profile-main .t-eyebrow { margin-bottom: 20px; display: block; font-family: var(--font-display); font-size: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 700;}
         .profile-main .t-title { font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 30px; font-family: var(--font-display); text-transform: uppercase; }
         .profile-main p { color: var(--muted); line-height: 1.7; font-size: 1.05rem; margin-bottom: 20px; transition: color 0.5s; }
-        .profile-sidebar { padding: 50px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: background 0.5s, border 0.5s; pointer-events: auto;}
+        .profile-sidebar { padding: 50px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: background 0.5s, border 0.5s; pointer-events: auto; will-change: transform, opacity; }
         .profile-sidebar .t-eyebrow { display: block; font-family: var(--font-display); font-size: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
         .t-focus-list { display: grid; gap: 25px; margin-top: 20px; }
         .t-focus-item { border-left: 2px solid var(--border); padding-left: 20px; transition: border 0.5s; }
@@ -286,7 +291,7 @@
 
         .terminal-wrapper { padding: 100px 5vw; background: var(--surface); border-top: 1px solid var(--border); transition: background 0.5s, border 0.5s; position: relative; z-index: 10; transform: translateZ(0);}
         .terminal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1400px; margin: 0 auto; }
-        .t-panel { padding: 50px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: background 0.5s, border 0.5s; pointer-events: auto;}
+        .t-panel { padding: 50px; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; display: flex; flex-direction: column; justify-content: center; box-shadow: 0 20px 50px rgba(0,0,0,0.1); transition: background 0.5s, border 0.5s; pointer-events: auto; will-change: transform, opacity; }
         .t-eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; display: block; }
         .t-title { font-family: var(--font-display); font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.3; margin-bottom: 20px; text-transform: uppercase; font-weight: 700; }
         .t-desc { color: var(--muted); line-height: 1.7; font-size: 1rem; margin-bottom: 30px; transition: color 0.5s; }
@@ -332,7 +337,7 @@
         .lb-close { position: absolute; top: 30px; right: 30px; background: var(--border); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-display); font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto; transform: translateZ(0); }
         .lb-close:hover { background: var(--text); color: var(--bg); transform: scale(1.1) translateZ(0); }
 
-        /* FOOTER ORIGINAL */
+        /* FOOTER */
         .site-footer { padding: 40px 5vw; border-top: 1px solid var(--border); background: var(--surface); position: relative; z-index: 10; transition: background 0.5s, border 0.5s; transform: translateZ(0); }
         .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; }
         .footer-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; align-items: center; }
@@ -345,6 +350,9 @@
         .footer-links a, .footer-links button { appearance: none; border: 0; background: transparent; padding: 0; color: var(--muted); font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; pointer-events: auto; text-transform: uppercase; letter-spacing: 1px; }
         .footer-links a:hover, .footer-links button:hover { color: var(--text); transform: translateY(-2px); }
 
+        /* ========================================================
+           OPTIMIZACIONES RESPONSIVE Y RENDIMIENTO MÓVIL (1000/10)
+           ======================================================== */
         @media (max-width: 1024px) {
             .hud-cmd, .hud-status { display: none; }
             .monolith, .h-card { grid-template-columns: 1fr; height: auto; max-height: 85vh; overflow-y: auto; }
@@ -363,35 +371,47 @@
             .cursor-dot, .cursor-ring { display: none !important; }
             body.custom-cursor * { cursor: auto !important; }
             
+            /* ESTRUCTURA FLUIDA MÓVIL - Cero distorsión - Aspect Ratio Puro */
             .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 80px 15px 30px; pointer-events: auto; }
-            .z-layer { position: relative; height: auto; transform: none !important; opacity: 1 !important; filter: none !important; margin-bottom: 25px; display: block; }
-            .layer-hero { min-height: 60vh; padding: 0; display: flex; justify-content: center; }
+            .z-layer { position: relative; height: auto; margin-bottom: 35px; transform: none !important; }
+            .layer-hero { min-height: 50vh; padding: 0; display: flex; justify-content: center; margin-bottom: 20px; }
             
-            .m-img-wrap { height: 220px; }
+            /* FRAMING PERFECTO: Usamos proporciones en lugar de píxeles fijos */
+            .m-img-wrap, .h-img-wrap { height: auto; aspect-ratio: 4/3; width: 100%; border-radius: 12px; overflow: hidden; }
+            .v-item { height: 320px; }
+            
+            .target-img, .h-img, .v-bg {
+                width: 100% !important;
+                height: 100% !important;
+                left: 0 !important;
+                top: 0 !important;
+                object-fit: cover !important;
+                transform: scale(1) !important;
+            }
+            
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; }
-            .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; transform: none !important; }
+            .h-container { width: 100%; height: auto; flex-direction: column; gap: 40px; transform: none !important; }
             .h-panel { width: 100%; height: auto; padding: 0; transform: none !important; }
-            .h-img-wrap { height: 220px; }
             
-            .m-content, .h-info { padding: 20px; }
-            .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
-            .m-summary { font-size: 0.85rem; margin-bottom: 15px; padding-bottom: 10px; }
-            .m-item { margin-bottom: 15px; }
+            .m-content, .h-info { padding: 25px 15px; }
+            .m-title, .h-info h3 { font-size: 1.2rem; margin: 10px 0; }
+            .m-summary { font-size: 0.9rem; margin-bottom: 15px; padding-bottom: 10px; }
             
-            .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 50px 15px; pointer-events: auto; }
-            .vault-grid { gap: 15px; }
-            .p-card, .profile-sidebar, .t-panel { padding: 20px; }
-            .t-meta-grid { grid-template-columns: 1fr; }
+            .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 60px 15px; pointer-events: auto; }
+            .vault-grid { gap: 20px; }
+            .p-card, .profile-sidebar, .t-panel { padding: 25px 20px; }
             
-            .tilt-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; will-change: auto !important; }
+            /* RENDIMIENTO MÓVIL: Eliminamos filtros pesados */
+            .monolith, .h-card { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); }
+            .tilt-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; }
             
-            .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 95vh; border-radius: 12px; }
-            .lightbox__main { padding: 15px; }
+            .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 90vh; border-radius: 16px; margin: 0 10px; }
+            .lightbox__main { padding: 10px; }
             .lightbox__side { padding: 20px; }
-            .lb-close { top: 10px; right: 10px; width: 35px; height: 35px; font-size: 14px; background: rgba(0,0,0,0.5); border:none; z-index: 20; }
-            .lb-nav { width: 35px; height: 35px; background: rgba(0,0,0,0.5); border: none; }
-            .lb-prev { left: 10px; }
-            .lb-next { right: 10px; }
+            .lb-close { top: 15px; right: 15px; width: 40px; height: 40px; font-size: 14px; background: rgba(0,0,0,0.6); border:none; z-index: 20; color: #fff;}
+            .lb-nav { width: 40px; height: 40px; background: rgba(0,0,0,0.6); border: none; color: #fff;}
+            .lb-prev { left: 15px; }
+            .lb-next { right: 15px; }
             
             .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
             .footer-links { justify-content: center; }
@@ -472,8 +492,8 @@
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
                 <div class="m-img-wrap">
-                    <!-- CSS FLUID NATIVO: img tag real con data-src -->
-                    <img data-src="assets/page4.jpg" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img">
+                    <img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img">
+                    <img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
@@ -491,8 +511,8 @@
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
                 <div class="m-img-wrap">
-                    <!-- CSS FLUID NATIVO -->
-                    <img data-src="assets/page11.jpg" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img">
+                    <img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img">
+                    <img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z2Meta1">Retail</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
@@ -510,8 +530,8 @@
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
                 <div class="m-img-wrap">
-                    <!-- CSS FLUID NATIVO -->
-                    <img data-src="assets/page13.jpg" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img">
+                    <img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img">
+                    <img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z3Meta1">POP y exhibición</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
@@ -534,8 +554,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <!-- CSS FLUID NATIVO -->
-                        <img data-src="assets/page1.jpg" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta1">POP premium</span></div>
@@ -554,7 +574,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page3.jpg" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta2">Editorial promocional</span></div>
@@ -573,7 +594,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page5.jpg" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta3">Diseño de empaque</span></div>
@@ -592,7 +614,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page15.jpg" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta4">POP retail</span></div>
@@ -611,7 +634,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page6.jpg" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta5">Diseño de etiqueta</span></div>
@@ -630,7 +654,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page12.jpg" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img">
+                        <img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img">
+                        <img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only">
                     </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta6">POP</span></div>
@@ -648,13 +673,13 @@
         </div>
     </section>
 
-    <!-- LA BÓVEDA FINAL (CONTENIDO DIFERIDO PARA GPU) -->
+    <!-- LA BÓVEDA FINAL -->
     <section class="vault-wrapper content-visibility-opt" id="mas-trabajo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
         <div class="vault-grid">
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
-                <!-- CSS FLUID NATIVO -->
-                <img data-src="assets/page14.jpg" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img">
+                <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img">
+                <img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p>
@@ -664,7 +689,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
-                <img data-src="assets/page2.jpg" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img">
+                <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img">
+                <img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p>
@@ -674,7 +700,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Amigos X Siempre Tours" data-i18n-title="vTitle3">
-                <img data-src="assets/page8.jpg" alt="Amigos X Siempre Tours audiovisual" class="v-bg target-img lazy-img">
+                <img data-src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="v-bg target-img lazy-img">
+                <img src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vTitle3">Amigos X Siempre Tours</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc3">Producción y edición de contenido audiovisual para redes con una narrativa más dinámica y atractiva.</p>
@@ -684,7 +711,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Video giveaway Semana Santa 2025" data-i18n-title="vTitle4">
-                <img data-src="assets/page10.jpg" alt="Video giveaway Semana Santa 2025" class="v-bg target-img lazy-img">
+                <img data-src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="v-bg target-img lazy-img">
+                <img src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vTitle4">Giveaway SS25</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc4">Pieza audiovisual promocional para formatos verticales con foco en interacción, energía y claridad del mensaje.</p>
@@ -694,7 +722,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
-                <img data-src="assets/page7.jpg" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img">
+                <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img">
+                <img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p>
@@ -797,24 +826,21 @@
         </div>
     </div>
 
-    <!-- LIBRERÍAS CORE -->
+    <!-- SCRIPTS CORE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <!-- LIBRERÍA: THREE.JS PARA SHADERS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+    <!-- SCRIPT MAESTRO BLINDADO (Todo el JS encapsulado aquí) -->
     <script>
-        gsap.registerPlugin(ScrollTrigger);
-
-        /* DESBLOQUEO 120FPS GSAP */
-        gsap.ticker.fps(120); 
-        gsap.ticker.lagSmoothing(0, 0);
-
-        /* ACCESIBILIDAD */
+    document.addEventListener("DOMContentLoaded", () => {
+        
+        /* SEGURIDAD DE RENDERIZADO */
+        try { gsap.registerPlugin(ScrollTrigger); gsap.ticker.fps(120); gsap.ticker.lagSmoothing(0, 0); } catch(e){}
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
-        /* 1. DICCIONARIO I18N */
+        /* 1. ESTADO Y DICCIONARIOS */
         let currentLang = 'es';
         const dict = {
             es: {
@@ -909,77 +935,105 @@
             ]
         };
 
-        /* 2. PRELOADER Y ASÍNCRONO OPTIMIZADO PARA IMÁGENES NATIVAS */
+        /* 2. VARIABLES GLOBALES */
+        const btnStart = document.getElementById('btn-start');
+        const sysInit = document.getElementById('system-init');
+        let audioCtx, droneOsc, droneGain;
+        let audioEnabled = true;
+
+        /* 3. LÓGICA DE PRELOADER ASÍNCRONA */
+        let isAnimDone = false;
+        let isImgDone = false;
         const lazyImages = document.querySelectorAll('.lazy-img');
-        let isAnimationFinished = false; let isImgFinished = false;
-        const totalToPreload = Math.min(lazyImages.length, 3); 
+        const totalPreload = Math.min(lazyImages.length, 3);
 
-        let startTime = null;
-        function animateLoader(timestamp) {
-            if (!startTime) startTime = timestamp;
-            const elapsed = timestamp - startTime;
-            const progress = Math.min(elapsed / 1200, 1); 
-            const easeProgress = 1 - Math.pow(1 - progress, 3); 
-            
-            document.getElementById('loader-pct').innerText = `[${Math.floor(easeProgress * 100).toString().padStart(3, '0')}%]`;
-            
-            if (progress < 1) { requestAnimationFrame(animateLoader); } 
-            else { isAnimationFinished = true; checkSystemReady(); }
-        }
-        requestAnimationFrame(animateLoader);
-
-        function checkSystemReady() {
-            if(isAnimationFinished && isImgFinished) {
-                document.getElementById('btn-start').classList.add('ready');
-                document.getElementById('btn-start').innerText = dict[currentLang].bootBtnReady;
-                initLazyLoadingObserver(); 
+        function checkReady() {
+            if(isAnimDone && isImgDone) {
+                if(btnStart) {
+                    btnStart.classList.add('ready');
+                    btnStart.innerText = dict[currentLang].bootBtnReady;
+                }
+                initLazyObserver();
             }
         }
 
-        if(lazyImages.length > 0) {
-            let imgLoadedCount = 0;
-            for(let i = 0; i < totalToPreload; i++) {
-                const img = new Image(); img.src = lazyImages[i].getAttribute('data-src');
-                img.onload = () => { imgLoadedCount++; if(imgLoadedCount >= totalToPreload) { isImgFinished = true; checkSystemReady(); } };
-                img.onerror = () => { imgLoadedCount++; if(imgLoadedCount >= totalToPreload) { isImgFinished = true; checkSystemReady(); } };
-            }
-        } else { isImgFinished = true; checkSystemReady(); }
+        let startT = null;
+        function animLoader(t) {
+            if(!startT) startT = t;
+            const elap = t - startT;
+            const p = Math.min(elap / 1200, 1);
+            const ep = 1 - Math.pow(1 - p, 3);
+            const pctEl = document.getElementById('loader-pct');
+            if(pctEl) pctEl.innerText = `[${Math.floor(ep * 100).toString().padStart(3, '0')}%]`;
+            
+            if(p < 1) { requestAnimationFrame(animLoader); } 
+            else { isAnimDone = true; checkReady(); }
+        }
+        requestAnimationFrame(animLoader);
 
-        function initLazyLoadingObserver() {
+        if(totalPreload > 0) {
+            let imgC = 0;
+            const done = () => { imgC++; if(imgC >= totalPreload) { isImgDone = true; checkReady(); } };
+            for(let i=0; i<totalPreload; i++){
+                const img = new Image();
+                img.onload = done; img.onerror = done;
+                img.src = lazyImages[i].getAttribute('data-src') || '';
+            }
+        } else { isImgDone = true; checkReady(); }
+
+        function initLazyObserver() {
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
                     if(entry.isIntersecting) {
                         const target = entry.target; const src = target.getAttribute('data-src');
-                        if(src) { 
-                            target.src = src; 
-                            target.removeAttribute('data-src'); 
-                        }
+                        if(src) { target.src = src; target.removeAttribute('data-src'); }
                         obs.unobserve(target);
                     }
                 });
             }, { rootMargin: '500px 0px' });
             lazyImages.forEach((img, i) => { 
-                if(i >= totalToPreload) observer.observe(img); 
-                else {
-                    const src = img.getAttribute('data-src');
-                    if(src) img.src = src;
-                }
+                if(i >= totalPreload) observer.observe(img); 
+                else { const src = img.getAttribute('data-src'); if(src) img.src = src; }
             });
         }
 
-        /* 3. AUDIO UI & SYSTEM BOOT */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let audioEnabled = true; let droneOsc, droneGain;
+        /* 4. BOTÓN "ENTRAR AL SISTEMA" (Cero Bugs) */
+        if(btnStart) {
+            btnStart.addEventListener('click', () => {
+                // Iniciar Audio Seguro
+                if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if(audioCtx.state === 'suspended') audioCtx.resume();
+                
+                // Configurar Drones
+                droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); const filter = audioCtx.createBiquadFilter();
+                droneOsc.type = 'sine'; droneOsc.frequency.value = 45; filter.type = 'lowpass'; filter.frequency.value = 200;
+                droneGain.gain.value = 0; droneOsc.connect(filter); filter.connect(droneGain); droneGain.connect(audioCtx.destination);
+                droneOsc.start(); droneGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 2);
+                
+                // Giroscopio
+                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission().then(p => { if (p === 'granted') initGyroscope(); }).catch(console.error);
+                } else { initGyroscope(); }
 
-        function initAudioEngine() {
-            droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); const filter = audioCtx.createBiquadFilter();
-            droneOsc.type = 'sine'; droneOsc.frequency.value = 45; filter.type = 'lowpass'; filter.frequency.value = 200;
-            droneGain.gain.value = 0; droneOsc.connect(filter); filter.connect(droneGain); droneGain.connect(audioCtx.destination);
-            droneOsc.start(); droneGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 2); 
+                // Fade Out Cinemático
+                gsap.to(sysInit, { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut', onComplete: () => {
+                    sysInit.style.display = 'none';
+                    if(audioEnabled) {
+                        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.3);
+                        gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+                    }
+                    gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
+                    initTypographyChoreography();
+                }});
+            });
         }
 
+        /* 5. SONIDO HOVER */
         function playHoverSFX() {
-            if (!audioEnabled || audioCtx.state !== 'running') return;
+            if (!audioEnabled || !audioCtx || audioCtx.state !== 'running') return;
             const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
             osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'triangle'; osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.05);
@@ -987,35 +1041,9 @@
             osc.start(); osc.stop(audioCtx.currentTime + 0.05);
         }
 
-        function requestGyroscope() {
-            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                DeviceOrientationEvent.requestPermission().then(p => { if (p === 'granted') initGyroscope(); }).catch(console.error);
-            } else { initGyroscope(); }
-        }
-
-        document.getElementById('btn-start').addEventListener('click', () => {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            initAudioEngine(); requestGyroscope();
-            
-            gsap.to('#system-init', { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut', onComplete: () => {
-                document.getElementById('system-init').style.display = 'none';
-                
-                if(audioEnabled) {
-                    const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                    osc.connect(gain); gain.connect(audioCtx.destination);
-                    osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.3);
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-                    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                }
-
-                gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
-                initTypographyChoreography();
-            }});
-        });
-
         document.getElementById('btn-audio').addEventListener('click', (e) => {
             audioEnabled = !audioEnabled; e.target.innerText = `SFX: ${audioEnabled ? 'ON' : 'OFF'}`; e.target.classList.toggle('active');
-            if(droneGain) droneGain.gain.setTargetAtTime(audioEnabled ? 0.05 : 0, audioCtx.currentTime, 0.5);
+            if(droneGain && audioCtx) droneGain.gain.setTargetAtTime(audioEnabled ? 0.05 : 0, audioCtx.currentTime, 0.5);
         });
 
         document.getElementById('btn-theme').addEventListener('click', () => {
@@ -1023,11 +1051,182 @@
             document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
         });
 
-        /* 4. BOTONES MAGNÉTICOS */
+        /* 6. WEBGL FLUID SHADER (120FPS GPU HARDWARE ACCELERATED) */
+        function initWebGLBackground() {
+            if (typeof THREE === 'undefined') return;
+            const canvas = document.getElementById('fluid-canvas');
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "high-performance", stencil: false, depth: false });
+            
+            const isMobile = window.innerWidth <= 768;
+            renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1) * 0.75 : Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            const geometry = new THREE.PlaneGeometry(2, 2);
+            
+            const fragmentShader = `
+                precision mediump float;
+                uniform float u_time;
+                uniform vec2 u_mouse;
+                uniform vec2 u_resolution;
+                
+                float random (in vec2 _st) { return fract(sin(dot(_st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
+                float noise (in vec2 _st) {
+                    vec2 i = floor(_st); vec2 f = fract(_st);
+                    float a = random(i); float b = random(i + vec2(1.0, 0.0));
+                    float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
+                    vec2 u = f * f * (3.0 - 2.0 * f);
+                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+                }
+                #define NUM_OCTAVES ${isMobile ? '2' : '4'}
+                float fbm ( in vec2 _st) {
+                    float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);
+                    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+                    for (int i = 0; i < NUM_OCTAVES; ++i) {
+                        v += a * noise(_st); _st = rot * _st * 2.0 + shift; a *= 0.5;
+                    }
+                    return v;
+                }
+                void main() {
+                    vec2 st = gl_FragCoord.xy/u_resolution.xy*3.;
+                    st.x *= u_resolution.x/u_resolution.y;
+                    vec2 mouseDist = (u_mouse - gl_FragCoord.xy/u_resolution.xy) * 0.5;
+                    st += mouseDist;
+                    vec2 q = vec2(0.);
+                    q.x = fbm( st + 0.00*u_time);
+                    q.y = fbm( st + vec2(1.0));
+                    vec2 r = vec2(0.);
+                    r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*u_time );
+                    r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*u_time);
+                    float f = fbm(st+r);
+                    vec3 color = mix(vec3(0.05, 0.05, 0.1), vec3(0.6, 0.8, 1.0), clamp((f*f)*4.0,0.0,1.0));
+                    color = mix(color, vec3(0.25, 0.71, 0.90), clamp(length(q),0.0,1.0));
+                    gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color,1.);
+                }
+            `;
+            const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
+
+            const uniforms = {
+                u_time: { value: 0.0 },
+                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+            };
+
+            const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, precision: 'mediump' });
+            const mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            let targetMouse = new THREE.Vector2(0.5, 0.5);
+            window.addEventListener('mousemove', (e) => {
+                targetMouse.x = e.clientX / window.innerWidth;
+                targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
+            });
+
+            window.addEventListener('resize', () => {
+                const isMob = window.innerWidth <= 768;
+                renderer.setPixelRatio(isMob ? Math.min(window.devicePixelRatio, 1) * 0.75 : Math.min(window.devicePixelRatio, 2));
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
+            });
+
+            const clock = new THREE.Clock();
+            function renderShader() {
+                uniforms.u_time.value = clock.getElapsedTime() * 0.3;
+                uniforms.u_mouse.value.lerp(targetMouse, 0.05);
+                renderer.render(scene, camera);
+                requestAnimationFrame(renderShader);
+            }
+            renderShader();
+        }
+        try { initWebGLBackground(); } catch(e){}
+
+        /* 7. SCROLL PARAMÉTRICO Y TICKER (SIN HIJACK EN MOBILE) */
+        let lenis;
+        try {
+            lenis = new Lenis({ duration: 1.2, smooth: !prefersReducedMotion, smoothTouch: false });
+            const progressBar = document.getElementById('progress-bar');
+            
+            lenis.on('scroll', (e) => {
+                if(audioEnabled && droneOsc && droneOsc.frequency) { const pitch = 45 + Math.abs(e.velocity * 0.8); droneOsc.frequency.setTargetAtTime(Math.min(pitch, 90), audioCtx.currentTime, 0.1); }
+                const progress = (e.animatedScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                if(progressBar) progressBar.style.width = `${progress}%`;
+                if(window.innerWidth > 768) {
+                    const dashoffset = 125 - (progress / 100) * 125;
+                    const cp = document.getElementById('cursor-progress');
+                    if(cp) cp.style.strokeDashoffset = dashoffset;
+                }
+            });
+            lenis.on('scroll', ScrollTrigger.update); 
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
+        } catch(e){}
+
+        /* 8. MOTOR GSAP BIFURCADO (DESKTOP VS MOBILE) */
+        let mm = gsap.matchMedia();
+
+        mm.add("(min-width: 769px)", () => {
+            const zLayers = gsap.utils.toArray('.z-layer'); 
+            if(zLayers.length) {
+                gsap.set(zLayers.slice(1), { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" });
+                let zTl = gsap.timeline({ scrollTrigger: { trigger: ".z-wrapper", start: "top top", end: "+=400%", pin: true, scrub: 0.5 } });
+                zTl.to('.layer-hero', { autoAlpha: 0, scale: 0.8, filter: "blur(5px)", duration: 0.8, force3D: true }, 0);
+                
+                zLayers.forEach((layer, i) => {
+                    if (i !== 0) { 
+                        let start = (i - 1) * 1.5;
+                        zTl.fromTo(layer, { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" }, { scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1.2, force3D: true }, start); 
+                        if (i !== zLayers.length - 1) { 
+                            zTl.to(layer, { scale: 5, autoAlpha: 0, filter: "blur(5px)", duration: 1, force3D: true }, start + 1.4); 
+                        }
+                    }
+                });
+            }
+
+            const hPanels = gsap.utils.toArray('.h-panel');
+            if(hPanels.length) {
+                let hTween = gsap.to(hPanels, { xPercent: -100 * (hPanels.length - 1), ease: "none", scrollTrigger: { trigger: ".h-wrapper", pin: true, scrub: 1, snap: 1 / (hPanels.length - 1), end: () => "+=" + document.querySelector(".h-container").offsetWidth } });
+                
+                gsap.utils.toArray('.h-card').forEach((card, i) => {
+                    let tl3D = gsap.timeline({ scrollTrigger: { trigger: card.closest('.h-panel'), containerAnimation: hTween, start: "left 100%", end: "right 0%", scrub: true } });
+                    tl3D.fromTo(card, 
+                        { rotationY: 45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)" }, 
+                        { rotationY: 0, rotationX: 0, z: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1, ease: "sine.inOut", force3D: true }
+                    ).to(card, 
+                        { rotationY: -45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)", duration: 1, ease: "sine.inOut", force3D: true }
+                    );
+                });
+
+                document.querySelectorAll('.parallax-img').forEach(img => { 
+                    gsap.fromTo(img, 
+                        { xPercent: -10 }, 
+                        { xPercent: 10, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }
+                    ); 
+                });
+            }
+        });
+
+        mm.add("(max-width: 768px)", () => {
+            gsap.utils.toArray('.m-img-wrap, .h-img-wrap, .v-item').forEach(wrap => {
+                const img = wrap.querySelector('.lazy-img');
+                if (img) {
+                    gsap.fromTo(img, 
+                        { scale: 1.05, yPercent: -3 }, 
+                        { scale: 1.05, yPercent: 3, ease: "none", force3D: true, scrollTrigger: { trigger: wrap, start: "top bottom", end: "bottom top", scrub: true } }
+                    );
+                }
+            });
+            gsap.utils.toArray('.monolith, .h-card, .v-item, .p-card, .profile-sidebar').forEach(el => {
+                gsap.fromTo(el,
+                    { opacity: 0, y: 40 },
+                    { opacity: 1, y: 0, duration: 0.8, force3D: true, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none reverse" } }
+                );
+            });
+        });
+
+        /* 9. UTILIDADES Y EVENTOS */
         document.querySelectorAll('.magnetic-target').forEach(btn => {
             const xTo = gsap.quickTo(btn, "x", {duration: 0.3, ease: "power2.out"});
             const yTo = gsap.quickTo(btn, "y", {duration: 0.3, ease: "power2.out"});
-            
             btn.addEventListener('mousemove', (e) => {
                 const rect = btn.getBoundingClientRect(); 
                 xTo((e.clientX - rect.left - rect.width / 2) * 0.3); 
@@ -1038,67 +1237,43 @@
 
         document.querySelectorAll('.hover-target').forEach(el => el.addEventListener('mouseenter', playHoverSFX));
 
-        /* 5. COMMAND K (UPGRADE: ARQUITECTURA DE LLM STREAMING) */
-        const cmdPalette = document.getElementById('cmd-palette');
-        const cmdInput = document.getElementById('cmd-input');
-        const cmdBody = document.getElementById('cmd-body');
+        if(window.innerWidth > 768) {
+            document.body.classList.add('custom-cursor');
+            const dot = document.querySelector('.cursor-dot'); const ring = document.querySelector('.cursor-ring');
+            gsap.set([dot, ring], {xPercent: -50, yPercent: -50}); 
+            const setDotX = gsap.quickSetter(dot, "x", "px"); const setDotY = gsap.quickSetter(dot, "y", "px");
+            const setRingX = gsap.quickTo(ring, "x", {duration: 0.15, ease: "power2.out"}); const setRingY = gsap.quickTo(ring, "y", {duration: 0.15, ease: "power2.out"});
+            let cursorVisible = false;
+            window.addEventListener('mousemove', e => { 
+                if(!cursorVisible) { gsap.to([dot, ring], {opacity: 1, duration: 0.3}); cursorVisible = true; }
+                setDotX(e.clientX); setDotY(e.clientY); setRingX(e.clientX); setRingY(e.clientY); 
+            });
+            document.querySelectorAll('.hover-target').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    ring.classList.add('active');
+                    if(el.classList.contains('lb-trigger')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curAmp;
+                    else if(el.classList.contains('magnetic-target') || el.classList.contains('nav-link') || el.classList.contains('btn-cta-nav')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curClic;
+                    else document.getElementById('cursor-text-ui').textContent = dict[currentLang].curExp;
+                });
+                el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+            });
+        }
+
+        const cmdPalette = document.getElementById('cmd-palette'); const cmdInput = document.getElementById('cmd-input'); const cmdBody = document.getElementById('cmd-body');
         let activeStream = false;
-        
         function toggleCmd() {
             const isActive = cmdPalette.classList.contains('active');
             if(isActive) { cmdPalette.classList.remove('active'); cmdInput.blur(); } 
             else { cmdPalette.classList.add('active'); setTimeout(() => cmdInput.focus(), 100); }
         }
-
         document.getElementById('btn-cmd').addEventListener('click', toggleCmd);
-        document.addEventListener('keydown', (e) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); toggleCmd(); }
-            if (e.key === 'Escape' && cmdPalette.classList.contains('active')) { toggleCmd(); }
-        });
+        document.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); toggleCmd(); } if (e.key === 'Escape' && cmdPalette.classList.contains('active')) { toggleCmd(); }});
         cmdPalette.addEventListener('click', (e) => { if(e.target === cmdPalette) toggleCmd(); });
-
-        async function streamAIResponse(htmlContent, el) {
-            activeStream = true;
-            el.innerHTML = '<span class="ai-typing"></span>';
-            const tokens = htmlContent.split(/(<[^>]*>| )/g).filter(Boolean);
-            let textAcc = '';
-            
-            for (let i = 0; i < tokens.length; i++) {
-                if (!activeStream) break;
-                textAcc += tokens[i];
-                el.innerHTML = textAcc + '<span class="ai-typing"></span>';
-                if (!tokens[i].startsWith('<')) await new Promise(r => setTimeout(r, Math.random() * 20 + 10)); 
-            }
-            if (activeStream) el.innerHTML = textAcc;
-            activeStream = false;
-        }
-
-        async function fetchAILogic(query, lang) {
-            await new Promise(r => setTimeout(r, Math.random() * 200 + 100));
-            
-            let finalResponse = lang === 'es' 
-                ? `Analizando consulta: "${query}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. Explora el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o escribe a <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.` 
-                : `Analyzing query: "${query}". My neural network detects interest, but I prioritize conversion and strategic design. Explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or email <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.`;
-            
-            const db = aiDB[lang];
-            const words = query.toLowerCase().split(/\s+/);
-            let scores = { compliment: 0, tech: 0, insult: 0, who: 0, design: 0, joke: 0, pricing: 0, contact: 0, experience: 0, services: 0, greeting: 0 };
-            
-            words.forEach(word => { db.forEach(intentData => { if(intentData.keys.some(kw => word.includes(kw) || kw.includes(word))) { scores[intentData.id]++; } }); });
-            if (scores.pricing > 0) scores.pricing += 10; 
-            
-            let maxScore = 0; let dominantIntent = null;
-            for (const[intentId, score] of Object.entries(scores)) { if (score > maxScore) { maxScore = score; dominantIntent = intentId; } }
-            if (dominantIntent) { const match = db.find(d => d.id === dominantIntent); if(match) finalResponse = match.res; }
-            
-            return finalResponse;
-        }
 
         let aiTimeout;
         cmdInput.addEventListener('input', (e) => {
             clearTimeout(aiTimeout); activeStream = false;
             const rawVal = e.target.value.trim();
-            
             if(rawVal.length > 2) {
                 cmdBody.innerHTML = `<span class="ai-typing"></span> Procesando cognitivamente...`;
                 aiTimeout = setTimeout(async () => {
@@ -1110,7 +1285,31 @@
             }
         });
 
-        /* 6. COREOGRAFÍA & GIROSCOPIO */
+        async function streamAIResponse(htmlContent, el) {
+            activeStream = true; el.innerHTML = '<span class="ai-typing"></span>';
+            const tokens = htmlContent.split(/(<[^>]*>| )/g).filter(Boolean); let textAcc = '';
+            for (let i = 0; i < tokens.length; i++) {
+                if (!activeStream) break; textAcc += tokens[i]; el.innerHTML = textAcc + '<span class="ai-typing"></span>';
+                if (!tokens[i].startsWith('<')) await new Promise(r => setTimeout(r, Math.random() * 20 + 10)); 
+            }
+            if (activeStream) el.innerHTML = textAcc; activeStream = false;
+        }
+
+        async function fetchAILogic(query, lang) {
+            await new Promise(r => setTimeout(r, Math.random() * 200 + 100));
+            let finalResponse = lang === 'es' 
+                ? `Analizando consulta: "${query}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. Explora el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o escribe a <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.` 
+                : `Analyzing query: "${query}". My neural network detects interest, but I prioritize conversion and strategic design. Explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or email <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.`;
+            const db = aiDB[lang]; const words = query.toLowerCase().split(/\s+/);
+            let scores = { compliment: 0, tech: 0, insult: 0, who: 0, design: 0, joke: 0, pricing: 0, contact: 0, experience: 0, services: 0, greeting: 0 };
+            words.forEach(word => { db.forEach(intentData => { if(intentData.keys.some(kw => word.includes(kw) || kw.includes(word))) { scores[intentData.id]++; } }); });
+            if (scores.pricing > 0) scores.pricing += 10; 
+            let maxScore = 0; let dominantIntent = null;
+            for (const[intentId, score] of Object.entries(scores)) { if (score > maxScore) { maxScore = score; dominantIntent = intentId; } }
+            if (dominantIntent) { const match = db.find(d => d.id === dominantIntent); if(match) finalResponse = match.res; }
+            return finalResponse;
+        }
+
         function splitTextForReveal(selector) {
             document.querySelectorAll(selector).forEach(el => {
                 if(!el.innerHTML.includes('<') || el.innerHTML.includes('<br>')) {
@@ -1136,218 +1335,17 @@
             });
         }
 
-        /* 7. UPGRADE 1000/10: WEBGL FLUID SHADER (120FPS GPU HARDWARE ACCELERATED) */
-        function initWebGLBackground() {
-            const canvas = document.getElementById('fluid-canvas');
-            
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "high-performance", stencil: false, depth: false });
-            
-            const isMobile = window.innerWidth <= 768;
-            renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-
-            const geometry = new THREE.PlaneGeometry(2, 2);
-            
-            const fragmentShader = `
-                precision mediump float;
-                uniform float u_time;
-                uniform vec2 u_mouse;
-                uniform vec2 u_resolution;
-                
-                float random (in vec2 _st) { return fract(sin(dot(_st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
-                float noise (in vec2 _st) {
-                    vec2 i = floor(_st); vec2 f = fract(_st);
-                    float a = random(i); float b = random(i + vec2(1.0, 0.0));
-                    float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
-                    vec2 u = f * f * (3.0 - 2.0 * f);
-                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-                }
-                #define NUM_OCTAVES ${window.innerWidth <= 768 ? '3' : '5'}
-                float fbm ( in vec2 _st) {
-                    float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);
-                    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
-                    for (int i = 0; i < NUM_OCTAVES; ++i) {
-                        v += a * noise(_st); _st = rot * _st * 2.0 + shift; a *= 0.5;
-                    }
-                    return v;
-                }
-
-                void main() {
-                    vec2 st = gl_FragCoord.xy/u_resolution.xy*3.;
-                    st.x *= u_resolution.x/u_resolution.y;
-                    
-                    vec2 mouseDist = (u_mouse - gl_FragCoord.xy/u_resolution.xy) * 0.5;
-                    st += mouseDist;
-
-                    vec2 q = vec2(0.);
-                    q.x = fbm( st + 0.00*u_time);
-                    q.y = fbm( st + vec2(1.0));
-
-                    vec2 r = vec2(0.);
-                    r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*u_time );
-                    r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*u_time);
-
-                    float f = fbm(st+r);
-                    
-                    vec3 color = mix(vec3(0.05, 0.05, 0.1), vec3(0.6, 0.8, 1.0), clamp((f*f)*4.0,0.0,1.0));
-                    color = mix(color, vec3(0.25, 0.71, 0.90), clamp(length(q),0.0,1.0));
-
-                    gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color,1.);
-                }
-            `;
-
-            const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
-
-            const uniforms = {
-                u_time: { value: 0.0 },
-                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
-                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-            };
-
-            const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader });
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-
-            let targetMouse = new THREE.Vector2(0.5, 0.5);
-            window.addEventListener('mousemove', (e) => {
-                targetMouse.x = e.clientX / window.innerWidth;
-                targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
-            });
-
-            window.addEventListener('resize', () => {
-                const isMob = window.innerWidth <= 768;
-                renderer.setPixelRatio(isMob ? 1 : Math.min(window.devicePixelRatio, 2));
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-            });
-
-            const clock = new THREE.Clock();
-            function renderShader() {
-                uniforms.u_time.value = clock.getElapsedTime() * 0.3;
-                uniforms.u_mouse.value.lerp(targetMouse, 0.05);
-                renderer.render(scene, camera);
-                requestAnimationFrame(renderShader);
-            }
-            renderShader();
-        }
-
-        initWebGLBackground(); 
-        
-        /* GESTIÓN DE CURSOR MOUSE UI */
-        if(window.innerWidth > 768) {
-            document.body.classList.add('custom-cursor');
-            const dot = document.querySelector('.cursor-dot'); const ring = document.querySelector('.cursor-ring');
-            gsap.set([dot, ring], {xPercent: -50, yPercent: -50}); 
-            
-            const setDotX = gsap.quickSetter(dot, "x", "px");
-            const setDotY = gsap.quickSetter(dot, "y", "px");
-            const setRingX = gsap.quickTo(ring, "x", {duration: 0.15, ease: "power2.out"});
-            const setRingY = gsap.quickTo(ring, "y", {duration: 0.15, ease: "power2.out"});
-            
-            let cursorVisible = false;
-            window.addEventListener('mousemove', e => { 
-                if(!cursorVisible) {
-                    gsap.to([dot, ring], {opacity: 1, duration: 0.3});
-                    cursorVisible = true;
-                }
-                setDotX(e.clientX); setDotY(e.clientY); 
-                setRingX(e.clientX); setRingY(e.clientY); 
-            });
-            
-            document.querySelectorAll('.hover-target').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    ring.classList.add('active');
-                    if(el.classList.contains('lb-trigger')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curAmp;
-                    else if(el.classList.contains('magnetic-target') || el.classList.contains('nav-link') || el.classList.contains('btn-cta-nav')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curClic;
-                    else document.getElementById('cursor-text-ui').textContent = dict[currentLang].curExp;
-                });
-                el.addEventListener('mouseleave', () => ring.classList.remove('active'));
-            });
-        }
-
-        /* SCROLL PARAMÉTRICO Y TICKER INDEPENDIENTE */
-        const lenis = new Lenis({ duration: 1.2, smooth: !prefersReducedMotion });
-        const progressBar = document.getElementById('progress-bar');
-        
-        lenis.on('scroll', (e) => {
-            if(audioEnabled && droneOsc && droneOsc.frequency) { const pitch = 45 + Math.abs(e.velocity * 0.8); droneOsc.frequency.setTargetAtTime(Math.min(pitch, 90), audioCtx.currentTime, 0.1); }
-            
-            const progress = (e.animatedScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            progressBar.style.width = `${progress}%`;
-            
-            if(window.innerWidth > 768) {
-                const dashoffset = 125 - (progress / 100) * 125;
-                document.getElementById('cursor-progress').style.strokeDashoffset = dashoffset;
-            }
-        });
-        
-        lenis.on('scroll', ScrollTrigger.update); 
-        gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
-
-        ScrollTrigger.matchMedia({
-            "(min-width: 769px)": function() {
-                const zLayers = gsap.utils.toArray('.z-layer'); 
-                gsap.set(zLayers.slice(1), { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" });
-                
-                let zTl = gsap.timeline({ scrollTrigger: { trigger: ".z-wrapper", start: "top top", end: "+=400%", pin: true, scrub: 0.5 } });
-                
-                zTl.to('.layer-hero', { autoAlpha: 0, scale: 0.8, filter: "blur(5px)", duration: 0.8, force3D: true }, 0);
-                
-                zLayers.forEach((layer, i) => {
-                    if (i !== 0) { 
-                        let start = (i - 1) * 1.5;
-                        zTl.fromTo(layer, { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" }, { scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1.2, force3D: true }, start); 
-                        if (i !== zLayers.length - 1) { 
-                            zTl.to(layer, { scale: 5, autoAlpha: 0, filter: "blur(5px)", duration: 1, force3D: true }, start + 1.4); 
-                        }
-                    }
-                });
-
-                const hPanels = gsap.utils.toArray('.h-panel');
-                let hTween = gsap.to(hPanels, { xPercent: -100 * (hPanels.length - 1), ease: "none", scrollTrigger: { trigger: ".h-wrapper", pin: true, scrub: 1, snap: 1 / (hPanels.length - 1), end: () => "+=" + document.querySelector(".h-container").offsetWidth } });
-                
-                gsap.utils.toArray('.h-card').forEach((card, i) => {
-                    let tl3D = gsap.timeline({ scrollTrigger: { trigger: card.closest('.h-panel'), containerAnimation: hTween, start: "left 100%", end: "right 0%", scrub: true } });
-                    tl3D.fromTo(card, 
-                        { rotationY: 45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)" }, 
-                        { rotationY: 0, rotationX: 0, z: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1, ease: "sine.inOut", force3D: true }
-                    ).to(card, 
-                        { rotationY: -45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)", duration: 1, ease: "sine.inOut", force3D: true }
-                    );
-                });
-
-                /* SOLUCIÓN AL BORDE NEGRO PARALLAX (CSS MATEMÁTICO 1000/10) */
-                document.querySelectorAll('.parallax-img').forEach(img => { 
-                    gsap.fromTo(img, 
-                        { xPercent: -10 }, /* Rango simétrico desde -10% hasta +10% */
-                        { xPercent: 10, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }
-                    ); 
-                });
-            }
-        });
-
-        /* 9. LIGHTBOX VIEW TRANSITIONS (Actualizado para Imágenes Nativas) */
-        const lightbox = document.getElementById('lightbox'); const lbImg = document.getElementById('lb-img'); let currentTargetImg = null;
-        let currentLbIndex = 0;
+        const lightbox = document.getElementById('lightbox'); const lbImg = document.getElementById('lb-img'); let currentTargetImg = null; let currentLbIndex = 0;
         const allLbTriggers = Array.from(document.querySelectorAll('.lb-trigger'));
 
         function openLightbox(index) {
-            currentLbIndex = index;
-            const item = allLbTriggers[index];
+            currentLbIndex = index; const item = allLbTriggers[index];
             const imgNode = item.querySelector('.target-img') || item.querySelector('.v-bg');
-            
             let src = '';
             if(imgNode) {
                 src = imgNode.getAttribute('src') || imgNode.getAttribute('data-src'); 
-                if(!src) {
-                    const bg = imgNode.style.backgroundImage;
-                    if(bg) src = bg.slice(5, -2);
-                }
+                if(!src) { const bg = imgNode.style.backgroundImage; if(bg) src = bg.slice(5, -2); }
             }
-            
             document.getElementById('lb-title').textContent = item.getAttribute('data-title'); 
             const projectDetails = item.querySelector('.project-details');
             if(projectDetails) { document.getElementById('lb-desc').innerHTML = projectDetails.innerHTML; } 
@@ -1356,38 +1354,29 @@
             if (!lightbox.classList.contains('active')) {
                 if (document.startViewTransition && imgNode) {
                     currentTargetImg = imgNode; currentTargetImg.style.viewTransitionName = 'active-image';
-                    const transition = document.startViewTransition(() => { lbImg.src = src; lbImg.style.viewTransitionName = 'active-image'; lightbox.classList.add('active'); lenis.stop(); });
+                    const transition = document.startViewTransition(() => { lbImg.src = src; lbImg.style.viewTransitionName = 'active-image'; lightbox.classList.add('active'); if(typeof lenis !== 'undefined') lenis.stop(); });
                     transition.finished.then(() => { currentTargetImg.style.viewTransitionName = 'none'; });
-                } else {
-                    lbImg.src = src; lightbox.classList.add('active'); lenis.stop();
-                }
+                } else { lbImg.src = src; lightbox.classList.add('active'); if(typeof lenis !== 'undefined') lenis.stop(); }
             } else {
-                gsap.to(['#lb-img', '#lb-title', '#lb-desc'], { opacity: 0, duration: 0.2, onComplete: () => {
-                    lbImg.src = src;
-                    gsap.to(['#lb-img', '#lb-title', '#lb-desc'], { opacity: 1, duration: 0.3, force3D: true });
-                }});
+                gsap.to(['#lb-img', '#lb-title', '#lb-desc'], { opacity: 0, duration: 0.2, onComplete: () => { lbImg.src = src; gsap.to(['#lb-img', '#lb-title', '#lb-desc'], { opacity: 1, duration: 0.3, force3D: true }); }});
             }
         }
 
-        allLbTriggers.forEach((item, index) => {
-            item.addEventListener('click', () => openLightbox(index));
-            item.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); openLightbox(index); } });
-        });
-
+        allLbTriggers.forEach((item, index) => { item.addEventListener('click', () => openLightbox(index)); item.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); openLightbox(index); } }); });
         document.getElementById('lb-prev').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); openLightbox((currentLbIndex - 1 + allLbTriggers.length) % allLbTriggers.length); });
         document.getElementById('lb-next').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); openLightbox((currentLbIndex + 1) % allLbTriggers.length); });
 
         const closeLightbox = async () => {
-            if (!document.startViewTransition) { lightbox.classList.remove('active'); setTimeout(() => { lbImg.src = ''; lenis.start(); }, 300); return; }
+            if (!document.startViewTransition) { lightbox.classList.remove('active'); setTimeout(() => { lbImg.src = ''; if(typeof lenis !== 'undefined') lenis.start(); }, 300); return; }
             if(currentTargetImg) currentTargetImg.style.viewTransitionName = 'active-image';
-            const transition = document.startViewTransition(() => { lightbox.classList.remove('active'); lbImg.style.viewTransitionName = 'none'; lenis.start(); });
+            const transition = document.startViewTransition(() => { lightbox.classList.remove('active'); lbImg.style.viewTransitionName = 'none'; if(typeof lenis !== 'undefined') lenis.start(); });
             await transition.finished; if(currentTargetImg) currentTargetImg.style.viewTransitionName = 'none'; currentTargetImg = null; lbImg.src = '';
         };
 
         document.getElementById('lb-close').addEventListener('click', closeLightbox); lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); }); document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); if(e.key === 'ArrowRight' && lightbox.classList.contains('active')) { document.getElementById('lb-next').click(); } if(e.key === 'ArrowLeft' && lightbox.classList.contains('active')) { document.getElementById('lb-prev').click(); }});
 
-        document.getElementById('backToTop').addEventListener('click', () => { lenis.scrollTo(0, { duration: 1.5, ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }); });
-        document.querySelectorAll('.nav-link').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const targetEl = document.querySelector(this.getAttribute('href')); if(targetEl) lenis.scrollTo(targetEl, { offset: 0, duration: 1.5 }); }); });
+        document.getElementById('backToTop').addEventListener('click', () => { if(typeof lenis !== 'undefined') lenis.scrollTo(0, { duration: 1.5, ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }); });
+        document.querySelectorAll('.nav-link').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const targetEl = document.querySelector(this.getAttribute('href')); if(targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl, { offset: 0, duration: 1.5 }); }); });
         
         const btnLang = document.getElementById('btn-lang');
         btnLang.addEventListener('click', () => {
@@ -1408,6 +1397,8 @@
             const placeholderTxt = currentLang === 'es' ? 'Haz una pregunta sobre Oscar Pozo...' : 'Ask a question sobre Oscar Pozo...';
             document.getElementById('cmd-input').setAttribute('placeholder', placeholderTxt);
         });
+
+    }); /* FIN DE DOMContentLoaded BLINDADO */
     </script>
 </body>
 </html>
