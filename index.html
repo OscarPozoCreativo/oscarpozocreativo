@@ -53,11 +53,12 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-light.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-light.png">
 
-    <!-- PRELOAD FUENTES LCP -->
+    <!-- PRELOAD FUENTES LCP (Satoshi Inyectada) -->
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Manrope:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"></noscript>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap"></noscript>
     
     <style>
         /* 1. ARQUITECTURA DE TOKENS */
@@ -68,7 +69,7 @@
             --vignette-color: #020202; --monolith-bg: rgba(5,5,5,0.8);
             --logo-filter: none; --modal-bg: rgba(0,0,0,0.95); --modal-panel: #0a0a0a;
             --img-bright: 0.75; --img-dim: 0.4; --noise-opacity: 0.04; 
-            --font-display: 'Syncopate', sans-serif; --font-body: 'Manrope', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Syncopate', sans-serif; --font-body: 'Satoshi', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         }[data-theme="light"] {
             --bg: #f4f4f5; --surface: #ffffff; --text: #050505; 
             --accent: #40B5E5; --accent-dark: #005f8e;
@@ -93,12 +94,9 @@
         #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 1000000; width: 0%; pointer-events: none; transform: translateZ(0); will-change: width; }
 
         /* PRELOADER CINEMÁTICO */
-        #system-init { position: fixed; inset: 0; background: var(--bg); z-index: 999999; display: flex; align-items: center; justify-content: center; flex-direction: column; transform: translateZ(0); will-change: opacity, visibility; }
+        #system-init { position: fixed; inset: 0; background: var(--bg); z-index: 999999; display: flex; align-items: center; justify-content: center; flex-direction: column; will-change: transform, opacity, visibility; }
         .loader-terminal { font-family: var(--font-mono); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; text-align: center; }
         .loader-pct { color: var(--accent); font-size: 24px; font-weight: 700; display: block; margin-top: 10px; font-variant-numeric: tabular-nums; }
-        .init-btn { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 15px 40px; font-family: var(--font-display); font-size: 12px; text-transform: uppercase; letter-spacing: 3px; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0; pointer-events: none; transform: translateY(20px); border-radius: 100px; }
-        .init-btn.ready { opacity: 1; pointer-events: auto; transform: translateY(0); }
-        .init-btn:hover { background: var(--accent); color: #fff; box-shadow: 0 0 30px rgba(64,181,229,0.4); transform: scale(1.05); }
 
         .has-reveal { opacity: 0; } 
         .reveal-wrap { overflow: visible !important; display: inline-block; vertical-align: top; position: relative; }
@@ -115,12 +113,9 @@
         }
         @keyframes flowPlasma { 0%{background-position:0% 50%} 100%{background-position:100% 50%} }
 
-        /* BACKGROUNDS GPU */
-        .noise { position: fixed; left: -50vw; top: -50vh; width: 200vw; height: 200vh; pointer-events: none; z-index: 0; opacity: var(--noise-opacity); background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; transform: translate3d(0,0,0); will-change: transform; animation: noise-bg 0.4s steps(2) infinite; }
-        @keyframes noise-bg { 0% { transform: translate3d(0,0,0); } 100% { transform: translate3d(50px,50px,0); } }
-        
-        #fluid-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.15; transform: translateZ(0); mix-blend-mode: screen; will-change: opacity; }[data-theme="light"] #fluid-canvas { mix-blend-mode: multiply; opacity: 0.08; filter: invert(1); }
-        .vignette { position: fixed; inset: 0; pointer-events: none; z-index: -1; background: radial-gradient(circle, transparent 20%, var(--vignette-color) 100%); transition: background 0.5s; transform: translateZ(0); }
+        /* BACKGROUNDS GPU (WebGL Inyectado) */
+        #webgl-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; opacity: 0.6; transition: opacity 0.8s; }
+        .noise-overlay { position: fixed; inset: 0; z-index: -1; opacity: 0.03; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
         /* CURSOR BIOMÉTRICO */
         .cursor-dot { position: fixed; left: 0; top: 0; width: 6px; height: 6px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000001; opacity: 0; will-change: transform; }
@@ -159,8 +154,11 @@
 
         /* Z-SCROLL ARQUITECTURA */
         .z-wrapper { width: 100vw; height: 100vh; position: relative; overflow: hidden; z-index: 10; pointer-events: none; }
-        /* IMPORTANTE: Layers inactivas no interceptan clicks. */
         .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); backface-visibility: hidden; pointer-events: none; }
+        
+        /* FIX CLICK FANTASMA: Ocultar capas inactivas desde el inicio */
+        .z-layer:not(.layer-hero) { visibility: hidden; opacity: 0; }
+        
         .layer-hero { flex-direction: column; text-align: center; pointer-events: auto; }
         .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 9rem); font-weight: 700; line-height: 0.85; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px; }
         .hero-desc { max-width: 650px; font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.6; color: var(--muted); font-weight: 400; padding: 0 20px;}
@@ -169,7 +167,7 @@
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         
-        /* CSS MATEMÁTICO: Encuadre perfecto + Buffer Parallax (Zoom 10%) */
+        /* CSS MATEMÁTICO: Encuadre perfecto + Buffer Parallax + Efecto Hover Inyectado */
         .target-img, .h-img, .v-bg { 
             position: absolute; 
             inset: 0; 
@@ -177,15 +175,18 @@
             height: 100%; 
             object-fit: cover; 
             object-position: center; 
-            transform: scale(1.1) translate3d(0,0,0); 
-            transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
-            filter: brightness(var(--img-bright)); 
+            transform: scale(1.1) translate3d(0,0,0); /* Buffer parallax mantenido */
+            transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
+            filter: grayscale(0.8) brightness(0.8); /* Efecto base inyectado */
             backface-visibility: hidden;
             will-change: transform;
         }
         
         @media (min-width: 769px) { 
-            .monolith:hover .target-img, .h-card:hover .target-img { filter: brightness(1.1) contrast(1.05); } 
+            .monolith:hover .target-img, .h-card:hover .target-img, .v-item:hover .v-bg { 
+                filter: grayscale(0) brightness(1); /* Efecto hover inyectado */
+                transform: scale(1.15) translate3d(0,0,0); /* Zoom matemático sin revelar bordes */
+            } 
             .monolith:hover, .h-card:hover { box-shadow: 0 20px 80px rgba(64,181,229,0.15); }
         }
 
@@ -219,9 +220,6 @@
         .section-header h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); text-transform: uppercase; }
         .vault-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
         .v-item { position: relative; height: 280px; border-radius: 12px; overflow: hidden; pointer-events: auto; border: 1px solid var(--border); transition: border 0.5s; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
-        
-        .v-bg { filter: brightness(var(--img-dim)) grayscale(0.8); }
-        .v-item:hover .v-bg { filter: brightness(1) grayscale(0); }
         
         .v-item::before { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); z-index: 1; pointer-events: none; transition: opacity 0.4s; }
         .v-item:hover::before { opacity: 0.7; }
@@ -299,14 +297,12 @@
         .lb-close { position: absolute; top: 30px; right: 30px; background: var(--border); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-display); font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto; transform: translateZ(0); }
         .lb-close:hover { background: var(--text); color: var(--bg); transform: scale(1.1) translateZ(0); }
 
-        /* FOOTER */
+        /* FOOTER FIX */
         .site-footer { padding: 40px 5vw; border-top: 1px solid var(--border); background: var(--surface); position: relative; z-index: 10; transition: background 0.5s, border 0.5s; transform: translateZ(0); }
         .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; }
-        .footer-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 20px; align-items: center; }
-        
-        .footer-logo-wrap { display: block; margin-bottom: 8px; pointer-events: auto; }
-        .footer-logo { max-height: 70px; max-width: 250px; width: auto; transition: filter 0.5s; filter: var(--logo-filter); transform: translateZ(0); }
-        
+        .footer-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-logo-wrap { display: block; pointer-events: auto; }
+        .footer-logo { max-height: 55px; width: auto; transition: filter 0.5s; filter: var(--logo-filter); transform: translateZ(0); }
         .footer-grid span { color: var(--muted); font-size: 0.9rem; line-height: 1.6; transition: color 0.5s; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
         .footer-links a, .footer-links button { appearance: none; border: 0; background: transparent; padding: 0; color: var(--muted); font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; pointer-events: auto; text-transform: uppercase; letter-spacing: 1px; }
@@ -350,6 +346,7 @@
                 top: 0 !important;
                 object-fit: cover !important;
                 transform: scale(1) !important;
+                filter: grayscale(0) brightness(1) !important; /* Asegura color en móvil sin hover */
             }
             
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; }
@@ -366,7 +363,7 @@
             .p-card, .profile-sidebar, .t-panel { padding: 20px; }
             .t-meta-grid { grid-template-columns: 1fr; }
             
-            .tilt-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; opacity: 1 !important; visibility: visible !important; }
+            .tilt-target, .skew-target, .monolith, .h-card, .v-item, .p-card { transform: none !important; opacity: 1 !important; visibility: visible !important; }
             .monolith, .h-card { backdrop-filter: none; -webkit-backdrop-filter: none; background: var(--bg); pointer-events: auto !important; }
             
             .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 95vh; border-radius: 12px; }
@@ -377,27 +374,25 @@
             .lb-prev { left: 10px; }
             .lb-next { right: 10px; }
             
-            .footer-grid { grid-template-columns: 1fr; text-align: center; gap: 30px; }
+            .footer-grid { flex-direction: column; text-align: center; gap: 30px; }
             .footer-links { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- PRELOADER -->
+    <!-- PRELOADER (Slide-up automático) -->
     <div id="system-init">
         <div class="loader-terminal">
             <span data-i18n="bootInit">ESTABLECIENDO CONEXIÓN ASÍNCRONA...</span>
             <span class="loader-pct" id="loader-pct">[000%]</span>
         </div>
-        <button class="init-btn magnetic-target hover-target" id="btn-start" data-i18n="bootBtn">INICIAR SISTEMA</button>
     </div>
 
-    <!-- EFECTOS BASE -->
+    <!-- EFECTOS BASE (WebGL Inyectado) -->
     <div id="progress-bar"></div>
-    <div class="noise"></div>
-    <canvas id="fluid-canvas"></canvas>
-    <div class="vignette"></div>
+    <canvas id="webgl-canvas"></canvas>
+    <div class="noise-overlay"></div>
 
     <!-- CURSOR BIOMÉTRICO -->
     <div class="cursor-dot"></div>
@@ -454,7 +449,7 @@
         </div>
 
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
                 <div class="m-img-wrap">
                     <img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img">
                     <img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only">
@@ -473,7 +468,7 @@
         </div>
 
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
                 <div class="m-img-wrap">
                     <img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img">
                     <img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only">
@@ -492,7 +487,7 @@
         </div>
 
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
                 <div class="m-img-wrap">
                     <img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img">
                     <img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only">
@@ -515,7 +510,7 @@
     <section class="h-wrapper" id="casos">
         <div class="h-container">
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img">
@@ -538,7 +533,7 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img">
@@ -561,7 +556,7 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img">
@@ -584,7 +579,7 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img">
@@ -607,7 +602,7 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img">
@@ -630,7 +625,7 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
                         <img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img">
@@ -659,7 +654,7 @@
     <section class="vault-wrapper" id="mas-trabajo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
         <div class="vault-grid">
-            <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
                 <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img">
                 <img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
@@ -670,7 +665,7 @@
                     <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v1Re">Aumento en percepción premium y mayor conversión en la categoría cuidado personal.</p></div>
                 </div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
                 <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img">
                 <img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
@@ -681,7 +676,7 @@
                     <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v2Re">Mayor CTR (Click Through Rate) en pauta publicitaria de redes.</p></div>
                 </div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Amigos X Siempre Tours" data-i18n-title="vTitle3">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Amigos X Siempre Tours" data-i18n-title="vTitle3">
                 <img data-src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="v-bg target-img lazy-img">
                 <img src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vTitle3">Amigos X Siempre Tours</h4></div>
@@ -692,7 +687,7 @@
                     <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v3Re">Mayor retención de audiencia (watch time) en formatos verticales.</p></div>
                 </div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Video giveaway Semana Santa 2025" data-i18n-title="vTitle4">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Video giveaway Semana Santa 2025" data-i18n-title="vTitle4">
                 <img data-src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="v-bg target-img lazy-img">
                 <img src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vTitle4">Giveaway SS25</h4></div>
@@ -703,7 +698,7 @@
                     <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v4Re">Récord de participaciones orgánicas en la campaña estacional.</p></div>
                 </div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
                 <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img">
                 <img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only">
                 <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
@@ -721,10 +716,10 @@
     <section class="process-wrapper" id="metodo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="procTitle">Proceso</h2></div>
         <div class="process-grid">
-            <div class="p-card hover-target tilt-target"><span class="p-num">01</span><h3 class="p-title" data-i18n="p1T">Diagnóstico</h3><p class="p-desc" data-i18n="p1D">Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.</p></div>
-            <div class="p-card hover-target tilt-target"><span class="p-num">02</span><h3 class="p-title" data-i18n="p2T">Sistema</h3><p class="p-desc" data-i18n="p2D">Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.</p></div>
-            <div class="p-card hover-target tilt-target"><span class="p-num">03</span><h3 class="p-title" data-i18n="p3T">Aplicación</h3><p class="p-desc" data-i18n="p3D">Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.</p></div>
-            <div class="p-card hover-target tilt-target"><span class="p-num">04</span><h3 class="p-title" data-i18n="p4T">Control</h3><p class="p-desc" data-i18n="p4D">Revisión de continuidad y consistencia para asegurar que el sistema siga funcionando a medida que crece.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">01</span><h3 class="p-title" data-i18n="p1T">Diagnóstico</h3><p class="p-desc" data-i18n="p1D">Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">02</span><h3 class="p-title" data-i18n="p2T">Sistema</h3><p class="p-desc" data-i18n="p2D">Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">03</span><h3 class="p-title" data-i18n="p3T">Aplicación</h3><p class="p-desc" data-i18n="p3D">Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">04</span><h3 class="p-title" data-i18n="p4T">Control</h3><p class="p-desc" data-i18n="p4D">Revisión de continuidad y consistencia para asegurar que el sistema siga funcionando a medida que crece.</p></div>
         </div>
     </section>
 
@@ -773,20 +768,18 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER FIX -->
     <footer class="site-footer">
         <div class="footer-container footer-grid">
             <div>
                 <a href="#" class="footer-logo-wrap hover-target magnetic-target">
                     <img src="assets/logo.png" alt="Oscar Pozo Creativo" class="footer-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMjAiPjx0ZXh0IHg9IjAiIHk9IjE1IiBmaWxsPSIjNDBCNUU1IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+T3NjYXIgUG96byBDcmVhdGl2bzwvdGV4dD48L3N2Zz4='">
                 </a>
-                <span data-i18n="footDesc">Diseño de Empaque, Retail y POP</span>
             </div>
             <div class="footer-links">
                 <button type="button" id="backToTop" class="hover-target magnetic-target" data-i18n="btnTop">Volver arriba</button>
                 <a href="#casos" class="hover-target nav-link magnetic-target" data-i18n="navPort">Portafolio</a>
                 <a href="#metodo" class="hover-target nav-link magnetic-target" data-i18n="navProc">Proceso</a>
-                <a href="#perfil" class="hover-target nav-link magnetic-target" data-i18n="navProf">Perfil</a>
             </div>
             <div><span data-i18n="footRights">© 2026 Oscar Pozo Creativo. Todos los derechos reservados.</span></div>
         </div>
@@ -814,7 +807,7 @@
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <!-- SCRIPT MAESTRO BLINDADO (Sin Frizos, 100% Sincronizado) -->
+    <!-- SCRIPT MAESTRO BLINDADO -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         
@@ -824,7 +817,7 @@
         let currentLang = 'es';
         const dict = {
             es: {
-                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", bootBtn: "INICIAR SISTEMA", bootBtnReady: "ENTRAR AL SISTEMA",
+                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...",
                 cmdAsk: "Preguntar a la IA <span>⌘K</span>", cmdStart: "Escribe cualquier duda sobre mi experiencia, tarifas o disponibilidad. Mi motor lógico responderá al instante.",
                 role: "CDO / Director de Arte", loc: "Sistemas Comerciales", country: "República Dominicana",
                 hero1: "SISTEMAS", hero2: "COMERCIALES.", heroDesc: "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.",
@@ -852,11 +845,11 @@
                 procTitle: "Proceso", p1T: "Diagnóstico", p1D: "Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.", p2T: "Sistema", p2D: "Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.", p3T: "Aplicación", p3D: "Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.", p4T: "Control", p4D: "Revisión de continuidad y consistencia para asegurar que el sistema siga funcionando a medida que crece.",
                 profLabel: "Perfil", profTitle: "Diseño comercial con criterio de sistema, no de pieza aislada.", profP1: "Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.", profP2: "Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.", profP3: "Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.", focLabel: "Enfoque", f1T: "Campañas retail", f1D: "Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.", f2T: "Diseño de empaque", f2D: "Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.", f3T: "POP y exhibición", f3D: "Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.", f4T: "Ejecución multiformato", f4D: "Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, display y soporte visual.",
                 conLabel: "Contacto", conTitle: "Disponible para proyectos y roles donde el diseño tenga impacto comercial real.", conDesc: "Si tu equipo o tu marca necesita más claridad visual, más consistencia entre formatos y una ejecución mejor resuelta en retail, diseño de empaque o POP, conversemos.", locLabel: "Ubicación", specLabel: "Especialidad", dispLabel: "Disponibilidad", specVal: "Retail, Empaque & POP", dispVal: "Senior / Colaboración Híbrida",
-                footDesc: "Diseño de Empaque, Retail y POP", btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", navProf: "Perfil", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados.",
+                btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados.",
                 curExp: "Explorar", curAmp: "Ampliar", curClic: "Clic"
             },
             en: {
-                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", bootBtn: "INITIATE SYSTEM", bootBtnReady: "ENTER SYSTEM",
+                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...",
                 cmdAsk: "Ask AI <span>⌘K</span>", cmdStart: "Type any question about my experience, rates, or availability. The logical engine will answer instantly.",
                 role: "CDO / Art Director", loc: "Commercial Systems", country: "Dominican Republic",
                 hero1: "COMMERCIAL", hero2: "SYSTEMS.", heroDesc: "Visual architecture, packaging design, and retail campaigns structured to dominate the shelf and multiply your revenue.",
@@ -883,7 +876,7 @@
                 procTitle: "Process", p1T: "Diagnosis", p1D: "Identification of hierarchy, saturation, reading, and visual fragmentation problems according to the application context.", p2T: "System", p2D: "Definition of visual rules for hierarchy, contrast, coding, and repeatability between pieces and formats.", p3T: "Application", p3D: "Implementation in retail, packaging design, POP, promotional editorial, and visual support respecting context and brand coherence.", p4T: "Control", p4D: "Review of continuity and consistency to ensure the system continues to work as it grows.",
                 profLabel: "Profile", profTitle: "Commercial design with a systems approach, not isolated pieces.", profP1: "I work in contexts where a brand must be sustained across campaigns, packaging, promotions, display, promotional editorial, and point of sale without losing clarity or coherence.", profP2: "That demands visual judgment, system capacity, and decisions designed for real performance: reading, operational consistency, and brand presence in competitive environments.", profP3: "My focus is on building pieces that work within solid, useful, and sustainable visual systems for real commercial operation.", focLabel: "Focus", f1T: "Retail campaigns", f1D: "Promotional pieces with high visual density built for clarity, rhythm, and fast commercial reading.", f2T: "Packaging design", f2D: "Packaging systems with hierarchy, variant differentiation, and visual continuity when growing without losing order.", f3T: "POP & display", f3D: "Point of sale materials with functional signage, visibility, and reading by category in a real environment.", f4T: "Multi-format execution", f4D: "Ability to sustain the same visual logic across editorial, packaging, signage, display, and visual support.",
                 conLabel: "Contact", conTitle: "Available for projects and roles where design has real commercial impact.", conDesc: "If your team or brand needs more visual clarity, more consistency across formats, and a better-resolved execution in retail, packaging design, or POP, let's talk.", locLabel: "Location", specLabel: "Specialty", dispLabel: "Availability", specVal: "Retail, Packaging & POP", dispVal: "Senior / Hybrid Collaboration",
-                footDesc: "Packaging, Retail & POP Design", btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", navProf: "Profile", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved.",
+                btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved.",
                 curExp: "Explore", curAmp: "Expand", curClic: "Click"
             }
         };
@@ -915,22 +908,17 @@
             ]
         };
 
-        /* PRELOADER LÓGICA Y BOTÓN ENTRAR */
+        /* PRELOADER LÓGICA (Slide-up Automático) */
         let isAnimDone = false;
         let isImgDone = false;
         const lazyImages = document.querySelectorAll('.lazy-img');
         const totalPreload = Math.min(lazyImages.length, 3);
-        const btnStart = document.getElementById('btn-start');
         const sysInit = document.getElementById('system-init');
-        let audioCtx, droneOsc, droneGain;
+        let audioCtx;
         let audioEnabled = true;
 
         function checkReady() {
             if(isAnimDone && isImgDone) {
-                if(btnStart) {
-                    btnStart.classList.add('ready');
-                    btnStart.innerText = dict[currentLang].bootBtnReady;
-                }
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if(entry.isIntersecting) {
@@ -944,6 +932,13 @@
                     if(i >= totalPreload) observer.observe(img); 
                     else { const src = img.getAttribute('data-src'); if(src) img.src = src; }
                 });
+
+                // Slide-up automático al 100%
+                gsap.to('#system-init', { yPercent: -100, duration: 1.2, ease: "power4.inOut", onComplete: () => {
+                    sysInit.style.display = 'none';
+                    gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
+                    initTypographyChoreography();
+                }});
             }
         }
 
@@ -968,35 +963,20 @@
             }
         } else { isImgDone = true; checkReady(); }
 
-        /* CLICK ENTRAR 100% GARANTIZADO */
-        if(btnStart) {
-            btnStart.addEventListener('click', () => {
-                if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                if(audioCtx.state === 'suspended') audioCtx.resume();
-                
-                droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); const filter = audioCtx.createBiquadFilter();
-                droneOsc.type = 'sine'; droneOsc.frequency.value = 45; filter.type = 'lowpass'; filter.frequency.value = 200;
-                droneGain.gain.value = 0; droneOsc.connect(filter); filter.connect(droneGain); droneGain.connect(audioCtx.destination);
-                droneOsc.start(); droneGain.gain.setTargetAtTime(0.05, audioCtx.currentTime, 2);
-                
-                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    DeviceOrientationEvent.requestPermission().then(p => { if (p === 'granted') initGyroscope(); }).catch(console.error);
-                } else { initGyroscope(); }
-
-                gsap.to(sysInit, { autoAlpha: 0, duration: 0.6, ease: 'power2.inOut', onComplete: () => {
-                    sysInit.style.display = 'none';
-                    if(audioEnabled) {
-                        const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                        osc.connect(gain); gain.connect(audioCtx.destination);
-                        osc.type = 'sine'; osc.frequency.setValueAtTime(1200, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(300, audioCtx.currentTime + 0.3);
-                        gain.gain.setValueAtTime(0.2, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-                        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
-                    }
-                    gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
-                    initTypographyChoreography();
-                }});
-            });
-        }
+        /* INICIALIZACIÓN DE AUDIO Y GIROSCOPIO EN PRIMERA INTERACCIÓN */
+        const initInteraction = () => {
+            if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission().then(p => { if (p === 'granted') initGyroscope(); }).catch(console.error);
+            } else { initGyroscope(); }
+            
+            document.removeEventListener('click', initInteraction);
+            document.removeEventListener('keydown', initInteraction);
+        };
+        document.addEventListener('click', initInteraction);
+        document.addEventListener('keydown', initInteraction);
 
         /* SONIDO HOVER */
         function playHoverSFX() {
@@ -1010,131 +990,70 @@
 
         document.getElementById('btn-audio').addEventListener('click', (e) => {
             audioEnabled = !audioEnabled; e.target.innerText = `SFX: ${audioEnabled ? 'ON' : 'OFF'}`; e.target.classList.toggle('active');
-            if(droneGain && audioCtx) droneGain.gain.setTargetAtTime(audioEnabled ? 0.05 : 0, audioCtx.currentTime, 0.5);
         });
+
+        /* WEBGL BACKGROUND (Inyectado) */
+        const initWebGL = () => {
+            const canvas = document.getElementById('webgl-canvas'); const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, powerPreference: "high-performance" });
+            renderer.setSize(window.innerWidth, window.innerHeight); const scene = new THREE.Scene(); const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+            const uniforms = { u_time: { value: 0.0 }, u_mouse: { value: new THREE.Vector2(0.5, 0.5) }, u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }, u_theme: { value: 0.0 } };
+            const shaderMat = new THREE.ShaderMaterial({ uniforms, vertexShader: `void main() { gl_Position = vec4(position, 1.0); }`, fragmentShader: `
+                precision mediump float; uniform float u_time; uniform vec2 u_mouse; uniform vec2 u_resolution; uniform float u_theme;
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; } vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                float snoise(vec2 v) { const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439); vec2 i=floor(v+dot(v,C.yy)); vec2 x0=v-i+dot(i,C.xx); vec2 i1=(x0.x>x0.y)?vec2(1.0,0.0):vec2(0.0,1.0); vec4 x12=x0.xyxy+C.xxzz; x12.xy-=i1; i=mod289(i); vec3 p=permute(permute(i.y+vec3(0.0,i1.y,1.0))+i.x+vec3(0.0,i1.x,1.0)); vec3 m=max(0.5-vec3(dot(x0,x0),dot(x12.xy,x12.xy),dot(x12.zw,x12.zw)),0.0); m=m*m; m=m*m; vec3 x=2.0*fract(p*C.www)-1.0; vec3 h=abs(x)-0.5; vec3 ox=floor(x+0.5); vec3 a0=x-ox; m*=1.79284291400159-0.85373472095314*(a0*a0+h*h); vec3 g; g.x=a0.x*x0.x+h.x*x0.y; g.yz=a0.yz*x12.xz+h.yz*x12.yw; return 130.0*dot(m,g); }
+                void main() { vec2 st = gl_FragCoord.xy/u_resolution.xy; st.x *= u_resolution.x/u_resolution.y; st += (u_mouse - gl_FragCoord.xy/u_resolution.xy) * 0.3; float n = snoise(st * 2.0 + u_time * 0.1) + 0.5 * snoise(st * 4.0 - u_time * 0.15); vec3 cD = mix(vec3(0.02, 0.02, 0.03), vec3(0.1, 0.1, 0.12), n); vec3 cL = mix(vec3(0.9, 0.9, 0.95), vec3(1.0, 1.0, 1.0), n); gl_FragColor = vec4(mix(cD, cL, u_theme), 1.0); }
+            `});
+            scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMat));
+            let tM = new THREE.Vector2(0.5, 0.5); window.addEventListener('mousemove', e => { tM.x = e.clientX / window.innerWidth; tM.y = 1.0 - (e.clientY / window.innerHeight); });
+            window.addEventListener('resize', () => { renderer.setSize(window.innerWidth, window.innerHeight); uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight); });
+            const clock = new THREE.Clock(); const render = () => { uniforms.u_time.value = clock.getElapsedTime(); uniforms.u_mouse.value.lerp(tM, 0.05); renderer.render(scene, camera); requestAnimationFrame(render); }; render();
+            return uniforms;
+        };
+        let webglUniforms = window.innerWidth > 768 ? initWebGL() : null;
 
         document.getElementById('btn-theme').addEventListener('click', () => {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            if(webglUniforms) gsap.to(webglUniforms.u_theme, { value: isDark ? 1.0 : 0.0, duration: 1, ease: "power2.inOut" });
         });
 
-        /* WEBGL FLUID SHADER (120FPS GPU HARDWARE ACCELERATED) */
-        function initWebGLBackground() {
-            if (typeof THREE === 'undefined') return;
-            const canvas = document.getElementById('fluid-canvas');
-            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false, powerPreference: "high-performance", stencil: false, depth: false });
-            
-            const isMobile = window.innerWidth <= 768;
-            renderer.setPixelRatio(isMobile ? Math.min(window.devicePixelRatio, 1) * 0.75 : Math.min(window.devicePixelRatio, 2));
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-            const geometry = new THREE.PlaneGeometry(2, 2);
-            
-            const fragmentShader = `
-                precision mediump float;
-                uniform float u_time;
-                uniform vec2 u_mouse;
-                uniform vec2 u_resolution;
-                
-                float random (in vec2 _st) { return fract(sin(dot(_st.xy, vec2(12.9898,78.233))) * 43758.5453123); }
-                float noise (in vec2 _st) {
-                    vec2 i = floor(_st); vec2 f = fract(_st);
-                    float a = random(i); float b = random(i + vec2(1.0, 0.0));
-                    float c = random(i + vec2(0.0, 1.0)); float d = random(i + vec2(1.0, 1.0));
-                    vec2 u = f * f * (3.0 - 2.0 * f);
-                    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
-                }
-                #define NUM_OCTAVES ${isMobile ? '2' : '4'}
-                float fbm ( in vec2 _st) {
-                    float v = 0.0; float a = 0.5; vec2 shift = vec2(100.0);
-                    mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
-                    for (int i = 0; i < NUM_OCTAVES; ++i) {
-                        v += a * noise(_st); _st = rot * _st * 2.0 + shift; a *= 0.5;
-                    }
-                    return v;
-                }
-                void main() {
-                    vec2 st = gl_FragCoord.xy/u_resolution.xy*3.;
-                    st.x *= u_resolution.x/u_resolution.y;
-                    vec2 mouseDist = (u_mouse - gl_FragCoord.xy/u_resolution.xy) * 0.5;
-                    st += mouseDist;
-                    vec2 q = vec2(0.);
-                    q.x = fbm( st + 0.00*u_time);
-                    q.y = fbm( st + vec2(1.0));
-                    vec2 r = vec2(0.);
-                    r.x = fbm( st + 1.0*q + vec2(1.7,9.2)+ 0.15*u_time );
-                    r.y = fbm( st + 1.0*q + vec2(8.3,2.8)+ 0.126*u_time);
-                    float f = fbm(st+r);
-                    vec3 color = mix(vec3(0.05, 0.05, 0.1), vec3(0.6, 0.8, 1.0), clamp((f*f)*4.0,0.0,1.0));
-                    color = mix(color, vec3(0.25, 0.71, 0.90), clamp(length(q),0.0,1.0));
-                    gl_FragColor = vec4((f*f*f+.6*f*f+.5*f)*color,1.);
-                }
-            `;
-            const vertexShader = `void main() { gl_Position = vec4(position, 1.0); }`;
-
-            const uniforms = {
-                u_time: { value: 0.0 },
-                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
-                u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-            };
-
-            const material = new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader, precision: 'mediump' });
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-
-            let targetMouse = new THREE.Vector2(0.5, 0.5);
-            window.addEventListener('mousemove', (e) => {
-                targetMouse.x = e.clientX / window.innerWidth;
-                targetMouse.y = 1.0 - (e.clientY / window.innerHeight);
-            });
-
-            window.addEventListener('resize', () => {
-                const isMob = window.innerWidth <= 768;
-                renderer.setPixelRatio(isMob ? Math.min(window.devicePixelRatio, 1) * 0.75 : Math.min(window.devicePixelRatio, 2));
-                renderer.setSize(window.innerWidth, window.innerHeight);
-                uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-            });
-
-            const clock = new THREE.Clock();
-            function renderShader() {
-                uniforms.u_time.value = clock.getElapsedTime() * 0.3;
-                uniforms.u_mouse.value.lerp(targetMouse, 0.05);
-                renderer.render(scene, camera);
-                requestAnimationFrame(renderShader);
-            }
-            renderShader();
-        }
-        try { initWebGLBackground(); } catch(e){}
-
-        /* SCROLL PARAMÉTRICO Y TICKER (SIN HIJACK EN MOBILE) */
+        /* SCROLL PARAMÉTRICO, TICKER Y SKEW PHYSICS */
         let lenis;
         try {
             lenis = new Lenis({ duration: 1.2, smooth: !prefersReducedMotion, smoothTouch: false });
             const progressBar = document.getElementById('progress-bar');
+            const skewTargets = document.querySelectorAll('.skew-target');
             
             lenis.on('scroll', (e) => {
-                if(audioEnabled && droneOsc && droneOsc.frequency) { const pitch = 45 + Math.abs(e.velocity * 0.8); droneOsc.frequency.setTargetAtTime(Math.min(pitch, 90), audioCtx.currentTime, 0.1); }
                 const progress = (e.animatedScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
                 if(progressBar) progressBar.style.width = `${progress}%`;
+                
                 if(window.innerWidth > 768) {
                     const dashoffset = 125 - (progress / 100) * 125;
                     const cp = document.getElementById('cursor-progress');
                     if(cp) cp.style.strokeDashoffset = dashoffset;
+
+                    // SKEW PHYSICS (Efecto de doblarse al hacer scroll)
+                    const velocity = e.velocity || 0; 
+                    const skew = Math.max(-5, Math.min(5, velocity * 0.2)); 
+                    skewTargets.forEach(el => {
+                        const rect = el.getBoundingClientRect(); 
+                        if(rect.top < window.innerHeight && rect.bottom > 0) { 
+                            gsap.to(el, { skewY: skew, duration: 0.5, ease: "power2.out", overwrite: "auto" }); 
+                        }
+                    });
                 }
             });
             lenis.on('scroll', ScrollTrigger.update); 
             gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
         } catch(e){}
 
-        /* MOTOR GSAP DESKTOP: FRENO EXACTO Y CERO CLICK FANTASMA */
+        /* MOTOR GSAP DESKTOP (Fix Clic Fantasma) */
         let mm = gsap.matchMedia();
 
         mm.add("(min-width: 769px)", () => {
             const zLayers = gsap.utils.toArray('.z-layer'); 
             if(zLayers.length) {
-                // Escondemos visualmente las capas para que no roben el click del Hero
                 gsap.set(zLayers.slice(1), { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" });
                 
                 let zTl = gsap.timeline({ scrollTrigger: { trigger: ".z-wrapper", start: "top top", end: "+=400%", pin: true, scrub: 0.5 } });
@@ -1142,13 +1061,11 @@
                 
                 zLayers.forEach((layer, i) => {
                     if (i !== 0) { 
-                        // Bloques de tiempo fijos para forzar la PAUSA en el centro de la pantalla
-                        let start = (i - 1) * 4; 
-                        // Entra
+                        // El Hero se desvanece de 0 a 1. El primer proyecto entra a partir de 1.
+                        // Esto garantiza que NO exista en el DOM mientras el Hero está activo.
+                        let start = (i * 3) - 2; 
                         zTl.fromTo(layer, { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" }, { scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1, force3D: true }, start); 
-                        // Se queda fijo 2 segundos
                         zTl.to(layer, { scale: 1, duration: 2 }, start + 1);
-                        // Sale
                         if (i !== zLayers.length - 1) { 
                             zTl.to(layer, { scale: 5, autoAlpha: 0, filter: "blur(5px)", duration: 1, force3D: true }, start + 3); 
                         }
@@ -1165,7 +1082,7 @@
                         trigger: ".h-wrapper", 
                         pin: true, 
                         scrub: 1, 
-                        snap: { snapTo: 1 / (hPanels.length - 1), duration: {min: 0.2, max: 0.5}, delay: 0, ease: "power1.inOut" }, // FRENO EXACTO
+                        snap: { snapTo: 1 / (hPanels.length - 1), duration: {min: 0.2, max: 0.5}, delay: 0, ease: "power1.inOut" },
                         end: () => "+=" + (document.querySelector(".h-container").offsetWidth) 
                     } 
                 });
@@ -1364,7 +1281,7 @@
             document.getElementById('cmd-input').setAttribute('placeholder', placeholderTxt);
         });
 
-    }); /* FIN DE DOMContentLoaded BLINDADO */
+    });
     </script>
 </body>
 </html>
