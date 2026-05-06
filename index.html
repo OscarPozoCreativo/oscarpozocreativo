@@ -167,13 +167,12 @@
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         
-        /* CSS MATEMÁTICO: Encuadre perfecto 1:1. Zoom purgado. */
+        /* ARQUITECTURA DE ENCUADRE RESPONSIVO: Separación de Lógica */
         .target-img, .h-img, .v-bg { 
             position: absolute; 
             inset: 0; 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; 
             object-position: center; 
             transform: scale(1) translate3d(0,0,0); /* Sin buffer engañoso */
             transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
@@ -182,10 +181,22 @@
             will-change: transform;
         }
         
+        /* Exhibición Principal: Prohibido Recortar (100% visible siempre) */
+        .target-img, .h-img {
+            object-fit: contain;
+            padding: 4%; /* Margen paramétrico de respiro */
+            box-sizing: border-box;
+        }
+
+        /* Losetas de Bóveda: Textura Grid (Permitido cover) */
+        .v-bg {
+            object-fit: cover; 
+        }
+        
         @media (min-width: 769px) { 
             .monolith:hover .target-img, .h-card:hover .target-img, .v-item:hover .v-bg { 
                 filter: grayscale(0) brightness(1); 
-                transform: scale(1.03) translate3d(0,0,0); /* Escala de hover premium, no abusiva */
+                transform: scale(1.03) translate3d(0,0,0); /* Escala de hover premium */
             } 
             .monolith:hover, .h-card:hover { box-shadow: 0 20px 80px rgba(64,181,229,0.15); }
         }
@@ -344,9 +355,15 @@
                 height: 100% !important;
                 left: 0 !important;
                 top: 0 !important;
-                object-fit: cover !important;
                 transform: scale(1) !important;
                 filter: grayscale(0) brightness(1) !important; /* Asegura color en móvil sin hover */
+            }
+            .target-img, .h-img {
+                object-fit: contain !important;
+                padding: 2% !important; /* Mantiene la filosofía de no recorte en móvil */
+            }
+            .v-bg {
+                object-fit: cover !important;
             }
             
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; }
@@ -832,7 +849,7 @@
                 hMeta2: "Editorial promocional", hTitle2: "Página publicitaria para campaña supermercado 2025", hDesc2: "Composición editorial para prensa escrita con jerarquía visual orientada a lectura y confianza comercial.", h2Reto: "Comunicar agresividad en precios sin que el diseño se perciba barato o caótico.", h2Enfoque: "Sistema de retícula estricta, balance de espacios en blanco y jerarquización de ofertas ganadoras.", h2Res: "Un encarte que el consumidor puede escanear en segundos, incrementando el tráfico hacia las promociones clave.",
                 hMeta3: "Diseño de empaque", hTitle3: "Diseño de empaque · Gold Selects", hDesc3: "Sistema visual de empaque desarrollado para reforzar diferenciación, lectura rápida y consistencia de línea.", h3Reto: "Homogeneizar una familia de productos que había perdido cohesión visual a medida que se añadían nuevas variantes.", h3Enfoque: "Creación de un Master Graphic sólido y un sistema de codificación por color a prueba de fallos.", h3Res: "Bloqueo de marca impecable en el anaquel. El consumidor identifica la línea inmediatamente.",
                 hMeta4: "POP retail", hTitle4: "Cabezal de bebé · activación visual en retail", hDesc4: "Pieza promocional desarrollada para reforzar visibilidad de categoría, señalización comercial y presencia de marca dentro del entorno retail.", h4Reto: "Dominar una categoría visualmente ruidosa y guiar a los padres directamente al producto.", h4Enfoque: "Psicología del color suave, formas amigables e información dura en la zona de contacto visual directo.", h4Res: "El pasillo se organizó, reduciendo la fricción de búsqueda y acelerando la decisión de compra.",
-                hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta · Gold Selects Gourmet", hDesc5: "Propuesta visual con códigos gourmet orientada a percepción de calidad, tradición y carácter premium.", h5Reto: "Elevar el valor percibido del producto para justificar un posicionamiento de precio superior (Premiumization).", h5Enfoque: "Uso de tipografías clásicas, acabados visuales limpios y un layout minimalista de inspiración europea.", h5Res: "Un producto que se defiende visualmente contra marcas internacionales importadas.",
+                hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta · Gold Selects Gourmet", hDesc5: "Propuesta visual con códigos gourmet orientada a percepción de calidad, tradición y carácter premium.", h5Reto: "Elevar el valor percibido del producto para justify un posicionamiento de precio superior (Premiumization).", h5Enfoque: "Uso de tipografías clásicas, acabados visuales limpios y un layout minimalista de inspiración europea.", h5Res: "Un producto que se defiende visualmente contra marcas internacionales importadas.",
                 hMeta6: "POP", hTitle6: "Coco Dream Blend", hDesc6: "Exhibidor con lenguaje visual suave y natural para comunicar hidratación, frescura y origen del producto.", h6Reto: "Conectar emocionalmente con el consumidor apelando a los ingredientes naturales en un segundo de visualización.", h6Enfoque: "Composición inmersiva, paleta de colores tropicales y fotografía de producto hiperrealista.", h6Res: "Un display imposible de ignorar que comunica el beneficio principal de manera instantánea.",
                 
                 vaultTitle: "Archivo Operativo", 
