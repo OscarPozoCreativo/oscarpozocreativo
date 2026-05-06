@@ -332,11 +332,14 @@
             body.custom-cursor * { cursor: auto !important; }
             
             /* ESTRUCTURA NATIVA PURA: Adiós Parallax, Cero Movimiento */
-            .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 80px 15px 30px; pointer-events: auto; }
+            .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 0 15px 30px; pointer-events: auto; }
             
             /* IMPORTANT: Override GSAP autoAlpha & pointers for mobile */
-            .z-layer { position: relative; height: auto; margin-bottom: 25px; transform: none !important; opacity: 1 !important; visibility: visible !important; filter: none !important; pointer-events: auto !important; display: block; }
-            .layer-hero { min-height: 50vh; padding: 0; display: flex; justify-content: center; }
+            .z-layer { position: relative; height: auto; margin-bottom: 30px; transform: none !important; opacity: 1 !important; visibility: visible !important; filter: none !important; pointer-events: auto !important; display: block; }
+            
+            /* HERO AL 100% Y SIN SALTO DE TEXTO */
+            .layer-hero { min-height: 100vh; min-height: 100svh; padding: 60px 0 0 0; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 40px; }
+            .reveal-text { transform: none !important; } /* Fija la tipografía en móvil, elimina el salto */
             
             /* FRAMING PERFECTO EN MÓVIL: Aspect Ratio 4/3 */
             .m-img-wrap, .h-img-wrap { height: auto; aspect-ratio: 4/3; width: 100%; border-radius: 12px; overflow: hidden; }
