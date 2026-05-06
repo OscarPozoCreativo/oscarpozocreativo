@@ -167,7 +167,7 @@
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         
-        /* CSS MATEMÁTICO: Encuadre perfecto + Buffer Parallax + Efecto Hover Inyectado */
+        /* CSS MATEMÁTICO: Encuadre perfecto 1:1. Zoom purgado. */
         .target-img, .h-img, .v-bg { 
             position: absolute; 
             inset: 0; 
@@ -175,17 +175,17 @@
             height: 100%; 
             object-fit: cover; 
             object-position: center; 
-            transform: scale(1.1) translate3d(0,0,0); /* Buffer parallax mantenido */
+            transform: scale(1) translate3d(0,0,0); /* Sin buffer engañoso */
             transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
-            filter: grayscale(0.8) brightness(0.8); /* Efecto base inyectado */
+            filter: grayscale(0.8) brightness(0.8); 
             backface-visibility: hidden;
             will-change: transform;
         }
         
         @media (min-width: 769px) { 
             .monolith:hover .target-img, .h-card:hover .target-img, .v-item:hover .v-bg { 
-                filter: grayscale(0) brightness(1); /* Efecto hover inyectado */
-                transform: scale(1.15) translate3d(0,0,0); /* Zoom matemático sin revelar bordes */
+                filter: grayscale(0) brightness(1); 
+                transform: scale(1.03) translate3d(0,0,0); /* Escala de hover premium, no abusiva */
             } 
             .monolith:hover, .h-card:hover { box-shadow: 0 20px 80px rgba(64,181,229,0.15); }
         }
@@ -1099,8 +1099,8 @@
 
                 document.querySelectorAll('.parallax-img').forEach(img => { 
                     gsap.fromTo(img, 
-                        { xPercent: -5 }, 
-                        { xPercent: 5, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }
+                        { xPercent: -2 }, 
+                        { xPercent: 2, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }
                     ); 
                 });
             }
