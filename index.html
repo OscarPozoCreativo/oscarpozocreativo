@@ -163,40 +163,30 @@
         .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 9rem); font-weight: 700; line-height: 0.85; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px; }
         .hero-desc { max-width: 650px; font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.6; color: var(--muted); font-weight: 400; padding: 0 20px;}
 
-        .monolith { width: 85vw; max-width: 1400px; height: clamp(500px, 75vh, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); will-change: transform, opacity; }
+        /* SOLUCIÓN ESTRUCTURAL: La altura responde al ancho (vw) para mantener el encuadre congelado */
+        .monolith { width: 85vw; max-width: 1400px; height: clamp(450px, 50vw, 750px); background: var(--monolith-bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.5); pointer-events: auto; transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); will-change: transform, opacity; }
         
         .m-img-wrap { position: relative; overflow: hidden; background: #000; transform: translateZ(0); }
         
-        /* ARQUITECTURA DE ENCUADRE RESPONSIVO: Separación de Lógica */
+        /* CSS ORIGINAL RESTAURADO: Cover absoluto + Parche de microescala matemática */
         .target-img, .h-img, .v-bg { 
             position: absolute; 
             inset: 0; 
             width: 100%; 
             height: 100%; 
+            object-fit: cover; 
             object-position: center; 
-            transform: scale(1) translate3d(0,0,0); /* Sin buffer engañoso */
+            transform: scale(1) translate3d(0,0,0); 
             transition: filter 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
             filter: grayscale(0.8) brightness(0.8); 
             backface-visibility: hidden;
             will-change: transform;
         }
         
-        /* Exhibición Principal: Prohibido Recortar (100% visible siempre) */
-        .target-img, .h-img {
-            object-fit: contain;
-            padding: 4%; /* Margen paramétrico de respiro */
-            box-sizing: border-box;
-        }
-
-        /* Losetas de Bóveda: Textura Grid (Permitido cover) */
-        .v-bg {
-            object-fit: cover; 
-        }
-        
         @media (min-width: 769px) { 
             .monolith:hover .target-img, .h-card:hover .target-img, .v-item:hover .v-bg { 
                 filter: grayscale(0) brightness(1); 
-                transform: scale(1.03) translate3d(0,0,0); /* Escala de hover premium */
+                transform: scale(1.03) translate3d(0,0,0); /* Hover limpio sin exagerar */
             } 
             .monolith:hover, .h-card:hover { box-shadow: 0 20px 80px rgba(64,181,229,0.15); }
         }
@@ -216,7 +206,8 @@
         .h-container { display: flex; width: 600vw; height: 100vh; transform-style: preserve-3d; will-change: transform;}
         .h-panel { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 60px); perspective: 2500px; transform-style: preserve-3d; pointer-events: none;}
         
-        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(500px, 75vh, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
+        /* MISMA SOLUCIÓN ESTRUCTURAL PARA HORIZONTAL */
+        .h-card { position: relative; width: 100%; max-width: 1400px; height: clamp(450px, 50vw, 750px); display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 50px 100px rgba(0,0,0,0.6); transition: background 0.5s, border 0.5s, box-shadow 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
         .card-glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.6) 25%, transparent 30%); transform: translate3d(-100%, 0, 0); }
         .h-img-wrap { overflow: hidden; position: relative; background: #000; transform: translateZ(0); }
 
@@ -355,15 +346,9 @@
                 height: 100% !important;
                 left: 0 !important;
                 top: 0 !important;
+                object-fit: cover !important;
                 transform: scale(1) !important;
                 filter: grayscale(0) brightness(1) !important; /* Asegura color en móvil sin hover */
-            }
-            .target-img, .h-img {
-                object-fit: contain !important;
-                padding: 2% !important; /* Mantiene la filosofía de no recorte en móvil */
-            }
-            .v-bg {
-                object-fit: cover !important;
             }
             
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; }
