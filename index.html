@@ -37,15 +37,14 @@
             --bg: #020202; --surface: transparent; --text: #ffffff; 
             --accent: #40B5E5; --accent-dark: #0077b6;
             --muted: #888888; --border: rgba(255,255,255,0.05);
-            --monolith-bg: rgba(5,5,5,0.2); --modal-bg: rgba(0,0,0,0.95); --modal-panel: #0a0a0a;
-            --logo-filter: none; /* Logo blanco por defecto en Dark */
+            --modal-bg: rgba(0,0,0,0.95); --modal-panel: #0a0a0a;
+            --logo-filter: none; 
             --font-display: 'Syncopate', sans-serif; --font-body: 'Satoshi', sans-serif; --font-mono: 'JetBrains Mono', monospace;
         }[data-theme="light"] {
             --bg: #f4f4f5; --surface: #ffffff; --text: #050505; 
             --accent: #40B5E5; --accent-dark: #005f8e;
             --muted: #666666; --border: rgba(0,0,0,0.1);
-            --monolith-bg: rgba(255,255,255,0.85);
-            --logo-filter: invert(1); /* Invierte a negro en Light */
+            --logo-filter: invert(1); 
             --modal-bg: rgba(244,244,245,0.95); --modal-panel: #ffffff;
         }
 
@@ -118,7 +117,7 @@
         .hud-status strong { color: #fff; font-size: 10px; font-weight: 700; transition: color 0.5s; }
         
         .btn-cta-nav { height: 36px; padding: 0 24px; background: #fff; color: #000; border-radius: 100px; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, box-shadow 0.3s; pointer-events: auto; border: 1px solid transparent; transform: translateZ(0); }
-        .btn-cta-nav:hover { transform: scale(1.05) translateZ(0); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }
+        .btn-cta-nav:hover { transform: scale(1.05) translateZ(0); box-shadow: 0 10px 20px rgba(255,255,255,0.2); }[data-theme="light"] .btn-cta-nav:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
 
         /* ESTRUCTURA MAESTRA: TRANSPARENCIA PARA EL WEBGL */
         .z-wrapper, .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper, .site-footer {
@@ -131,13 +130,28 @@
         .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); backface-visibility: hidden; pointer-events: none; }
         .z-layer:not(.layer-hero) { visibility: hidden; opacity: 0; }
         
-        .layer-hero { flex-direction: column; text-align: center; pointer-events: auto; }
+        .layer-hero { flex-direction: column; text-align: center; pointer-events: auto; position: relative; }
         .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 9rem); font-weight: 700; line-height: 0.85; text-transform: uppercase; letter-spacing: -2px; margin-bottom: 20px; }
         .hero-desc { max-width: 650px; font-size: clamp(0.95rem, 1.2vw, 1.1rem); line-height: 1.6; color: rgba(255,255,255,0.7); font-weight: 400; padding: 0 20px;}
 
-        /* MONOLITOS COMPACTADOS Y PREMIUM */
-        .monolith { width: 85vw; max-width: 1200px; height: clamp(400px, 45vw, 650px); background: rgba(5,5,5,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; box-shadow: 0 0 100px rgba(0,0,0,0.8); pointer-events: auto; transition: box-shadow 0.4s, border 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); will-change: transform, opacity; }
-        .monolith:hover { box-shadow: 0 20px 80px rgba(64,181,229,0.15); border-color: rgba(255,255,255,0.15); }
+        /* ANIMACIÓN SCROLL (NUEVO) */
+        .scroll-indicator { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 12px; pointer-events: none; opacity: 0; }
+        .scroll-line { width: 1px; height: 40px; background: rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+        .scroll-line::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 50%; background: var(--accent); animation: scrollDrop 1.5s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+        .scroll-indicator span { font-family: var(--font-display); font-size: 7px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 3px; }
+        @keyframes scrollDrop { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
+
+        /* MONOLITOS COMPACTADOS Y PREMIUM (NOOMO GLASSMORPHISM) */
+        .monolith { 
+            width: 85vw; max-width: 1200px; height: clamp(400px, 45vw, 650px); 
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.08); 
+            border-radius: 24px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); 
+            pointer-events: auto; transition: box-shadow 0.4s, border 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; 
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); will-change: transform, opacity; 
+        }
+        .monolith:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(64,181,229,0.15); border-color: rgba(255,255,255,0.2); }
         
         /* CONTENEDOR TRANSPARENTE ABSOLUTO */
         .m-img-wrap, .h-img-wrap { position: relative; overflow: hidden; background: transparent !important; transform: translateZ(0); }
@@ -167,7 +181,6 @@
         .h-wrapper { 
             width: 100vw; height: 100vh; overflow: hidden; position: relative; z-index: 10; perspective: 2500px; pointer-events: none;
             background: transparent !important; 
-            /* Modificadores de texto para contraste en fondo blanco */
             --text-local: #050505;
             --muted-local: #555555;
             --border-local: rgba(0,0,0,0.1);
@@ -176,9 +189,17 @@
         .h-container { display: flex; width: 600vw; height: 100vh; transform-style: preserve-3d; will-change: transform;}
         .h-panel { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; padding: clamp(20px, 4vw, 60px); perspective: 2500px; transform-style: preserve-3d; pointer-events: none;}
         
-        /* Glassmorphism blanco translúcido (Compactado) */
-        .h-card { position: relative; width: 100%; max-width: 1200px; height: clamp(400px, 45vw, 650px); display: grid; grid-template-columns: 1fr 1fr; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; overflow: hidden; pointer-events: auto; box-shadow: 0 40px 100px rgba(0,0,0,0.05); transition: box-shadow 0.4s, border 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); color: var(--text-local); }
-        .h-card:hover { box-shadow: 0 30px 90px rgba(64,181,229,0.1); border-color: rgba(255,255,255,0.8); }
+        /* Glassmorphism blanco translúcido (NOOMO STYLE) */
+        .h-card { 
+            position: relative; width: 100%; max-width: 1200px; height: clamp(400px, 45vw, 650px); display: grid; grid-template-columns: 1fr 1fr; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%); 
+            border: 1px solid rgba(255,255,255,0.8); 
+            border-radius: 24px; overflow: hidden; pointer-events: auto; 
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.5); 
+            transition: box-shadow 0.4s, border 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; 
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: var(--text-local); 
+        }
+        .h-card:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.1), 0 0 40px rgba(64,181,229,0.1); border-color: #ffffff; }
         .card-glare { position: absolute; inset: 0; z-index: 10; pointer-events: none; mix-blend-mode: overlay; background: linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.8) 25%, transparent 30%); transform: translate3d(-100%, 0, 0); }
         
         .h-info { padding: clamp(20px, 3vw, 40px); display: flex; flex-direction: column; justify-content: center; overflow-y: auto; position: relative; z-index: 5;}
@@ -282,7 +303,7 @@
         .footer-links a:hover, .footer-links button:hover { color: var(--text); transform: translateY(-2px); }
 
         /* ========================================================
-           DISEÑO MÓVIL ESTRICTO: ESTÁTICO, COMPACTO Y SIN SALTOS
+           DISEÑO MÓVIL ESTRICTO
            ======================================================== */
         @media (max-width: 1024px) {
             .hud-cmd, .hud-status { display: none; }
@@ -312,6 +333,8 @@
             .layer-hero { min-height: 100vh; min-height: 100svh; padding: 60px 0 0 0; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 40px; }
             .reveal-text { transform: none !important; } 
             
+            .scroll-indicator { display: none; } /* Ocultar en móvil para ahorrar espacio visual */
+
             .m-img-wrap, .h-img-wrap { height: auto; aspect-ratio: 4/3; width: 100%; border-radius: 12px; overflow: hidden; background: #000 !important; }
             .target-img, .h-img, .v-bg { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; object-fit: cover !important; transform: scale(1) !important; filter: grayscale(0) brightness(1) !important; }
             
@@ -414,13 +437,19 @@
                 <span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIALES.</span></span>
             </h1>
             <p class="hero-desc has-reveal" data-i18n="heroDesc">Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.</p>
+            
+            <!-- INDICADOR DE SCROLL CINEMÁTICO -->
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span data-i18n="scrollDown">SCROLL</span>
+            </div>
         </div>
 
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
                 <div class="m-img-wrap">
-                    <img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img">
-                    <img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only">
+                    <img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only" decoding="async">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
@@ -429,7 +458,7 @@
                         <p class="m-summary" data-i18n="z1Summary">Sistema visual desarrollado para ordenar variantes, beneficios y categorías, manteniendo reconocimiento de marca y consistencia en anaquel.</p>
                         <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z1RetoTxt">La línea necesitaba diferenciar productos y beneficios sin romper unidad visual ni perder legibilidad en un contexto de compra rápida.</p></div>
                         <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z1EnfoqueTxt">Jerarquía de marca dominante, codificación por categoría y reglas visuales listas para escalar a nuevas referencias.</p></div>
-                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">La línea ganó orden, diferenciación y continuidad, dejando un sistema más sólido para competir en anaquel.</p></div>
+                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">La línea ganó orden, diferenciación y continuity, dejando un sistema más sólido para competir en anaquel.</p></div>
                     </div>
                 </div>
             </article>
@@ -438,8 +467,8 @@
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
                 <div class="m-img-wrap">
-                    <img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img">
-                    <img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only">
+                    <img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only" decoding="async">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z2Meta1">Retail</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
@@ -457,8 +486,8 @@
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
                 <div class="m-img-wrap">
-                    <img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img">
-                    <img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only">
+                    <img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only" decoding="async">
                 </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z3Meta1">POP y exhibición</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
@@ -481,8 +510,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only">
+                        <img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -504,8 +533,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only">
+                        <img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -527,8 +556,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only">
+                        <img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -550,8 +579,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only">
+                        <img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -573,8 +602,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only">
+                        <img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -596,8 +625,8 @@
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap">
-                        <img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img">
-                        <img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only">
+                        <img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only" decoding="async">
                     </div>
                     <div class="h-info">
                         <div class="m-meta">
@@ -623,8 +652,8 @@
         <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
         <div class="vault-grid">
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
-                <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img">
-                <img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only">
+                <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p>
@@ -634,8 +663,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
-                <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img">
-                <img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only">
+                <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p>
@@ -645,8 +674,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Amigos X Siempre Tours" data-i18n-title="vTitle3">
-                <img data-src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="v-bg target-img lazy-img">
-                <img src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="sr-only">
+                <img data-src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page8.webp" alt="Amigos X Siempre Tours audiovisual" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vTitle3">Amigos X Siempre Tours</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc3">Producción y edición de contenido audiovisual para redes con una narrativa más dinámica y atractiva.</p>
@@ -656,8 +685,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Video giveaway Semana Santa 2025" data-i18n-title="vTitle4">
-                <img data-src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="v-bg target-img lazy-img">
-                <img src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="sr-only">
+                <img data-src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page10.webp" alt="Video giveaway Semana Santa 2025" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vTitle4">Giveaway SS25</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc4">Pieza audiovisual promocional para formatos verticales con foco en interacción, energía y claridad del mensaje.</p>
@@ -667,8 +696,8 @@
                 </div>
             </article>
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
-                <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img">
-                <img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only">
+                <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
                 <div class="project-details" style="display:none;">
                     <p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p>
@@ -705,7 +734,7 @@
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
                     <div class="t-focus-item"><strong data-i18n="f1T">Campañas retail</strong><span data-i18n="f1D">Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuity visual al crecer sin perder orden.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f3T">POP y exhibición</strong><span data-i18n="f3D">Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f4T">Ejecución multiformato</strong><span data-i18n="f4D">Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, display y soporte visual.</span></div>
                 </div>
@@ -764,7 +793,7 @@
 
         <button class="lb-close hover-target magnetic-target" id="lb-close" aria-label="Cerrar">X</button>
         <div class="lightbox__dialog">
-            <div class="lightbox__main"><img src="" alt="Project Image" class="lightbox__img" id="lb-img"></div>
+            <div class="lightbox__main"><img src="" alt="Project Image" class="lightbox__img" id="lb-img" decoding="async"></div>
             <div class="lightbox__side"><h3 id="lb-title"></h3><div id="lb-desc"></div></div>
         </div>
     </div>
@@ -779,7 +808,12 @@
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         
-        try { gsap.registerPlugin(ScrollTrigger); gsap.ticker.fps(120); gsap.ticker.lagSmoothing(0, 0); } catch(e){}
+        try { 
+            gsap.registerPlugin(ScrollTrigger); 
+            gsap.ticker.fps(0); 
+            gsap.ticker.lagSmoothing(0, 0); 
+        } catch(e){}
+        
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         
         let currentLang = 'es';
@@ -789,10 +823,11 @@
                 cmdAsk: "Preguntar a la IA <span>⌘K</span>", cmdStart: "Escribe cualquier duda sobre mi experiencia, tarifas o disponibilidad. Mi motor lógico responderá al instante.",
                 role: "Diseñador Comercial Senior", loc: "Sistemas Comerciales", country: "República Dominicana",
                 hero1: "SISTEMAS", hero2: "COMERCIALES.", heroDesc: "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.",
+                scrollDown: "SCROLL",
                 reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", clickHint: "[ Clic para visualizar pantalla completa ]",
                 navCta: "INICIAR PROYECTO",
                 
-                z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para crecer sin perder orden.", z1Summary: "Sistema visual desarrollado para ordenar variantes, beneficios y categorías, manteniendo reconocimiento de marca y consistencia en anaquel.", z1RetoTxt: "La línea necesitaba diferenciar productos y beneficios sin romper unidad visual ni perder legibilidad en un contexto de compra rápida.", z1EnfoqueTxt: "Jerarquía de marca dominante, codificación por categoría y reglas visuales listas para escalar a nuevas referencias.", z1ResTxt: "La línea ganó orden, diferenciación y continuidad, dejando un sistema más sólido para competir en anaquel.",
+                z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para crecer sin perder orden.", z1Summary: "Sistema visual desarrollado para ordenar variantes, beneficios y categorías, manteniendo reconocimiento de marca y consistencia en anaquel.", z1RetoTxt: "La línea necesitaba diferenciar productos y beneficios sin romper unidad visual ni perder legibilidad en un contexto de compra rápida.", z1EnfoqueTxt: "Jerarquía de marca dominante, codificación por categoría y reglas visuales listas para escalar a nuevas referencias.", z1ResTxt: "La línea ganó orden, diferenciación y continuity, dejando un sistema más sólido para competir en anaquel.",
                 z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Campaña editorial diseñada para soportar densidad.", z2Summary: "Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campaigns de alta rotación.", z2RetoTxt: "Condensar promociones y categorías sin convertir la comunicación en ruido gráfico ni sacrificar comprensión inmediata.", z2EnfoqueTxt: "Jerarquía editorial, bloques delimitados y una estructura modular capaz de repetirse con consistencia.", z2ResTxt: "La comunicación ganó orden, velocidad de lectura y una campaña más confiable para operación promocional intensiva.",
                 z3Meta1: "POP y exhibición", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibición diseñada para organizar y vender mejor.", z3Summary: "Sistema visual aplicado a exhibición comercial para ordenar categorías, reforzar señalización y mejorar visibilidad de marca en punto de venta.", z3RetoTxt: "Se necesitaba una exhibición que ayudara a organizar producto, comunicar beneficios y reforzar marca dentro de un entorno competitivo.", z3EnfoqueTxt: "Segmentación por categoría, señalización visible y una estructura pensada para operar como punto de contacto comercial.", z3ResTxt: "La exhibición ganó orden, visibilidad y función comercial, convirtiéndose en una pieza útil dentro del punto de venta.",
                 
@@ -821,6 +856,7 @@
                 cmdAsk: "Ask AI <span>⌘K</span>", cmdStart: "Type any question about my experience, rates, or availability. The logical engine will answer instantly.",
                 role: "Senior Commercial Designer", loc: "Commercial Systems", country: "Dominican Republic",
                 hero1: "COMMERCIAL", hero2: "SYSTEMS.", heroDesc: "Visual architecture, packaging design, and retail campaigns structured to dominate the shelf and multiply your revenue.",
+                scrollDown: "SCROLL",
                 reto: "Challenge", enfoque: "Approach", resultado: "Result", clickHint: "[ Click to view fullscreen ]",
                 navCta: "START PROJECT",
                 
@@ -903,6 +939,7 @@
                 gsap.to('#system-init', { yPercent: -100, duration: 1.2, ease: "power4.inOut", onComplete: () => {
                     sysInit.style.display = 'none';
                     gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
+                    gsap.to('.scroll-indicator', { opacity: 1, duration: 1, delay: 0.8 });
                     initTypographyChoreography();
                 }});
             }
@@ -957,7 +994,7 @@
         });
 
         /* =========================================================================================
-           MOTOR WEBGL SOTD (SCISSOR TEST PARA SPLIT FÍSICO Y EFECTOS INDEPENDIENTES)
+           MOTOR WEBGL SOTD EXTREMO (SCISSOR TEST + OCCLUSION CULLING)
            ========================================================================================= */
         let globalScrollVelocity = 0;
         let globalHScrollProgress = 0;
@@ -967,17 +1004,17 @@
         if (window.innerWidth > 768) {
             try {
                 const canvas = document.getElementById('webgl-canvas');
-                const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, powerPreference: "high-performance", antialias: true });
+                const renderer = new THREE.WebGLRenderer({ canvas, alpha: false, powerPreference: "high-performance", antialias: false }); 
                 renderer.setSize(window.innerWidth, window.innerHeight);
-                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
                 
-                // === ESCENA 1 (OSCURA): PARTÍCULAS SUTILES QUE REACCIONAN AL SCROLL ===
+                // === ESCENA 1 (OSCURA) ===
                 const sceneDark = new THREE.Scene();
                 sceneDark.background = new THREE.Color('#050505');
                 const cameraDark = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
                 cameraDark.position.z = 100;
 
-                const particleCount = 1500;
+                const particleCount = 800; 
                 const posArray = new Float32Array(particleCount * 3);
                 for(let i=0; i<particleCount*3; i++) {
                     posArray[i] = (Math.random() - 0.5) * 200;
@@ -985,7 +1022,7 @@
                 const particlesGeom = new THREE.BufferGeometry();
                 particlesGeom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
                 const particlesMat = new THREE.PointsMaterial({
-                    size: 0.5,
+                    size: 0.8,
                     color: '#ffffff',
                     transparent: true,
                     opacity: 0.15,
@@ -994,9 +1031,9 @@
                 const particleSystem = new THREE.Points(particlesGeom, particlesMat);
                 sceneDark.add(particleSystem);
 
-                // === ESCENA 2 (CLARA): OBJETO GLASSMORPHISM ROTATIVO ===
+                // === ESCENA 2 (CLARA) ===
                 const sceneLight = new THREE.Scene();
-                sceneLight.background = new THREE.Color('#f0f1fa'); 
+                sceneLight.background = new THREE.Color('#f0f1fa');
                 const cameraLight = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
                 cameraLight.position.z = 50;
 
@@ -1006,7 +1043,7 @@
                 dirLight.position.set(10, 20, 10);
                 sceneLight.add(dirLight);
 
-                const shapeGeom = new THREE.TorusGeometry(10, 3, 64, 100);
+                const shapeGeom = new THREE.TorusGeometry(10, 3, 32, 64);
                 const shapeMat = new THREE.MeshPhysicalMaterial({
                     color: 0xffffff,
                     metalness: 0.1,
@@ -1026,25 +1063,34 @@
                     cameraLight.aspect = window.innerWidth / window.innerHeight; cameraLight.updateProjectionMatrix();
                 });
 
+                // OCCLUSION CULLING INTELIGENTE
                 const renderWebGL = () => {
-                    const positions = particleSystem.geometry.attributes.position.array;
-                    for(let i=1; i<particleCount*3; i+=3) {
-                        positions[i] += globalScrollVelocity * 0.05 + 0.05;
-                        if(positions[i] > 100) positions[i] = -100;
-                        if(positions[i] < -100) positions[i] = 100;
-                    }
-                    particleSystem.geometry.attributes.position.needsUpdate = true;
-                    particleSystem.rotation.y += 0.001;
-
-                    lightObject.rotation.x = globalHScrollProgress * Math.PI * 2;
-                    lightObject.rotation.y = globalHScrollProgress * Math.PI * 4;
-                    lightObject.position.y = Math.sin(Date.now() * 0.001) * 2;
-
                     let hTop = Math.max(0, hRect.top);
                     let hBottom = Math.min(window.innerHeight, hRect.bottom);
+                    let isHWrapperFullViewport = (hRect.top <= 0 && hRect.bottom >= window.innerHeight);
+
+                    if (!isHWrapperFullViewport) {
+                        const positions = particleSystem.geometry.attributes.position.array;
+                        for(let i=1; i<particleCount*3; i+=3) {
+                            positions[i] += globalScrollVelocity * 0.05 + 0.05; 
+                            if(positions[i] > 100) positions[i] = -100;
+                            if(positions[i] < -100) positions[i] = 100;
+                        }
+                        particleSystem.geometry.attributes.position.needsUpdate = true;
+                        particleSystem.rotation.y += 0.001;
+                    }
+
+                    if (hBottom > hTop) {
+                        lightObject.rotation.x = globalHScrollProgress * Math.PI * 2;
+                        lightObject.rotation.y = globalHScrollProgress * Math.PI * 4;
+                        lightObject.position.y = Math.sin(Date.now() * 0.001) * 2;
+                    }
 
                     renderer.setScissorTest(false);
-                    renderer.render(sceneDark, cameraDark); 
+                    
+                    if (!isHWrapperFullViewport) {
+                        renderer.render(sceneDark, cameraDark); 
+                    }
 
                     if (hBottom > hTop) {
                         renderer.setScissorTest(true);
@@ -1057,7 +1103,7 @@
 
                     requestAnimationFrame(renderWebGL);
                 };
-                renderWebGL();
+                requestAnimationFrame(renderWebGL);
 
             } catch(e) { console.error("WebGL SOTD falló:", e); }
         }
@@ -1176,7 +1222,7 @@
             window.addEventListener('mousemove', e => { 
                 if(!cursorVisible) { gsap.to([dot, ring], {opacity: 1, duration: 0.3}); cursorVisible = true; }
                 setDotX(e.clientX); setDotY(e.clientY); setRingX(e.clientX); setRingY(e.clientY); 
-            });
+            }, {passive: true});
             document.querySelectorAll('.hover-target').forEach(el => {
                 el.addEventListener('mouseenter', () => {
                     ring.classList.add('active');
@@ -1261,7 +1307,7 @@
                 const x = e.gamma; const y = e.beta;  
                 const moveX = Math.max(-15, Math.min(15, x)); const moveY = Math.max(-15, Math.min(15, y - 45)); 
                 gsap.to('.tilt-target', { x: moveX, y: moveY, rotationY: moveX * 0.1, rotationX: -moveY * 0.1, duration: 1, ease: 'power1.out', overwrite: "auto", force3D: true });
-            });
+            }, {passive: true});
         }
 
         const lightbox = document.getElementById('lightbox'); const lbImg = document.getElementById('lb-img'); let currentTargetImg = null; let currentLbIndex = 0;
