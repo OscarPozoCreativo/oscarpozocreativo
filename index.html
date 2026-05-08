@@ -394,7 +394,7 @@
         .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; }
         .footer-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-logo-wrap { display: block; pointer-events: auto; }
-        .footer-logo { max-height: 55px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
+        .footer-logo { max-height: 95px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
         .footer-grid span { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
         .footer-links a, .footer-links button { appearance: none; border: 0; background: transparent; padding: 0; color: var(--muted); font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; pointer-events: auto; text-transform: uppercase; letter-spacing: 1px; }
@@ -778,7 +778,7 @@
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
                     <div class="t-focus-item"><strong data-i18n="f1T">Campañas retail</strong><span data-i18n="f1D">Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuity visual al crecer sin perder orden.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f3T">POP y exhibición</strong><span data-i18n="f3D">Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f4T">Ejecución multiformato</strong><span data-i18n="f4D">Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, display y soporte visual.</span></div>
                 </div>
@@ -834,6 +834,13 @@
 
     <script>
     document.addEventListener("DOMContentLoaded", () => {
+        
+        // FORZAR SCROLL AL INICIO AL RECARGAR
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         try { gsap.registerPlugin(ScrollTrigger); gsap.ticker.fps(0); gsap.ticker.lagSmoothing(0, 0); } catch(e){}
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let currentLang = 'es';
@@ -1374,6 +1381,22 @@
             const placeholderTxt = currentLang === 'es' ? 'Haz una pregunta sobre Oscar Pozo...' : 'Ask a question sobre Oscar Pozo...';
             document.getElementById('cmd-input').setAttribute('placeholder', placeholderTxt);
         });
+
+        /* =========================================================================================
+           PROTECCIÓN DE ASSETS (ANTI-CLICK DERECHO Y DRAG)
+           ========================================================================================= */
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO' || e.target.classList.contains('v-bg') || e.target.classList.contains('target-img') || e.target.classList.contains('reel-bg')) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
+                e.preventDefault();
+            }
+        });
+
     });
     </script>
 </body>
