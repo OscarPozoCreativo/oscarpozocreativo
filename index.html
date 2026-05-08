@@ -748,15 +748,32 @@
         </div>
     </section>
 
+    <!-- PERFIL Y ENFOQUE -->
     <section class="profile-wrapper" id="perfil">
         <div class="profile-grid">
             <div class="profile-main">
                 <span class="t-eyebrow" data-i18n="profLabel">Perfil</span>
                 <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño comercial con criterio de sistema, no de pieza aislada.</h2>
-                <p data-i18n="profP1">Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.</p>
-                <p data-i18n="profP2">Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.</p>
+                
+                <!-- NUEVO: CONTENEDOR DE FOTO INTEGRADA -->
+<div class="profile-bio-wrap" style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap;">
+    
+    <!-- LA FOTO (Filtros corregidos para recuperar detalle en sombras) -->
+    <div class="profile-avatar tilt-target" style="flex: 0 0 220px; height: 250px; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--border); background: #050505;">
+        <img src="assets/oscar-profile.webp" alt="Oscar Pozo" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.05) brightness(1.1);">
+        <!-- Gradiente para fundir la parte inferior de la foto -->
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, #020202 0%, transparent 30%); pointer-events: none;"></div>
+    </div>
+
+    <div style="flex: 1; min-width: 250px;">
+        <p data-i18n="profP1">Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.</p>
+        <p data-i18n="profP2">Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.</p>
+    </div>
+</div>
+                
                 <p data-i18n="profP3">Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.</p>
             </div>
+            
             <div class="profile-sidebar tilt-target">
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
