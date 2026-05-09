@@ -325,7 +325,8 @@
 
         .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
         .p-card { padding: 40px; background: rgba(10,10,10,0.5); border: 1px solid var(--border); border-radius: 20px; backdrop-filter: blur(10px); transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), border-color 0.3s; pointer-events: auto; transform: translate3d(0,0,0); will-change: transform, opacity; }
-        .p-card:hover { transform: translate3d(0, -10px, 0); border-color: var(--accent); }
+        .p-card:hover { transform: translate3d(0,
+        -10px, 0); border-color: var(--accent); }
         .p-num { font-family: var(--font-display); font-size: 3rem; color: transparent; -webkit-text-stroke: 1px var(--border); display: block; margin-bottom: 20px; font-weight: 700; transition: all 0.3s; }
         .p-card:hover .p-num { -webkit-text-stroke: 1px var(--accent); color: rgba(64,181,229,0.1); }
         .p-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
@@ -380,13 +381,13 @@
         .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; }
         .footer-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-logo-wrap { display: block; pointer-events: auto; }
-        .footer-logo { max-height: 55px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
+        .footer-logo { max-height: 85px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
         .footer-grid span { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
         .footer-links a, .footer-links button { appearance: none; border: 0; background: transparent; padding: 0; color: var(--muted); font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; pointer-events: auto; text-transform: uppercase; letter-spacing: 1px; }
         .footer-links a:hover, .footer-links button:hover { color: var(--text); transform: translateY(-2px); }
 
-        /* DISEÑO MÓVIL ESTRICTO */
+        /* DISEÑO MÓVIL ESTRICTO Y BLINDADO CONTRA RESIZE */
         @media (max-width: 1024px) {
             .hud-status { display: none; }
             .monolith, .h-card { grid-template-columns: 1fr; height: auto; min-height: 60vh; max-height: 85vh; overflow-y: auto; }
@@ -410,8 +411,11 @@
             body { background: #050505; }
             .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 0 15px 30px; pointer-events: auto; background: transparent !important; }
             
-            .z-layer { position: relative; height: auto; margin-bottom: 30px; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; display: block; transform: none !important; filter: none !important; }
+            /* REGLAS ABSOLUTAS PARA MATAR EL BUG DE GSAP EN RESIZE */
+            .z-layer { position: relative !important; height: auto !important; margin-bottom: 30px !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; display: block !important; transform: none !important; filter: none !important; }
             .z-layer:not(.layer-hero) { opacity: 1 !important; visibility: visible !important; transform: none !important; filter: none !important; }
+            .monolith, .h-card, .reel-item, .v-item, .p-card, .t-panel, .profile-sidebar { transform: none !important; filter: none !important; width: 100% !important; height: auto !important; }
+            .tilt-target, .skew-target { transform: none !important; }
             
             .layer-hero { min-height: 100vh; min-height: 100svh; padding: 60px 0 0 0; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 40px; margin-top: 0; }
             .reveal-text { transform: none !important; } 
@@ -419,8 +423,8 @@
             .m-img-wrap, .h-img-wrap { height: auto; aspect-ratio: 4/3; width: 100%; border-radius: 12px; overflow: hidden; background: #000 !important; }
             .target-img, .h-img, .v-bg { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; object-fit: cover !important; transform: scale(1) !important; filter: grayscale(0) brightness(1) !important; }
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; background: #f0f1fa !important; color: #050505;}
-            .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; }
-            .h-panel { width: 100%; height: auto; padding: 0; }
+            .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; transform: none !important; }
+            .h-panel { width: 100%; height: auto; padding: 0; transform: none !important; }
             .h-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); backdrop-filter: none; -webkit-backdrop-filter: none; height: auto; min-height: auto;}
             .m-content, .h-info { padding: 20px; }
             .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
@@ -428,13 +432,12 @@
             .m-item { margin-bottom: 15px; }
             .reels-wrapper { padding: 60px 0 60px 15px; height: auto; }
             .reels-wrapper .section-header { margin-bottom: 20px; }
-            .reels-track { padding: 10px 15px 30px 0; gap: 15px; overflow-x: auto; width: auto; scroll-snap-type: x mandatory; }
-            .reel-item { width: 75vw; border-radius: 16px; transform: none !important; scroll-snap-align: center; }
+            .reels-track { padding: 10px 15px 30px 0; gap: 15px; overflow-x: auto; width: auto; scroll-snap-type: x mandatory; transform: none !important; }
+            .reel-item { width: 75vw !important; border-radius: 16px; scroll-snap-align: center; }
             .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 50px 15px; pointer-events: auto; background: transparent !important; }
             .vault-grid { gap: 15px; }
             .p-card, .profile-sidebar, .t-panel { padding: 20px; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px);}
             .t-meta-grid { grid-template-columns: 1fr; }
-            .tilt-target, .skew-target { transform: none !important; } 
             .monolith { background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); pointer-events: auto !important; height: auto; min-height: auto;}
             
             .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 40% 60%; height: 85vh; border-radius: 12px; }
@@ -480,16 +483,16 @@
             <div class="scroll-indicator"><div class="scroll-line"></div><span data-i18n="scrollDown">SCROLL</span></div>
         </div>
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Palitos de Queso." data-i18n-title="z1Title">
-                <div class="m-img-wrap"><img data-src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="m-img target-img lazy-img" decoding="async"><img src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="sr-only" decoding="async"></div>
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Avena Gold Selects" data-i18n-title="z1Title">
+                <div class="m-img-wrap"><img data-src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="m-img target-img lazy-img" decoding="async"><img src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="sr-only" decoding="async"></div>
                 <div class="m-content">
-                    <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
-                    <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para Palitos de Queso.</h2>
+                    <div class="m-meta"><span data-i18n="z1Meta1">Diseño de empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
+                    <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para Avena Gold Selects</h2>
                     <div class="project-details">
-                        <p class="m-summary" data-i18n="z1Summary">Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.</p>
-                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z1RetoTxt">Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.</p></div>
-                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z1EnfoqueTxt">Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.</p></div>
-                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.</p></div>
+                        <p class="m-summary" data-i18n="z1Summary">Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.</p>
+                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z1RetoTxt">Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.</p></div>
+                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z1EnfoqueTxt">Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.</p></div>
+                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.</p></div>
                     </div>
                 </div>
             </article>
@@ -561,17 +564,17 @@
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Avena Gold Selects" data-i18n-title="hTitle3">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Palitos de Queso." data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap"><img data-src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta3">Diseño de empaque</span><span>Gold Selects / Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle3">Diseño de empaque para Avena Gold Selects</h3>
+                        <div class="m-meta"><span data-i18n="hMeta3">Empaque</span><span>Gold Selects / Plaza Lama</span></div>
+                        <h3 data-i18n="hTitle3">Diseño de empaque para Palitos de Queso.</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc3">Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h3Reto">Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h3Enfoque">Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h3Res">Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.</p></div>
+                            <p class="m-summary" data-i18n="hDesc3">Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h3Reto">Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h3Enfoque">Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h3Res">Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.</p></div>
                         </div>
                     </div>
                 </article>
@@ -818,12 +821,12 @@
         const dict = {
             es: {
                 bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", role: "Diseñador Comercial Senior", loc: "Diseño Comercial", country: "República Dominicana", hero1: "DISEÑO", hero2: "COMERCIAL.", heroDesc: "Diseño estratégico para marcas que quieren vender más. Desde empaques y exhibidores hasta campañas digitales, creo soluciones visuales que destacan tu producto en cualquier mercado.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", navCta: "INICIAR PROYECTO",
-                z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para Palitos de Queso.", z1Summary: "Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.", z1RetoTxt: "Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.", z1EnfoqueTxt: "Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.", z1ResTxt: "Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.",
+                z1Meta1: "Diseño de empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para Avena Gold Selects", z1Summary: "Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.", z1RetoTxt: "Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.", z1EnfoqueTxt: "Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.", z1ResTxt: "Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.",
                 z2Meta1: "Supermercados", z2Meta2: "Plaza Lama", z2Title: "Encarte de ofertas para supermercado.", z2Summary: "Diseño de encarte enfocado en organizar una gran cantidad de ofertas sin que la página se vea saturada o desordenada.", z2RetoTxt: "Mostrar muchos productos y precios agresivos en un mismo espacio, manteniendo una lectura cómoda para el cliente.", z2EnfoqueTxt: "Creación de bloques visuales limpios, destacando los productos gancho con un contraste fuerte para guiar la vista.", z2ResTxt: "Un encarte fácil de leer que ayuda al consumidor a encontrar las mejores ofertas en segundos, impulsando las visitas a la tienda.",
                 z3Meta1: "Exhibidores", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibidor comercial para Gold Care.", z3Summary: "Mueble de exhibición diseñado para organizar los productos de cuidado de calzado y ganar presencia en el pasillo.", z3RetoTxt: "Agrupar betunes, cepillos y limpiadores en un solo lugar que se vea ordenado y atractivo.", z3EnfoqueTxt: "Diseño por categorías, colores de la marca bien marcados y un espacio donde el cliente encuentra lo que busca sin dar vueltas.", z3ResTxt: "Un exhibidor que organiza la mercancía y actúa como un vendedor silencioso.",
                 hMeta1: "Exhibidor premium", hTitle1: "Punta de góndola para vino Melodramatic", hDesc1: "Diseño de exhibidor de alto impacto para destacar esta línea de vinos en el área de licores del supermercado.", h1Reto: "Lograr que la marca de vino resalte en un pasillo lleno de opciones, transmitiendo elegancia y calidad.", h1Enfoque: "Uso de tonos oscuros, iluminación sugerida y una estructura imponente que eleva la percepción del producto.", h1Res: "Una exhibición que frena al cliente en el pasillo, aumentando la curiosidad y las ventas de la marca.",
                 hMeta2: "Prensa y ofertas", hTitle2: "Publicidad de ofertas para Plaza Lama", hDesc2: "Diseño de prensa y medios impresos estructurado para comunicar precios bajos con claridad y confianza.", h2Reto: "Anunciar descuentos fuertes sin que la marca pierda su nivel ni el diseño se vea descuidado.", h2Enfoque: "Distribución inteligente del espacio, letras grandes para los precios y un orden lógico de lectura.", h2Res: "Comunicación directa y efectiva que asegura que el mensaje de ahorro llegue al cliente sin confusiones.",
-                hMeta3: "Diseño de empaque", hTitle3: "Diseño de empaque para Avena Gold Selects", hDesc3: "Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.", h3Reto: "Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.", h3Enfoque: "Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.", h3Res: "Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.",
+                hMeta3: "Empaque", hTitle3: "Diseño de empaque para Palitos de Queso.", hDesc3: "Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.", h3Reto: "Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.", h3Enfoque: "Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.", h3Res: "Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.",
                 hMeta4: "Exhibidores", hTitle4: "Cabezal de góndola para área de bebés", hDesc4: "Material de exhibición diseñado para señalizar y destacar la categoría infantil en el supermercado.", h4Reto: "Llamar la atención de los padres en un pasillo que suele estar lleno de colores y marcas compitiendo.", h4Enfoque: "Uso de colores suaves, imágenes tiernas y mensajes directos que conectan emocionalmente con el comprador.", h4Res: "Un área mucho más atractiva y fácil de ubicar, mejorando la experiencia de compra de los padres.",
                 hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta para Salami Gold Selects", hDesc5: "Diseño de etiqueta premium para embutido, enfocada en proyectar alta calidad y frescura en la nevera del supermercado.", h5Reto: "Competir contra marcas de tradición en el país, logrando que el cliente perciba este salami como una opción superior.", h5Enfoque: "Uso de negro y dorado para dar estatus, tipografía fuerte y una ventana transparente amplia para mostrar la carne.", h5Res: "Un producto que destaca inmediatamente en el área de embutidos, transmitiendo confianza y calidad.",
                 hMeta6: "Exhibidores", hTitle6: "Exhibidor para Coco Dream Blend", hDesc6: "Mueble de exhibición con un diseño fresco y tropical para resaltar esta bebida a base de coco.", h6Reto: "Transmitir la frescura y naturalidad del producto en los pocos segundos que el cliente pasa caminando.", h6Enfoque: "Uso de colores vivos, texturas naturales y fotos de alta calidad que provocan sed y antojo.", h6Res: "Un punto de venta llamativo que comunica el sabor y los beneficios del producto de forma inmediata.",
@@ -847,12 +850,12 @@
             },
             en: {
                 bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", role: "Senior Commercial Designer", loc: "Commercial Design", country: "Dominican Republic", hero1: "COMMERCIAL", hero2: "DESIGN.", heroDesc: "Strategic design for brands that want to sell more. From packaging and displays to digital campaigns, I create visual solutions that make your product stand out in any market.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", navCta: "START PROJECT",
-                z1Meta1: "Packaging", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design for Cheese Sticks.", z1Summary: "Packaging design for cheese sticks, highlighting the product to make it look appetizing and stand out in the snack aisle.", z1RetoTxt: "Make the product catch the eye in an aisle full of colors and snack brands, where the customer buys on impulse.", z1EnfoqueTxt: "Large and provocative photography, bright colors that open the appetite, and clear letters that say exactly what it is.", z1ResTxt: "A packaging that provokes instant purchase and competes head-to-head with traditional brands.",
+                z1Meta1: "Packaging Design", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design for Gold Selects Oatmeal", z1Summary: "Oatmeal bag redesign to organize information and make the product stand out on the shelf.", z1RetoTxt: "Modernize the image without losing the brand's essence or confusing the regular customer.", z1EnfoqueTxt: "Clean colors to differentiate varieties and a direct design that shows nutritional benefits straight to the point.", z1ResTxt: "A packaging that immediately catches the eye and makes it easier for the customer to find their favorite oatmeal.",
                 z2Meta1: "Supermarkets", z2Meta2: "Plaza Lama", z2Title: "Promotional insert for supermarket.", z2Summary: "Insert design focused on organizing a large number of offers without making the page look cluttered or messy.", z2RetoTxt: "Show many products and aggressive prices in the same space, maintaining a comfortable reading experience for the customer.", z2EnfoqueTxt: "Creation of clean visual blocks, highlighting hook products with strong contrast to guide the eye.", z2ResTxt: "An easy-to-read insert that helps the consumer find the best offers in seconds, driving traffic to the store.",
                 z3Meta1: "Displays", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Commercial display for Gold Care.", z3Summary: "Display furniture designed to organize shoe care products and gain presence in the aisle.", z3RetoTxt: "Group shoe polishes, brushes, and cleaners in a single place that looks neat and attractive.", z3EnfoqueTxt: "Design by categories, strong brand colors, and a space where the customer finds what they are looking for without wandering.", z3ResTxt: "A display that organizes the merchandise and acts as a silent salesperson.",
                 hMeta1: "Premium Display", hTitle1: "Premium endcap for Melodramatic wine", hDesc1: "High-impact display design to highlight this wine line in the supermarket's liquor area.", h1Reto: "Make the wine brand stand out in an aisle full of options, conveying elegance and quality.", h1Enfoque: "Use of dark tones, suggested lighting, and an imposing structure that elevates the product's perception.", h1Res: "A display that stops the customer in the aisle, increasing curiosity and brand sales.",
                 hMeta2: "Press & Offers", hTitle2: "Advertising page for Plaza Lama", hDesc2: "Press and print media design structured to communicate low prices with clarity and trust.", h2Reto: "Announce strong discounts without the brand losing its level or the design looking sloppy.", h2Enfoque: "Smart space distribution, large typography for prices, and a logical reading order.", h2Res: "Direct and effective communication that ensures the savings message reaches the customer without confusion.",
-                hMeta3: "Packaging Design", hTitle3: "Packaging design for Gold Selects Oatmeal", hDesc3: "Oatmeal bag redesign to organize information and make the product stand out on the shelf.", h3Reto: "Modernize the image without losing the brand's essence or confusing the regular customer.", h3Enfoque: "Clean colors to differentiate varieties and a direct design that shows nutritional benefits straight to the point.", h3Res: "A packaging that immediately catches the eye and makes it easier for the customer to find their favorite oatmeal.",
+                hMeta3: "Packaging", hTitle3: "Packaging design for Cheese Sticks.", hDesc3: "Packaging design for cheese sticks, highlighting the product to make it look appetizing and stand out in the snack aisle.", h3Reto: "Make the product catch the eye in an aisle full of colors and snack brands, where the customer buys on impulse.", h3Enfoque: "Large and provocative photography, bright colors that open the appetite, and clear letters that say exactly what it is.", h3Res: "A packaging that provokes instant purchase and competes head-to-head with traditional brands.",
                 hMeta4: "Displays", hTitle4: "Endcap header for baby area", hDesc4: "Display material designed to signal and highlight the children's category in the supermarket.", h4Reto: "Catch the attention of parents in an aisle that is usually full of competing colors and brands.", h4Enfoque: "Use of soft colors, tender images, and direct messages that connect emotionally with the buyer.", h4Res: "A much more attractive and easy-to-locate area, improving the shopping experience for parents.",
                 hMeta5: "Label Design", hTitle5: "Label design for Gold Selects Salami", hDesc5: "Premium label design for deli meat, focused on projecting high quality and freshness in the supermarket fridge.", h5Reto: "Compete against traditional brands in the country, making the customer perceive this salami as a superior option.", h5Enfoque: "Use of black and gold to give status, strong typography, and a large transparent window to show the meat.", h5Res: "A product that immediately stands out in the deli area, conveying trust and quality.",
                 hMeta6: "Displays", hTitle6: "Display for Coco Dream Blend", hDesc6: "Display furniture with a fresh and tropical design to highlight this coconut-based drink.", h6Reto: "Convey the freshness and naturalness of the product in the few seconds the customer spends walking by.", h6Enfoque: "Use of bright colors, natural textures, and high-quality photos that provoke thirst and craving.", h6Res: "A striking point of sale that communicates the flavor and benefits of the product immediately.",
@@ -1079,12 +1082,6 @@
                 let getScrollAmount = () => reelsTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.05);
                 gsap.to(reelsTrack, { x: () => -getScrollAmount(), ease: "none", scrollTrigger: { trigger: ".reels-wrapper", pin: true, scrub: 1, end: () => "+=" + (reelsTrack.scrollWidth) } });
             }
-
-            // FUNCIÓN DE LIMPIEZA PARA EVITAR BUGS AL REDIMENSIONAR
-            return () => {
-                gsap.killTweensOf('.z-layer, .layer-hero, .h-panel, .h-card, .parallax-img, .reels-track');
-                gsap.set('.z-layer, .layer-hero, .h-panel, .h-card, .parallax-img, .reels-track', { clearProps: "all" });
-            };
         });
 
         document.querySelectorAll('.magnetic-target').forEach(btn => {
