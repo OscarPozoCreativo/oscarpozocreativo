@@ -12,7 +12,7 @@
 
     <title>Oscar Pozo | Diseñador Comercial Senior</title>
     
-    <meta name="description" content="Diseño comercial táctico, retail, empaque y exhibición diseñado para dominar mercados.">
+    <meta name="description" content="Diseño estratégico para marcas que quieren vender más. Empaques, exhibidores y campañas visuales.">
     <meta name="author" content="Oscar Pozo Creativo">
     <meta name="theme-color" content="#020202">
     
@@ -22,7 +22,7 @@
     <meta property="og:site_name" content="Oscar Pozo Creativo">
     <meta property="og:url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/">
     <meta property="og:title" content="Oscar Pozo | Diseñador Comercial Senior">
-    <meta property="og:description" content="Sistemas visuales diseñados para dominar el anaquel y escalar facturación.">
+    <meta property="og:description" content="Diseño estratégico para marcas que quieren vender más. Empaques, exhibidores y campañas visuales.">
     <meta property="og:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -47,13 +47,10 @@
             
             /* TOKENS DEL HEADER DINÁMICO */
             --nav-text: #ffffff;
-            --nav-border: rgba(255,255,255,0.3);
+            --nav-logo-filter: none;
             --cta-bg: #ffffff;
             --cta-text: #000000;
-            --nav-logo-filter: none;
-        }
-        
-        [data-theme="light"], .nav-inverted {
+        }[data-theme="light"], .nav-inverted {
             --bg: #f4f4f5; --surface: #ffffff; --text: #050505; 
             --accent: #40B5E5; --accent-dark: #005f8e;
             --muted: #666666; --border: rgba(0,0,0,0.1);
@@ -61,10 +58,9 @@
             
             /* INVERSIÓN DEL HEADER */
             --nav-text: #050505;
-            --nav-border: rgba(0,0,0,0.3);
+            --nav-logo-filter: invert(1);
             --cta-bg: #050505;
             --cta-text: #ffffff;
-            --nav-logo-filter: invert(1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -102,44 +98,52 @@
         #webgl-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; width: 100vw; height: 100vh; }
         .noise-overlay { position: fixed; inset: 0; z-index: -1; opacity: 0.03; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); mix-blend-mode: overlay; }
 
+        /* CURSOR PERSONALIZADO */
         .cursor-dot { position: fixed; left: 0; top: 0; width: 6px; height: 6px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000001; opacity: 0; will-change: transform; mix-blend-mode: difference;}
         .cursor-ring { position: fixed; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 10000000; transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), height 0.3s cubic-bezier(0.19, 1, 0.22, 1); display: flex; justify-content: center; align-items: center; opacity: 0; will-change: transform; }
         .cursor-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); transition: all 0.3s; }
         .cursor-ring circle { fill: rgba(0,0,0,0.1); stroke: rgba(255,255,255,0.7); stroke-width: 1px; stroke-dasharray: 125; stroke-dashoffset: 125; transition: stroke-dashoffset 0.1s ease; backdrop-filter: blur(2px); }
-        .cursor-ring.active { width: 90px; height: 90px; }
-        .cursor-ring.active circle { fill: #fff; stroke: transparent; backdrop-filter: none; mix-blend-mode: difference; }
-        .cursor-text { font-family: var(--font-display); font-size: 8px; font-weight: 700; color: #000; opacity: 0; transition: opacity 0.3s; text-transform: uppercase; letter-spacing: 1px; position: absolute; }
-        .cursor-ring.active .cursor-text { opacity: 1; }
+        .cursor-ring.active { width: 80px; height: 80px; }
+        .cursor-ring.active circle { fill: rgba(255,255,255,0.1); stroke: var(--accent); backdrop-filter: none; }
 
-        /* HUD NAVEGACIÓN FANTASMA (Sin fondos, adaptativo) */
+        /* HUD NAVEGACIÓN GOOGLE FLOW STYLE */
         nav { 
             position: fixed; top: 0; width: 100%; 
             padding: clamp(15px, 2vh, 20px) clamp(20px, 4vw, 40px); 
-            display: flex; justify-content: space-between; align-items: center; 
+            display: flex; justify-content: space-between; align-items: flex-start; 
             z-index: 100; pointer-events: none; 
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            transform: translateY(0);
             background: transparent !important; 
             border: none !important;
-            backdrop-filter: none !important;
-            -webkit-backdrop-filter: none !important;
+            height: 100px; 
         }
-        nav.nav-hidden { transform: translateY(-100%); }
+        
+        nav::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; 
+            z-index: -1;
+            pointer-events: none;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: transparent !important; 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+        }
 
         .hud-left { display: flex; flex-direction: row; align-items: center; gap: 40px; pointer-events: auto; }
-        .hud-logo { display: flex; align-items: center; }
-        .hud-logo img { width: 40px; height: 40px; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), filter 0.3s; filter: var(--nav-logo-filter); transform: translateZ(0); }
+        .hud-logo { display: flex; align-items: center; background: transparent; padding: 0; }
+        .hud-logo img { width: 35px; height: 35px; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), filter 0.3s; filter: var(--nav-logo-filter); transform: translateZ(0); }
         .hud-logo:hover img { transform: scale(1.15) translateZ(0); }
         
-        .hud-controls { display: flex; gap: 15px; align-items: center; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; height: 40px; }
-        .ctrl-btn { background: transparent; border: 1px solid var(--nav-border); color: var(--nav-text); padding: 0 16px; border-radius: 6px; transition: all 0.3s; pointer-events: auto; height: 32px; display: flex; align-items: center; justify-content: center; }
-        .ctrl-btn:hover { border-color: var(--nav-text); }
+        .hud-controls { display: flex; gap: 20px; align-items: center; font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; height: 40px; }
+        .ctrl-btn { background: transparent; border: none; color: var(--nav-text); padding: 0; transition: opacity 0.3s, color 0.3s; pointer-events: auto; font-weight: 700; letter-spacing: 1px; opacity: 0.7; cursor: pointer; }
+        .ctrl-btn:hover, .ctrl-btn.active { opacity: 1; }
         
-        .hud-right { display: flex; align-items: center; gap: 20px; pointer-events: auto; }
-        .hud-status { text-align: right; font-family: var(--font-display); font-size: 8px; color: var(--nav-text); opacity: 0.8; line-height: 1.8; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+        .hud-right { display: flex; align-items: center; gap: 25px; pointer-events: auto; }
+        .hud-status { text-align: right; font-family: var(--font-display); font-size: 8px; color: var(--nav-text); opacity: 0.7; line-height: 1.8; text-transform: uppercase; letter-spacing: 1px; background: transparent; padding: 0; border: none; transition: color 0.3s; }
         .hud-status strong { color: var(--nav-text); font-size: 10px; font-weight: 700; opacity: 1; }
         
-        .btn-cta-nav { height: 36px; padding: 0 24px; background: var(--cta-bg); color: var(--cta-text); border-radius: 100px; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background 0.3s, color 0.3s; pointer-events: auto; border: 1px solid transparent; transform: translateZ(0); }
+        .btn-cta-nav { height: 38px; padding: 0 24px; background: var(--cta-bg); color: var(--cta-text); border-radius: 100px; font-family: var(--font-display); font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: transform 0.3s, background 0.3s, color 0.3s; pointer-events: auto; border: none; transform: translateZ(0); }
         .btn-cta-nav:hover { transform: scale(1.05) translateZ(0); }
 
         /* ESTRUCTURA MAESTRA */
@@ -150,7 +154,7 @@
 
         /* Z-SCROLL ARQUITECTURA */
         .z-wrapper { width: 100vw; height: 100vh; position: relative; overflow: hidden; pointer-events: none; }
-        .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); backface-visibility: hidden; pointer-events: none; }
+        .z-layer { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; transform: translate3d(0,0,0); backface-visibility: hidden; pointer-events: none; will-change: transform, filter, opacity; }
         .z-layer:not(.layer-hero) { visibility: hidden; opacity: 0; }
         
         .layer-hero { flex-direction: column; text-align: center; pointer-events: auto; position: relative; justify-content: center; margin-top: -5vh; }
@@ -172,7 +176,7 @@
             border-radius: 24px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; 
             box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); 
             pointer-events: auto; transition: box-shadow 0.4s, border 0.4s; transform: translate3d(0,0,0); backface-visibility: hidden; 
-            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); will-change: transform, opacity; 
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); will-change: transform, opacity; cursor: pointer;
         }
         .monolith:hover { box-shadow: 0 40px 80px rgba(0,0,0,0.8), 0 0 40px rgba(64,181,229,0.15); border-color: rgba(255,255,255,0.2); }
         
@@ -215,7 +219,7 @@
             display: grid; grid-template-columns: 1fr 1fr; 
             background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 100%); 
             border: 1px solid rgba(255,255,255,0.8); 
-            border-radius: 24px; overflow: hidden; pointer-events: auto; 
+            border-radius: 24px; overflow: hidden; pointer-events: auto; cursor: pointer;
             box-shadow: 0 30px 60px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.5); 
             transition: box-shadow 0.4s, border 0.4s; transform-origin: center center; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; 
             backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); color: var(--text-local); 
@@ -229,7 +233,6 @@
         .h-info .m-meta span { color: var(--text-local); border-color: var(--border-local); }
         .h-info .m-summary { color: var(--muted-local); border-color: var(--border-local); }
         .h-info .m-item p { color: var(--muted-local); }
-        .click-hint { margin-top: clamp(10px, 2vh, 20px); font-family: var(--font-display); font-weight: 700; font-size: 7px; color: var(--accent-dark); letter-spacing: 2px; text-transform: uppercase; }
 
         /* SECCIÓN REELS / VIDEOS VERTICALES */
         .reels-wrapper { 
@@ -299,7 +302,7 @@
         }
         .reel-item:hover .hover-video { transform: scale(1); }
 
-        /* LA BÓVEDA Y RESTO DEL UI (Espacios ajustados) */
+        /* LA BÓVEDA Y RESTO DEL UI */
         .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { 
             padding: clamp(60px, 8vh, 100px) 5vw; 
             border-top: 1px solid var(--border); 
@@ -313,7 +316,7 @@
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-header h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); text-transform: uppercase; }
         .vault-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-        .v-item { position: relative; height: 280px; border-radius: 12px; overflow: hidden; pointer-events: auto; border: 1px solid var(--border); transition: border 0.5s; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; }
+        .v-item { position: relative; height: 280px; border-radius: 12px; overflow: hidden; pointer-events: auto; border: 1px solid var(--border); transition: border 0.5s; transform: translate3d(0,0,0); backface-visibility: hidden; will-change: transform, opacity; cursor: pointer;}
         .v-item::before { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); z-index: 2; pointer-events: none; transition: opacity 0.4s; }
         .v-item:hover::before { opacity: 0.7; }
         .v-info { position: absolute; bottom: 20px; left: 20px; z-index: 3; pointer-events: none;}
@@ -386,7 +389,7 @@
         /* DISEÑO MÓVIL ESTRICTO */
         @media (max-width: 1024px) {
             .hud-status { display: none; }
-            .monolith, .h-card { grid-template-columns: 1fr; height: auto; max-height: 85vh; overflow-y: auto; }
+            .monolith, .h-card { grid-template-columns: 1fr; height: auto; min-height: 60vh; max-height: 85vh; overflow-y: auto; }
             .m-img-wrap, .h-img-wrap { height: 35vh; }
             .m-content, .h-info { padding: 30px; }
             .profile-grid, .terminal-grid { grid-template-columns: 1fr; }
@@ -396,7 +399,8 @@
         }
         
         @media (max-width: 768px) {
-            nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+            nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: flex-start; height: auto; min-height: 80px; }
+            nav::before { height: 100%; }
             .hud-left { gap: 0; }
             .hud-controls, .hud-status { display: none; }
             .btn-cta-nav { padding: 0 16px; font-size: 8px; }
@@ -406,8 +410,8 @@
             body { background: #050505; }
             .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 0 15px 30px; pointer-events: auto; background: transparent !important; }
             
-            .z-layer { position: relative; height: auto; margin-bottom: 30px; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; display: block; transform: none !important; }
-            .z-layer:not(.layer-hero) { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+            .z-layer { position: relative; height: auto; margin-bottom: 30px; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; display: block; transform: none !important; filter: none !important; }
+            .z-layer:not(.layer-hero) { opacity: 1 !important; visibility: visible !important; transform: none !important; filter: none !important; }
             
             .layer-hero { min-height: 100vh; min-height: 100svh; padding: 60px 0 0 0; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 40px; margin-top: 0; }
             .reveal-text { transform: none !important; } 
@@ -417,7 +421,7 @@
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; background: #f0f1fa !important; color: #050505;}
             .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; }
             .h-panel { width: 100%; height: auto; padding: 0; }
-            .h-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); backdrop-filter: none; -webkit-backdrop-filter: none; height: auto;}
+            .h-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); backdrop-filter: none; -webkit-backdrop-filter: none; height: auto; min-height: auto;}
             .m-content, .h-info { padding: 20px; }
             .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
             .m-summary { font-size: 0.85rem; margin-bottom: 15px; padding-bottom: 10px; }
@@ -431,7 +435,7 @@
             .p-card, .profile-sidebar, .t-panel { padding: 20px; background: rgba(10,10,10,0.8); backdrop-filter: blur(10px);}
             .t-meta-grid { grid-template-columns: 1fr; }
             .tilt-target, .skew-target { transform: none !important; } 
-            .monolith { background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); pointer-events: auto !important; height: auto;}
+            .monolith { background: rgba(10,10,10,0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); pointer-events: auto !important; height: auto; min-height: auto;}
             
             .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 40% 60%; height: 85vh; border-radius: 12px; }
             .lightbox__main { padding: 10px; }
@@ -453,8 +457,10 @@
     <div id="progress-bar"></div>
     <canvas id="webgl-canvas"></canvas>
     <div class="noise-overlay"></div>
+    
+    <!-- CURSOR PERSONALIZADO -->
     <div class="cursor-dot"></div>
-    <div class="cursor-ring"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" id="cursor-progress"></circle></svg><span class="cursor-text" id="cursor-text-ui">Explorar</span></div>
+    <div class="cursor-ring"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" id="cursor-progress"></circle></svg></div>
 
     <nav id="main-nav">
         <div class="hud-left">
@@ -462,58 +468,58 @@
             <div class="hud-controls"><button class="ctrl-btn hover-target magnetic-target" id="btn-lang" data-lang="es" tabindex="0">ES / EN</button><button class="ctrl-btn hover-target active magnetic-target" id="btn-audio" tabindex="0">SFX: ON</button></div>
         </div>
         <div class="hud-right">
-            <div class="hud-status"><strong data-i18n="role">Diseñador Comercial Senior</strong><br><span data-i18n="loc">Sistemas Comerciales</span></div>
+            <div class="hud-status"><strong data-i18n="role">Diseñador Comercial Senior</strong><br><span data-i18n="loc">Diseño Comercial</span></div>
             <a href="#contacto" class="btn-cta-nav magnetic-target hover-target" data-i18n="navCta">INICIAR PROYECTO</a>
         </div>
     </nav>
 
     <section class="z-wrapper">
         <div class="z-layer layer-hero">
-            <h1 class="hero-title"><span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">SISTEMAS</span></span><br><span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIALES.</span></span></h1>
-            <p class="hero-desc" data-i18n="heroDesc" style="opacity:0; transform:translateY(20px);">Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.</p>
+            <h1 class="hero-title"><span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">DISEÑO</span></span><br><span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIAL.</span></span></h1>
+            <p class="hero-desc" data-i18n="heroDesc" style="opacity:0; transform:translateY(20px);">Diseño estratégico para marcas que quieren vender más. Desde empaques y exhibidores hasta campañas digitales, creo soluciones visuales que destacan tu producto en cualquier mercado.</p>
             <div class="scroll-indicator"><div class="scroll-line"></div><span data-i18n="scrollDown">SCROLL</span></div>
         </div>
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
-                <div class="m-img-wrap"><img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img" decoding="async"><img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only" decoding="async"></div>
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Palitos de Queso." data-i18n-title="z1Title">
+                <div class="m-img-wrap"><img data-src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="m-img target-img lazy-img" decoding="async"><img src="assets/page5.webp" alt="Diseño de empaque Palitos de Queso Gold Selects" class="sr-only" decoding="async"></div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
-                    <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para crecer sin perder orden.</h2>
+                    <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para Palitos de Queso.</h2>
                     <div class="project-details">
-                        <p class="m-summary" data-i18n="z1Summary">Reestructuración arquitectónica del empaque. Eliminamos la fricción visual del consumidor mediante un sistema de codificación por color escalable y directo.</p>
-                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z1RetoTxt">La línea sufría de canibalización visual. Los nuevos productos diluían la marca y confundían al comprador en el momento clave de decisión.</p></div>
-                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z1EnfoqueTxt">Implementación de un bloque de marca estricto. Jerarquía implacable donde el beneficio principal domina el 40% del frontal del empaque.</p></div>
-                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">Reducción drástica del tiempo de escaneo en anaquel. La marca ahora domina visualmente frente a competidores importados.</p></div>
+                        <p class="m-summary" data-i18n="z1Summary">Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.</p>
+                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z1RetoTxt">Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.</p></div>
+                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z1EnfoqueTxt">Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.</p></div>
+                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z1ResTxt">Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.</p></div>
                     </div>
                 </div>
             </article>
         </div>
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Encarte de ofertas para supermercado." data-i18n-title="z2Title">
                 <div class="m-img-wrap"><img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img" decoding="async"><img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only" decoding="async"></div>
                 <div class="m-content">
-                    <div class="m-meta"><span data-i18n="z2Meta1">Retail</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
-                    <h2 class="m-title" data-i18n="z2Title">Campaña editorial diseñada para soportar densidad.</h2>
+                    <div class="m-meta"><span data-i18n="z2Meta1">Supermercados</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
+                    <h2 class="m-title" data-i18n="z2Title">Encarte de ofertas para supermercado.</h2>
                     <div class="project-details">
-                        <p class="m-summary" data-i18n="z2Summary">Ingeniería editorial para retail. Un sistema diseñado para procesar alta densidad de productos sin sacrificar la percepción de valor ni la legibilidad.</p>
-                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z2RetoTxt">El encarte anterior era ruido visual puro. Necesitábamos inyectar agresividad promocional sin que la marca se percibiera barata o caótica.</p></div>
-                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z2EnfoqueTxt">Retícula matemática estricta. Uso estratégico del espacio negativo para guiar el ojo directamente hacia los productos gancho.</p></div>
-                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z2ResTxt">Aumento en la velocidad de lectura del consumidor. Mayor tráfico dirigido a las zonas calientes de promoción en tienda.</p></div>
+                        <p class="m-summary" data-i18n="z2Summary">Diseño de encarte enfocado en organizar una gran cantidad de ofertas sin que la página se vea saturada o desordenada.</p>
+                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z2RetoTxt">Mostrar muchos productos y precios agresivos en un mismo espacio, manteniendo una lectura cómoda para el cliente.</p></div>
+                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z2EnfoqueTxt">Creación de bloques visuales limpios, destacando los productos gancho con un contraste fuerte para guiar la vista.</p></div>
+                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z2ResTxt">Un encarte fácil de leer que ayuda al consumidor a encontrar las mejores ofertas en segundos, impulsando las visitas a la tienda.</p></div>
                     </div>
                 </div>
             </article>
         </div>
         <div class="z-layer">
-            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
+            <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibidor comercial para Gold Care." data-i18n-title="z3Title">
                 <div class="m-img-wrap"><img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img" decoding="async"><img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only" decoding="async"></div>
                 <div class="m-content">
-                    <div class="m-meta"><span data-i18n="z3Meta1">POP y exhibición</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
-                    <h2 class="m-title" data-i18n="z3Title">Exhibición diseñada para organizar y vender mejor.</h2>
+                    <div class="m-meta"><span data-i18n="z3Meta1">Exhibidores</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
+                    <h2 class="m-title" data-i18n="z3Title">Exhibidor comercial para Gold Care.</h2>
                     <div class="project-details">
-                        <p class="m-summary" data-i18n="z3Summary">Sistema visual aplicado a exhibición comercial para ordenar categorías, reforzar señalización y mejorar visibilidad de marca en punto de venta.</p>
-                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z3RetoTxt">Se necesitaba una exhibición que ayudara a organizar producto, comunicar beneficios y reforzar marca dentro de un entorno competitivo.</p></div>
-                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z3EnfoqueTxt">Segmentación por categoría, señalización visible y una estructura pensada para operar como punto de contacto comercial.</p></div>
-                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z3ResTxt">La exhibición ganó orden, visibilidad y función comercial, convirtiéndose en una pieza útil dentro del punto de venta.</p></div>
+                        <p class="m-summary" data-i18n="z3Summary">Mueble de exhibición diseñado para organizar los productos de cuidado de calzado y ganar presencia en el pasillo.</p>
+                        <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="z3RetoTxt">Agrupar betunes, cepillos y limpiadores en un solo lugar que se vea ordenado y atractivo.</p></div>
+                        <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="z3EnfoqueTxt">Diseño por categorías, colores de la marca bien marcados y un espacio donde el cliente encuentra lo que busca sin dar vueltas.</p></div>
+                        <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="z3ResTxt">Un exhibidor que organiza la mercancía y actúa como un vendedor silencioso.</p></div>
                     </div>
                 </div>
             </article>
@@ -523,104 +529,98 @@
     <section class="h-wrapper" id="casos">
         <div class="h-container">
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Punta de góndola para vino Melodramatic" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap"><img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta1">POP premium</span><span>Melodramatic</span></div>
-                        <h3 data-i18n="hTitle1">Melodramatic · punta de góndola premium</h3>
+                        <div class="m-meta"><span data-i18n="hMeta1">Exhibidor premium</span><span>Melodramatic</span></div>
+                        <h3 data-i18n="hTitle1">Punta de góndola para vino Melodramatic</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc1">Arquitectura de exhibición premium. Un ancla visual diseñada para interrumpir el tráfico en el pasillo más saturado del supermercado.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h1Reto">Crear una exhibición que destaque en el saturado entorno de cosméticos sin perder la esencia de lujo de la marca.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h1Enfoque">Uso de tonos oscuros, alto contraste en la tipografía y arquitectura geométrica para captar la atención.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h1Res">Incremento directo en la captura de atención. El exhibidor no solo muestra, actúa como un vendedor silencioso de alto rendimiento.</p></div>
+                            <p class="m-summary" data-i18n="hDesc1">Diseño de exhibidor de alto impacto para destacar esta línea de vinos en el área de licores del supermercado.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h1Reto">Lograr que la marca de vino resalte en un pasillo lleno de opciones, transmitiendo elegancia y calidad.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h1Enfoque">Uso de tonos oscuros, iluminación sugerida y una estructura imponente que eleva la percepción del producto.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h1Res">Una exhibición que frena al cliente en el pasillo, aumentando la curiosidad y las ventas de la marca.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Publicidad de ofertas para Plaza Lama" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap"><img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta2">Editorial promocional</span><span>Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle2">Página publicitaria para campaña supermercado 2025</h3>
+                        <div class="m-meta"><span data-i18n="hMeta2">Prensa y ofertas</span><span>Plaza Lama</span></div>
+                        <h3 data-i18n="hTitle2">Publicidad de ofertas para Plaza Lama</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc2">Composición editorial para prensa escrita con jerarquía visual orientada a lectura y confianza comercial.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h2Reto">Comunicar agresividad en precios sin que el diseño se perciba barato o caótico.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h2Enfoque">Sistema de retícula estricta, balance de espacios en blanco y jerarquización de ofertas ganadoras.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h2Res">Un encarte que el consumidor puede escanear en segundos, incrementando el tráfico hacia las promociones clave.</p></div>
+                            <p class="m-summary" data-i18n="hDesc2">Diseño de prensa y medios impresos estructurado para comunicar precios bajos con claridad y confianza.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h2Reto">Anunciar descuentos fuertes sin que la marca pierda su nivel ni el diseño se vea descuidado.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h2Enfoque">Distribución inteligente del espacio, letras grandes para los precios y un orden lógico de lectura.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h2Res">Comunicación directa y efectiva que asegura que el mensaje de ahorro llegue al cliente sin confusiones.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para Avena Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap"><img data-src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page4.webp" alt="Diseño de empaque Avena Gold Selects" class="sr-only" decoding="async"></div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta3">Diseño de empaque</span><span>Gold Selects / Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle3">Diseño de empaque · Gold Selects</h3>
+                        <h3 data-i18n="hTitle3">Diseño de empaque para Avena Gold Selects</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc3">Sistema de empaque a prueba de fallos. Diseñado para que la línea pueda escalar a más de 50 productos manteniendo una coherencia visual absoluta.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h3Reto">Homogeneizar una familia de productos que había perdido cohesión visual a medida que se añadían nuevas variantes.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h3Enfoque">Creación de una línea gráfica principal sólida y un sistema de codificación por color a prueba de fallos.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h3Res">Dominio total del anaquel. El consumidor no ve un producto, ve un bloque de marca imposible de ignorar.</p></div>
+                            <p class="m-summary" data-i18n="hDesc3">Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h3Reto">Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h3Enfoque">Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h3Res">Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de góndola para área de bebés" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap"><img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta4">POP retail</span><span>Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle4">Cabezal de bebé · activación visual en retail</h3>
+                        <div class="m-meta"><span data-i18n="hMeta4">Exhibidores</span><span>Plaza Lama</span></div>
+                        <h3 data-i18n="hTitle4">Cabezal de góndola para área de bebés</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc4">Pieza promocional desarrollada para reforzar visibilidad de categoría, señalización comercial y presencia de marca dentro del entorno retail.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h4Reto">Dominar una categoría visualmente ruidosa y guiar a los padres directamente al producto.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h4Enfoque">Psicología del color suave, formas amigables e información dura en la zona de contacto visual directo.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h4Res">El pasillo se organizó, reduciendo la fricción de búsqueda y acelerando la decisión de compra.</p></div>
+                            <p class="m-summary" data-i18n="hDesc4">Material de exhibición diseñado para señalizar y destacar la categoría infantil en el supermercado.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h4Reto">Llamar la atención de los padres en un pasillo que suele estar lleno de colores y marcas compitiendo.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h4Enfoque">Uso de colores suaves, imágenes tiernas y mensajes directos que conectan emocionalmente con el comprador.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h4Res">Un área mucho más atractiva y fácil de ubicar, mejorando la experiencia de compra de los padres.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta para Salami Gold Selects" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap"><img data-src="assets/page6.webp" alt="Diseño de etiqueta Salami Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page6.webp" alt="Diseño de etiqueta Salami Gold Selects" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta5">Diseño de etiqueta</span><span>Gold Selects Gourmet / Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle5">Diseño de etiqueta · Gold Selects Gourmet</h3>
+                        <div class="m-meta"><span data-i18n="hMeta5">Diseño de etiqueta</span><span>Gold Selects / Plaza Lama</span></div>
+                        <h3 data-i18n="hTitle5">Diseño de etiqueta para Salami Gold Selects</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc5">Propuesta visual con códigos gourmet orientada a percepción de calidad, tradición y carácter premium.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h5Reto">Elevar el valor percibido del producto para justificar un posicionamiento de precio superior (elevar la percepción de la marca a un nivel superior).</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h5Enfoque">Uso de tipografías clásicas, acabados visuales limpios y un layout minimalista de inspiración europea.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h5Res">Un producto que se defiende visualmente contra marcas internacionales importadas.</p></div>
+                            <p class="m-summary" data-i18n="hDesc5">Diseño de etiqueta premium para embutido, enfocada en proyectar alta calidad y frescura en la nevera del supermercado.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h5Reto">Competir contra marcas de tradición en el país, logrando que el cliente perciba este salami como una opción superior.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h5Enfoque">Uso de negro y dorado para dar estatus, tipografía fuerte y una ventana transparente amplia para mostrar la carne.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h5Res">Un producto que destaca inmediatamente en el área de embutidos, transmitiendo confianza y calidad.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
             <div class="h-panel">
-                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
+                <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibidor para Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
                     <div class="h-img-wrap"><img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only" decoding="async"></div>
                     <div class="h-info">
-                        <div class="m-meta"><span data-i18n="hMeta6">POP</span><span>Coco Dream Blend / Plaza Lama</span></div>
-                        <h3 data-i18n="hTitle6">Coco Dream Blend</h3>
+                        <div class="m-meta"><span data-i18n="hMeta6">Exhibidores</span><span>Coco Dream Blend / Plaza Lama</span></div>
+                        <h3 data-i18n="hTitle6">Exhibidor para Coco Dream Blend</h3>
                         <div class="project-details">
-                            <p class="m-summary" data-i18n="hDesc6">Exhibidor con lenguaje visual suave y natural para comunicar hidratación, frescura y origen del producto.</p>
-                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h6Reto">Conectar emocionalmente con el consumidor apelando a los ingredientes naturales en un segundo de visualización.</p></div>
-                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h6Enfoque">Composición inmersiva, paleta de colores tropicales y fotografía de producto hiperrealista.</p></div>
-                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h6Res">Un exhibidor imposible de ignorar que comunica el beneficio principal de manera instantánea.</p></div>
+                            <p class="m-summary" data-i18n="hDesc6">Mueble de exhibición con un diseño fresco y tropical para resaltar esta bebida a base de coco.</p>
+                            <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="h6Reto">Transmitir la frescura y naturalidad del producto en los pocos segundos que el cliente pasa caminando.</p></div>
+                            <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="h6Enfoque">Uso de colores vivos, texturas naturales y fotos de alta calidad que provocan sed y antojo.</p></div>
+                            <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="h6Res">Un punto de venta llamativo que comunica el sabor y los beneficios del producto de forma inmediata.</p></div>
                         </div>
-                        <span class="click-hint" data-i18n="clickHint">[ Clic para visualizar pantalla completa ]</span>
                     </div>
                 </article>
             </div>
@@ -628,7 +628,7 @@
     </section>
 
     <section class="reels-wrapper" id="audiovisual">
-        <div class="section-header"><h2 class="has-reveal" data-i18n="reelsTitle">Motion & Social</h2></div>
+        <div class="section-header"><h2 class="has-reveal" data-i18n="reelsTitle">Videos y Redes</h2></div>
         <div class="reels-track">
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Salto Alto de Bayaguana" data-i18n-title="vT_Bayaguana" data-video-full="assets/Salto-Alto-De-Bayaguana-full.mp4">
                 <img data-src="assets/thumb-bayaguana.webp" alt="Salto Alto de Bayaguana" class="reel-bg target-img lazy-img" decoding="async">
@@ -636,7 +636,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Bayaguana">Salto Alto de Bayaguana</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Bayaguana">Captura de la experiencia cruda y natural del salto. La edición prioriza el sonido ambiente y cortes dinámicos que transmiten la adrenalina del momento, diseñado para que las personas sientan el deseo de compartirlo orgánicamente.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Bayaguana">Video para redes mostrando la experiencia real del salto. Cortes rápidos y sonido ambiente para que la gente sienta la adrenalina y quiera compartirlo.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Ballenas Jorobadas Cayo Levantado" data-i18n-title="vT_Ballenas" data-video-full="assets/Ballenas-Jorobadas-Cayo-Levantado-full.mp4">
                 <img data-src="assets/thumb-ballenas.webp" alt="Ballenas Jorobadas Cayo Levantado" class="reel-bg target-img lazy-img" decoding="async">
@@ -644,7 +644,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Ballenas">Ballenas Jorobadas</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Ballenas">Documentación visual del avistamiento en mar abierto. El ritmo de edición se adapta a la majestuosidad del momento, utilizando una paleta de colores fríos y profundos para resaltar la inmensidad del océano, captar la atención desde el primer segundo y lograr mayor interacción en los anuncios.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Ballenas">Video del recorrido para ver las ballenas. Colores profundos y un ritmo que capta la atención desde el primer segundo para lograr más interacción.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Buggy Punta Cana Congo Bar" data-i18n-title="vT_BuggyCongo" data-video-full="assets/Buggy-De-Punta-Cana-Con-Congo-Bar-full.mp4">
                 <img data-src="assets/thumb-congo.webp" alt="Buggy Punta Cana Congo Bar" class="reel-bg target-img lazy-img" decoding="async">
@@ -652,7 +652,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_BuggyCongo">Buggy Congo Bar</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyCongo">Narrativa de contraste: del lodo y la ruta extrema a la energía nocturna del Congo Bar. Una pieza estructurada para mostrar la experiencia completa del tour, manteniendo al espectador enganchado hasta el clímax de la fiesta.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyCongo">Un video que muestra la aventura completa: desde el lodo en los buggys hasta la fiesta en la noche. Hecho para mantener a la gente viendo hasta el final.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cayo Arena" data-i18n-title="vT_CayoArena" data-video-full="assets/Cayo-Arena-full.mp4">
                 <img data-src="assets/thumb-arena.webp" alt="Cayo Arena" class="reel-bg target-img lazy-img" decoding="async">
@@ -660,7 +660,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_CayoArena">Cayo Arena</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_CayoArena">Enfoque estético y aspiracional. Tomas estabilizadas y corrección de color vibrante que resaltan la transparencia del agua y la arena blanca. El objetivo es despertar el deseo inmediato de estar ahí.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_CayoArena">Video atractivo y con colores vivos que resaltan el agua cristalina. El objetivo es que quien lo vea sienta el deseo inmediato de ir.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Buggy Punta Cana Espuma Party" data-i18n-title="vT_BuggyEspuma" data-video-full="assets/Buggy-De-Punta-Cana-Con-Espuma-Party-2-full.mp4">
                 <img data-src="assets/thumb-espuma.webp" alt="Buggy Punta Cana Espuma Party" class="reel-bg target-img lazy-img" decoding="async">
@@ -668,7 +668,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_BuggyEspuma">Buggy Espuma Party</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyEspuma">Pura energía visual. Cortes rápidos sincronizados con el ritmo musical que capturan el caos divertido de los buggys y la explosión de la fiesta de espuma. Formato nativo para retención máxima en videos cortos como Reels y TikTok.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyEspuma">Pura energía. Cortes rápidos al ritmo de la música mostrando el desorden divertido de la fiesta de espuma. Formato ideal para TikTok e Instagram Reels.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Four Wheels Boca Chica" data-i18n-title="vT_FourWheels" data-video-full="assets/Four-Wheels-Boca-Chica-Amigosxsiempretours-full.mp4">
                 <img data-src="assets/thumb-fourwheels.webp" alt="Four Wheels Boca Chica" class="reel-bg target-img lazy-img" decoding="async">
@@ -676,7 +676,7 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_FourWheels">Four Wheels Boca Chica</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_FourWheels">Inmersión total en primera persona. La cámara sigue la acción de cerca a través del lodo y la velocidad, eliminando filtros innecesarios para mostrar una aventura real, sucia y auténtica que conecta con el público joven.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_FourWheels">Grabado en primera persona para que se sienta la velocidad y el lodo. Un video sin filtros que conecta directo con el público joven.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Fricolandia" data-i18n-title="vT_Fricolandia" data-video-full="assets/Fricolandia-full.mp4">
                 <img data-src="assets/thumb-fricolandia.webp" alt="Fricolandia" class="reel-bg target-img lazy-img" decoding="async">
@@ -684,36 +684,36 @@
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Fricolandia">Fricolandia</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Fricolandia">Recorrido visual por las instalaciones destacando el confort y la exclusividad del destino. Movimientos de cámara fluidos y transiciones suaves que construyen una atmósfera de relajación y estatus.</p></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Fricolandia">Un recorrido visual que resalta la comodidad y exclusividad del lugar. Movimientos suaves de cámara que transmiten relajación.</p></div>
             </article>
             <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Giveaway Semana Santa" data-i18n-title="vT_Giveaway" data-video-full="assets/Giveaway-Semana-Santa-full.mp4">
                 <img data-src="assets/thumb-giveaway.webp" alt="Giveaway Semana Santa" class="reel-bg target-img lazy-img" decoding="async">
                 <video class="hover-video" src="assets/Giveaway-Semana-Santa-hover.mp4" muted loop playsinline preload="metadata"></video>
                 <div class="reel-overlay"></div><div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
-                <div class="reel-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vT_Giveaway">Giveaway SS25</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Giveaway">Pieza promocional táctica. Tipografía de alto impacto, animaciones cinéticas y un mensaje directo al grano. Estructurado visualmente para guiar el ojo del usuario directamente hacia las instrucciones de participación con llamados a la acción muy claros.</p></div>
+                <div class="reel-info"><span data-i18n="vMeta4">Video promocional</span><h4 data-i18n="vT_Giveaway">Giveaway Semana Santa</h4></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Giveaway">Video promocional directo al grano. Letras grandes y llamativas para que la gente entienda rápido cómo participar y ganar.</p></div>
             </article>
         </div>
     </section>
 
     <section class="vault-wrapper" id="mas-trabajo">
-        <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
+        <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Más Proyectos</h2></div>
         <div class="vault-grid">
-            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Encarte de Belleza 2025" data-i18n-title="vTitle1">
                 <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only" decoding="async">
-                <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v1R">Crear un encarte que evoque lujo en un formato masivo.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v1E">Tono refinado, balance de blancos y tipografía editorial.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v1Re">Aumento en percepción premium y mayor conversión en la categoría cuidado personal.</p></div></div>
+                <div class="v-info"><span data-i18n="vMeta1">Ofertas de belleza</span><h4 data-i18n="vTitle1">Encarte de Belleza 2025</h4></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc1">Encarte promocional con un tono refinado para cosméticos y cuidado personal, equilibrando elegancia y claridad comercial.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v1R">Mostrar ofertas de belleza manteniendo una imagen de lujo y cuidado.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v1E">Diseño limpio, fondos blancos y letras elegantes.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v1Re">Mejor presentación de la categoría y mayor interés de compra.</p></div></div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Artes para Redes Sociales" data-i18n-title="vTitle2">
                 <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only" decoding="async">
-                <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v2R">Sobresalir en el feed sin perder el mensaje comercial de precio.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v2E">Alto contraste, jerarquía de lectura en 3 segundos y producto como protagonista.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v2Re">Mayor tasa de clics e interacción en los anuncios de redes sociales.</p></div></div>
+                <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Artes para Redes Sociales</h4></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc2">Piezas promocionales enfocadas en claridad, contraste y lectura rápida para el celular.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v2R">Captar la atención rápido en Instagram y Facebook sin perder el mensaje de la oferta.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v2E">Textos grandes, colores llamativos y el producto como protagonista.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v2Re">Más clics y visitas a la tienda desde los anuncios digitales.</p></div></div>
             </article>
-            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
+            <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Empaque de Comida para Perros" data-i18n-title="vTitle5">
                 <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only" decoding="async">
-                <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v5R">Posicionar un nuevo producto en una categoría altamente saturada.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v5E">Resaltar beneficios nutricionales visualmente con paleta de colores distintiva.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v5Re">Concepto visual sólidamente validado para inicio de producción física.</p></div></div>
+                <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Empaque de Comida para Perros</h4></div>
+                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc5">Diseño de empaque creado para resaltar los beneficios y ganar presencia en el pasillo de mascotas.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v5R">Destacar un nuevo producto entre tantas marcas de comida para perros en el supermercado.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v5E">Colores fuertes y beneficios nutricionales claros a simple vista.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v5Re">Un diseño sólido que compite fuertemente en el mercado.</p></div></div>
             </article>
         </div>
     </section>
@@ -721,10 +721,10 @@
     <section class="process-wrapper" id="metodo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="procTitle">Proceso</h2></div>
         <div class="process-grid">
-            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">01</span><h3 class="p-title" data-i18n="p1T">Diagnóstico</h3><p class="p-desc" data-i18n="p1D">Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.</p></div>
-            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">02</span><h3 class="p-title" data-i18n="p2T">Sistema</h3><p class="p-desc" data-i18n="p2D">Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.</p></div>
-            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">03</span><h3 class="p-title" data-i18n="p3T">Aplicación</h3><p class="p-desc" data-i18n="p3D">Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.</p></div>
-            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">04</span><h3 class="p-title" data-i18n="p4T">Control</h3><p class="p-desc" data-i18n="p4D">Revisión de continuidad y consistencia para asegurar que el sistema siga funcionando a medida que crece.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">01</span><h3 class="p-title" data-i18n="p1T">Diagnóstico</h3><p class="p-desc" data-i18n="p1D">Identificación de problemas visuales, de lectura o de desorden en los diseños actuales de la marca.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">02</span><h3 class="p-title" data-i18n="p2T">Sistema</h3><p class="p-desc" data-i18n="p2D">Definición de reglas claras para los colores, letras y el orden de la información para que todo se vea como una misma familia.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">03</span><h3 class="p-title" data-i18n="p3T">Aplicación</h3><p class="p-desc" data-i18n="p3D">Creación de los diseños finales para empaques, exhibidores, redes o encartes, asegurando que la marca se vea impecable.</p></div>
+            <div class="p-card hover-target tilt-target skew-target"><span class="p-num">04</span><h3 class="p-title" data-i18n="p4T">Control</h3><p class="p-desc" data-i18n="p4D">Revisión de todos los materiales para garantizar que el diseño mantenga su calidad a medida que la marca crece.</p></div>
         </div>
     </section>
 
@@ -733,7 +733,7 @@
         <div class="profile-grid">
             <div class="profile-main">
                 <span class="t-eyebrow" data-i18n="profLabel">Perfil</span>
-                <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño comercial con criterio de sistema, no de pieza aislada.</h2>
+                <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño comercial estratégico para cualquier formato.</h2>
                 
                 <div class="profile-bio-wrap" style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap;">
                     <div class="profile-avatar tilt-target" style="flex: 0 0 220px; height: 250px; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--border); background: #050505;">
@@ -741,20 +741,20 @@
                         <div style="position: absolute; inset: 0; background: linear-gradient(to top, #020202 0%, transparent 20%); pointer-events: none;"></div>
                     </div>
                     <div style="flex: 1; min-width: 250px;">
-                        <p data-i18n="profP1">Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.</p>
-                        <p data-i18n="profP2">Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.</p>
+                        <p data-i18n="profP1">Trabajo en proyectos donde una marca debe verse bien y vender, sin importar si es en un supermercado, en redes sociales o en la calle.</p>
+                        <p data-i18n="profP2">Esto exige buen ojo y tomar decisiones basadas en resultados: que el cliente entienda rápido, que la marca se vea impecable y que destaque frente a la competencia.</p>
                     </div>
                 </div>
-                <p data-i18n="profP3">Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.</p>
+                <p data-i18n="profP3">Mi enfoque es crear diseños versátiles que resuelvan problemas reales y ayuden a tu negocio a crecer, sea cual sea el formato.</p>
             </div>
             
             <div class="profile-sidebar tilt-target">
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
-                    <div class="t-focus-item"><strong data-i18n="f1T">Campañas retail</strong><span data-i18n="f1D">Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f3T">POP y exhibición</strong><span data-i18n="f3D">Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f4T">Ejecución multiformato</strong><span data-i18n="f4D">Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, exhibidor y soporte visual.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f1T">Campañas y Promociones</strong><span data-i18n="f1D">Piezas con mucha información diseñadas para que se lean rápido y claro.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de Empaques</strong><span data-i18n="f2D">Empaques atractivos que resaltan en la góndola y mantienen el orden visual de la marca.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f3T">Exhibidores y Materiales</strong><span data-i18n="f3D">Materiales de punto de venta que llaman la atención y guían al cliente a comprar.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f4T">Diseño Global</strong><span data-i18n="f4D">Capacidad para adaptar la misma calidad visual a redes sociales, impresos y cualquier otro medio.</span></div>
                 </div>
             </div>
         </div>
@@ -764,13 +764,13 @@
         <div class="terminal-grid">
             <div class="t-panel tilt-target">
                 <span class="t-eyebrow" data-i18n="conLabel">Contacto</span>
-                <h2 class="t-title has-reveal" data-i18n="conTitle">Disponible para proyectos y roles donde el diseño tenga impacto comercial real.</h2>
-                <p class="t-desc" data-i18n="conDesc">Si tu equipo o tu marca necesita más claridad visual, más consistencia entre formatos y una ejecución mejor resuelta en retail, diseño de empaque o POP, conversemos.</p>
+                <h2 class="t-title has-reveal" data-i18n="conTitle">Disponible para proyectos donde el diseño realmente ayude a vender más.</h2>
+                <p class="t-desc" data-i18n="conDesc">Si tu marca necesita verse mejor, destacar frente a la competencia y tener materiales que llamen la atención, hablemos.</p>
             </div>
             <div class="t-panel tilt-target">
                 <div class="t-meta-grid">
                     <div class="t-meta-box"><strong data-i18n="locLabel">Ubicación</strong><span data-i18n="country">República Dominicana</span></div>
-                    <div class="t-meta-box"><strong data-i18n="specLabel">Especialidad</strong><span data-i18n="specVal">Retail, Empaque & POP</span></div>
+                    <div class="t-meta-box"><strong data-i18n="specLabel">Especialidad</strong><span data-i18n="specVal">Supermercados, Empaques y Exhibidores</span></div>
                     <div class="t-meta-box"><strong data-i18n="dispLabel">Disponibilidad</strong><span data-i18n="dispVal">Proyectos / Remoto y Presencial</span></div>
                 </div>
                 <div class="t-actions">
@@ -817,62 +817,62 @@
         let currentLang = 'es';
         const dict = {
             es: {
-                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", role: "Diseñador Comercial Senior", loc: "Sistemas Comerciales", country: "República Dominicana", hero1: "SISTEMAS", hero2: "COMERCIALES.", heroDesc: "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", clickHint: "[ Clic para visualizar pantalla completa ]", navCta: "INICIAR PROYECTO",
-                z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para crecer sin perder orden.", z1Summary: "Reestructuración arquitectónica del empaque. Eliminamos la fricción visual del consumidor mediante un sistema de codificación por color escalable y directo.", z1RetoTxt: "La línea sufría de canibalización visual. Los nuevos productos diluían la marca y confundían al comprador en el momento clave de decisión.", z1EnfoqueTxt: "Implementación de un bloque de marca estricto. Jerarquía implacable donde el beneficio principal domina el 40% del frontal del empaque.", z1ResTxt: "Reducción drástica del tiempo de escaneo en anaquel. La marca ahora domina visualmente frente a competidores importados.",
-                z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Campaña editorial diseñada para soportar densidad.", z2Summary: "Ingeniería editorial para retail. Un sistema diseñado para procesar alta densidad de productos sin sacrificar la percepción de valor ni la legibilidad.", z2RetoTxt: "El encarte anterior era ruido visual puro. Necesitábamos inyectar agresividad promocional sin que la marca se percibiera barata o caótica.", z2EnfoqueTxt: "Retícula matemática estricta. Uso estratégico del espacio negativo para guiar el ojo directamente hacia los productos gancho.", z2ResTxt: "Aumento en la velocidad de lectura del consumidor. Mayor tráfico dirigido a las zonas calientes de promoción en tienda.",
-                z3Meta1: "POP y exhibición", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibición diseñada para organizar y vender mejor.", z3Summary: "Sistema visual aplicado a exhibición comercial para ordenar categorías, reforzar señalización y mejorar visibilidad de marca en punto de venta.", z3RetoTxt: "Se necesitaba una exhibición que ayudara a organizar producto, comunicar beneficios y reforzar marca dentro de un entorno competitivo.", z3EnfoqueTxt: "Segmentación por categoría, señalización visible y una estructura pensada para operar como punto de contacto comercial.", z3ResTxt: "La exhibición ganó orden, visibilidad y función comercial, convirtiéndose en una pieza útil dentro del punto de venta.",
-                hMeta1: "POP premium", hTitle1: "Melodramatic · punta de góndola premium", hDesc1: "Arquitectura de exhibición premium. Un ancla visual diseñada para interrumpir el tráfico en el pasillo más saturado del supermercado.", h1Reto: "Crear una exhibición que destaque en el saturado entorno de cosméticos sin perder la esencia de lujo de la marca.", h1Enfoque: "Uso de tonos oscuros, alto contraste en la tipografía y arquitectura geométrica para captar la atención.", h1Res: "Incremento directo en la captura de atención. El exhibidor no solo muestra, actúa como un vendedor silencioso de alto rendimiento.",
-                hMeta2: "Editorial promocional", hTitle2: "Página publicitaria para campaña supermercado 2025", hDesc2: "Composición editorial para prensa escrita con jerarquía visual orientada a lectura y confianza comercial.", h2Reto: "Comunicar agresividad en precios sin que el diseño se perciba barato o caótico.", h2Enfoque: "Sistema de retícula estricta, balance de espacios en blanco y jerarquización de ofertas ganadoras.", h2Res: "Un encarte que el consumidor puede escanear en segundos, incrementando el tráfico hacia las promociones clave.",
-                hMeta3: "Diseño de empaque", hTitle3: "Diseño de empaque · Gold Selects", hDesc3: "Sistema de empaque a prueba de fallos. Diseñado para que la línea pueda escalar a más de 50 productos manteniendo una coherencia visual absoluta.", h3Reto: "Homogeneizar una familia de productos que había perdido cohesión visual a medida que se añadían nuevas variantes.", h3Enfoque: "Creación de una línea gráfica principal sólida y un sistema de codificación por color a prueba de fallos.", h3Res: "Dominio total del anaquel. El consumidor no ve un producto, ve un bloque de marca imposible de ignorar.",
-                hMeta4: "POP retail", hTitle4: "Cabezal de bebé · activación visual en retail", hDesc4: "Pieza promocional desarrollada para reforzar visibilidad de categoría, señalización comercial y presencia de marca dentro del entorno retail.", h4Reto: "Dominar una categoría visualmente ruidosa y guiar a los padres directamente al producto.", h4Enfoque: "Psicología del color suave, formas amigables e información dura en la zona de contacto visual directo.", h4Res: "El pasillo se organizó, reduciendo la fricción de búsqueda y acelerando la decisión de compra.",
-                hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta · Gold Selects Gourmet", hDesc5: "Propuesta visual con códigos gourmet orientada a percepción de calidad, tradición y carácter premium.", h5Reto: "Elevar el valor percibido del producto para elevar la percepción de la marca a un nivel superior.", h5Enfoque: "Uso de tipografías clásicas, acabados visuales limpios y un layout minimalista de inspiración europea.", h5Res: "Un producto que se defiende visualmente contra marcas internacionales importadas.",
-                hMeta6: "POP", hTitle6: "Coco Dream Blend", hDesc6: "Exhibidor con lenguaje visual suave y natural para comunicar hidratación, frescura y origen del producto.", h6Reto: "Conectar emocionalmente con el consumidor apelando a los ingredientes naturales en un segundo de visualización.", h6Enfoque: "Composición inmersiva, paleta de colores tropicales y fotografía de producto hiperrealista.", h6Res: "Un exhibidor imposible de ignorar que comunica el beneficio principal de manera instantánea.",
-                reelsTitle: "Motion & Social", vaultTitle: "Archivo Operativo", 
-                vMeta1: "Editorial belleza", vTitle1: "Promoción de Belleza 2025", vDesc1: "Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.", v1R: "Crear un encarte que evoque lujo en un formato masivo.", v1E: "Tono refinado, balance de blancos y tipografía editorial.", v1Re: "Aumento en percepción premium y mayor conversión en la categoría cuidado personal.",
-                vMeta2: "Redes sociales", vTitle2: "Retail IG & FB", vDesc2: "Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.", v2R: "Sobresalir en el feed sin perder el mensaje comercial de precio.", v2E: "Alto contraste, jerarquía de lectura en 3 segundos y producto como protagonista.", v2Re: "Mayor tasa de clics e interacción en los anuncios de redes sociales.",
-                vMeta5: "Diseño de empaque", vTitle5: "Concepto Alimento para Perros", vDesc5: "Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.", v5R: "Posicionar un nuevo producto en una categoría altamente saturada.", v5E: "Resaltar beneficios nutricionales visualmente con paleta de colores distintiva.", v5Re: "Concepto visual sólidamente validado para inicio de producción física.",
-                vMeta3: "Video y redes", vMeta4: "Motion",
-                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Captura de la experiencia cruda y natural del salto. La edición prioriza el sonido ambiente y cortes dinámicos que transmiten la adrenalina del momento, diseñado para que las personas sientan el deseo de compartirlo orgánicamente.",
-                vT_Ballenas: "Ballenas Jorobadas", vD_Ballenas: "Documentación visual del avistamiento en mar abierto. El ritmo de edición se adapta a la majestuosidad del momento, utilizando una paleta de colores fríos y profundos para resaltar la inmensidad del océano, captar la atención desde el primer segundo y lograr mayor interacción en los anuncios.",
-                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "Narrativa de contraste: del lodo y la ruta extrema a la energía nocturna del Congo Bar. Una pieza estructurada para mostrar la experiencia completa del tour, manteniendo al espectador enganchado hasta el clímax de la fiesta.",
-                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Enfoque estético y aspiracional. Tomas estabilizadas y corrección de color vibrante que resaltan la transparencia del agua y la arena blanca. El objetivo es despertar el deseo inmediato de estar ahí.",
-                vT_BuggyEspuma: "Buggy Espuma Party", vD_BuggyEspuma: "Pura energía visual. Cortes rápidos sincronizados con el ritmo musical que capturan el caos divertido de los buggys y la explosión de la fiesta de espuma. Formato nativo para retención máxima en videos cortos como Reels y TikTok.",
-                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Inmersión total en primera persona. La cámara sigue la acción de cerca a través del lodo y la velocidad, eliminando filtros innecesarios para mostrar una aventura real, sucia y auténtica que conecta con el público joven.",
-                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Recorrido visual por las instalaciones destacando el confort y la exclusividad del destino. Movimientos de cámara fluidos y transiciones suaves que construyen una atmósfera de relajación y estatus.",
-                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Pieza promocional táctica. Tipografía de alto impacto, animaciones cinéticas y un mensaje directo al grano. Estructurado visualmente para guiar el ojo del usuario directamente hacia las instrucciones de participación con llamados a la acción muy claros.",
-                procTitle: "Proceso", p1T: "Diagnóstico", p1D: "Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.", p2T: "Sistema", p2D: "Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.", p3T: "Aplicación", p3D: "Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.", p4T: "Control", p4D: "Revisión de continuidad y consistencia para asegurar que el sistema siga funcionando a medida que crece.",
-                profLabel: "Perfil", profTitle: "Diseño comercial con criterio de sistema, no de pieza aislada.", profP1: "Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.", profP2: "Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.", profP3: "Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.", focLabel: "Enfoque", f1T: "Campañas retail", f1D: "Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.", f2T: "Diseño de empaque", f2D: "Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.", f3T: "POP y exhibición", f3D: "Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.", f4T: "Ejecución multiformato", f4D: "Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, exhibidor y soporte visual.",
-                conLabel: "Contacto", conTitle: "Disponible para proyectos y roles donde el diseño tenga impacto comercial real.", conDesc: "Si tu equipo o tu marca necesita más claridad visual, más consistencia entre formatos y una ejecución mejor resuelta en retail, diseño de empaque o POP, conversemos.", locLabel: "Ubicación", specLabel: "Especialidad", dispLabel: "Disponibilidad", specVal: "Retail, Empaque & POP", dispVal: "Proyectos / Remoto y Presencial",
-                btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados.", curExp: "Explorar", curAmp: "Ampliar", curClic: "Clic"
+                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", role: "Diseñador Comercial Senior", loc: "Diseño Comercial", country: "República Dominicana", hero1: "DISEÑO", hero2: "COMERCIAL.", heroDesc: "Diseño estratégico para marcas que quieren vender más. Desde empaques y exhibidores hasta campañas digitales, creo soluciones visuales que destacan tu producto en cualquier mercado.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", navCta: "INICIAR PROYECTO",
+                z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para Palitos de Queso.", z1Summary: "Diseño de empaque para palitos de queso, destacando el producto para que se vea apetitoso y resalte en el pasillo de picaderas.", z1RetoTxt: "Hacer que el producto llame la atención en un pasillo lleno de colores y marcas de snacks, donde el cliente compra por antojo.", z1EnfoqueTxt: "Fotografía grande y provocativa, colores vivos que abren el apetito y letras claras que dicen exactamente qué es.", z1ResTxt: "Un empaque que provoca comprarlo al instante y compite de tú a tú con las marcas tradicionales.",
+                z2Meta1: "Supermercados", z2Meta2: "Plaza Lama", z2Title: "Encarte de ofertas para supermercado.", z2Summary: "Diseño de encarte enfocado en organizar una gran cantidad de ofertas sin que la página se vea saturada o desordenada.", z2RetoTxt: "Mostrar muchos productos y precios agresivos en un mismo espacio, manteniendo una lectura cómoda para el cliente.", z2EnfoqueTxt: "Creación de bloques visuales limpios, destacando los productos gancho con un contraste fuerte para guiar la vista.", z2ResTxt: "Un encarte fácil de leer que ayuda al consumidor a encontrar las mejores ofertas en segundos, impulsando las visitas a la tienda.",
+                z3Meta1: "Exhibidores", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibidor comercial para Gold Care.", z3Summary: "Mueble de exhibición diseñado para organizar los productos de cuidado de calzado y ganar presencia en el pasillo.", z3RetoTxt: "Agrupar betunes, cepillos y limpiadores en un solo lugar que se vea ordenado y atractivo.", z3EnfoqueTxt: "Diseño por categorías, colores de la marca bien marcados y un espacio donde el cliente encuentra lo que busca sin dar vueltas.", z3ResTxt: "Un exhibidor que organiza la mercancía y actúa como un vendedor silencioso.",
+                hMeta1: "Exhibidor premium", hTitle1: "Punta de góndola para vino Melodramatic", hDesc1: "Diseño de exhibidor de alto impacto para destacar esta línea de vinos en el área de licores del supermercado.", h1Reto: "Lograr que la marca de vino resalte en un pasillo lleno de opciones, transmitiendo elegancia y calidad.", h1Enfoque: "Uso de tonos oscuros, iluminación sugerida y una estructura imponente que eleva la percepción del producto.", h1Res: "Una exhibición que frena al cliente en el pasillo, aumentando la curiosidad y las ventas de la marca.",
+                hMeta2: "Prensa y ofertas", hTitle2: "Publicidad de ofertas para Plaza Lama", hDesc2: "Diseño de prensa y medios impresos estructurado para comunicar precios bajos con claridad y confianza.", h2Reto: "Anunciar descuentos fuertes sin que la marca pierda su nivel ni el diseño se vea descuidado.", h2Enfoque: "Distribución inteligente del espacio, letras grandes para los precios y un orden lógico de lectura.", h2Res: "Comunicación directa y efectiva que asegura que el mensaje de ahorro llegue al cliente sin confusiones.",
+                hMeta3: "Diseño de empaque", hTitle3: "Diseño de empaque para Avena Gold Selects", hDesc3: "Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.", h3Reto: "Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.", h3Enfoque: "Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.", h3Res: "Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.",
+                hMeta4: "Exhibidores", hTitle4: "Cabezal de góndola para área de bebés", hDesc4: "Material de exhibición diseñado para señalizar y destacar la categoría infantil en el supermercado.", h4Reto: "Llamar la atención de los padres en un pasillo que suele estar lleno de colores y marcas compitiendo.", h4Enfoque: "Uso de colores suaves, imágenes tiernas y mensajes directos que conectan emocionalmente con el comprador.", h4Res: "Un área mucho más atractiva y fácil de ubicar, mejorando la experiencia de compra de los padres.",
+                hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta para Salami Gold Selects", hDesc5: "Diseño de etiqueta premium para embutido, enfocada en proyectar alta calidad y frescura en la nevera del supermercado.", h5Reto: "Competir contra marcas de tradición en el país, logrando que el cliente perciba este salami como una opción superior.", h5Enfoque: "Uso de negro y dorado para dar estatus, tipografía fuerte y una ventana transparente amplia para mostrar la carne.", h5Res: "Un producto que destaca inmediatamente en el área de embutidos, transmitiendo confianza y calidad.",
+                hMeta6: "Exhibidores", hTitle6: "Exhibidor para Coco Dream Blend", hDesc6: "Mueble de exhibición con un diseño fresco y tropical para resaltar esta bebida a base de coco.", h6Reto: "Transmitir la frescura y naturalidad del producto en los pocos segundos que el cliente pasa caminando.", h6Enfoque: "Uso de colores vivos, texturas naturales y fotos de alta calidad que provocan sed y antojo.", h6Res: "Un punto de venta llamativo que comunica el sabor y los beneficios del producto de forma inmediata.",
+                reelsTitle: "Videos y Redes", vaultTitle: "Más Proyectos", 
+                vMeta1: "Ofertas de belleza", vTitle1: "Encarte de Belleza 2025", vDesc1: "Encarte promocional con un tono refinado para cosméticos y cuidado personal, equilibrando elegancia y claridad comercial.", v1R: "Mostrar ofertas de belleza manteniendo una imagen de lujo y cuidado.", v1E: "Diseño limpio, fondos blancos y letras elegantes.", v1Re: "Mejor presentación de la categoría y mayor interés de compra.",
+                vMeta2: "Redes sociales", vTitle2: "Artes para Redes Sociales", vDesc2: "Piezas promocionales enfocadas en claridad, contraste y lectura rápida para el celular.", v2R: "Captar la atención rápido en Instagram y Facebook sin perder el mensaje de la oferta.", v2E: "Textos grandes, colores llamativos y el producto como protagonista.", v2Re: "Más clics y visitas a la tienda desde los anuncios digitales.",
+                vMeta5: "Diseño de empaque", vTitle5: "Empaque de Comida para Perros", vDesc5: "Diseño de empaque creado para resaltar los beneficios y ganar presencia en el pasillo de mascotas.", v5R: "Destacar un nuevo producto entre tantas marcas de comida para perros en el supermercado.", v5E: "Colores fuertes y beneficios nutricionales claros a simple vista.", v5Re: "Un diseño sólido que compite fuertemente en el mercado.",
+                vMeta3: "Video y redes", vMeta4: "Video promocional",
+                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Video para redes mostrando la experiencia real del salto. Cortes rápidos y sonido ambiente para que la gente sienta la adrenalina y quiera compartirlo.",
+                vT_Ballenas: "Ballenas Jorobadas", vD_Ballenas: "Video del recorrido para ver las ballenas. Colores profundos y un ritmo que capta la atención desde el primer segundo para lograr más interacción.",
+                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "Un video que muestra la aventura completa: desde el lodo en los buggys hasta la fiesta en la noche. Hecho para mantener a la gente viendo hasta el final.",
+                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Video atractivo y con colores vivos que resaltan el agua cristalina. El objetivo es que quien lo vea sienta el deseo inmediato de ir.",
+                vT_BuggyEspuma: "Buggy Espuma Party", vD_BuggyEspuma: "Pura energía. Cortes rápidos al ritmo de la música mostrando el desorden divertido de la fiesta de espuma. Formato ideal para TikTok e Instagram Reels.",
+                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Grabado en primera persona para que se sienta la velocidad y el lodo. Un video sin filtros que conecta directo con el público joven.",
+                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Un recorrido visual que resalta la comodidad y exclusividad del lugar. Movimientos suaves de cámara que transmiten relajación.",
+                vT_Giveaway: "Giveaway Semana Santa", vD_Giveaway: "Video promocional directo al grano. Letras grandes y llamativas para que la gente entienda rápido cómo participar y ganar.",
+                procTitle: "Proceso", p1T: "Diagnóstico", p1D: "Identificación de problemas visuales, de lectura o de desorden en los diseños actuales de la marca.", p2T: "Sistema", p2D: "Definición de reglas claras para los colores, letras y el orden de la información para que todo se vea como una misma familia.", p3T: "Aplicación", p3D: "Creación de los diseños finales para empaques, exhibidores, redes o encartes, asegurando que la marca se vea impecable.", p4T: "Control", p4D: "Revisión de todos los materiales para garantizar que el diseño mantenga su calidad a medida que la marca crece.",
+                profLabel: "Perfil", profTitle: "Diseño comercial estratégico para cualquier formato.", profP1: "Trabajo en proyectos donde una marca debe verse bien y vender, sin importar si es en un supermercado, en redes sociales o en la calle.", profP2: "Esto exige buen ojo y tomar decisiones basadas en resultados: que el cliente entienda rápido, que la marca se vea impecable y que destaque frente a la competencia.", profP3: "Mi enfoque es crear diseños versátiles que resuelvan problemas reales y ayuden a tu negocio a crecer, sea cual sea el formato.", focLabel: "Enfoque", f1T: "Campañas y Promociones", f1D: "Piezas con mucha información diseñadas para que se lean rápido y claro.", f2T: "Diseño de Empaques", f2D: "Empaques atractivos que resaltan en la góndola y mantienen el orden visual de la marca.", f3T: "Exhibidores y Materiales", f3D: "Materiales de punto de venta que llaman la atención y guían al cliente a comprar.", f4T: "Diseño Global", f4D: "Capacidad para adaptar la misma calidad visual a redes sociales, impresos y cualquier otro medio.",
+                conLabel: "Contacto", conTitle: "Disponible para proyectos donde el diseño realmente ayude a vender más.", conDesc: "Si tu marca necesita verse mejor, destacar frente a la competencia y tener materiales que llamen la atención, hablemos.", locLabel: "Ubicación", specLabel: "Especialidad", dispLabel: "Disponibilidad", specVal: "Supermercados, Empaques y Exhibidores", dispVal: "Proyectos / Remoto y Presencial",
+                btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados."
             },
             en: {
-                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", role: "Senior Commercial Designer", loc: "Commercial Systems", country: "Dominican Republic", hero1: "COMMERCIAL", hero2: "SYSTEMS.", heroDesc: "Visual architecture, packaging design, and retail campaigns structured to dominate the shelf and multiply your revenue.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", clickHint: "[ Click to view fullscreen ]", navCta: "START PROJECT",
-                z1Meta1: "Packaging", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design to scale without losing order.", z1Summary: "Architectural restructuring of packaging. We eliminated consumer visual friction through a scalable and direct color-coding system.", z1RetoTxt: "The line suffered from visual cannibalization. New products diluted the brand and confused the buyer at the key moment of decision.", z1EnfoqueTxt: "Implementation of a strict brand block. Relentless hierarchy where the main benefit dominates 40% of the packaging front.", z1ResTxt: "Drastic reduction in shelf scanning time. The brand now visually dominates against imported competitors.",
-                z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Editorial campaign designed to handle density.", z2Summary: "Editorial engineering for retail. A system designed to process high product density without sacrificing value perception or legibility.", z2RetoTxt: "The previous insert was pure visual noise. We needed to inject promotional aggressiveness without making the brand feel cheap or chaotic.", z2EnfoqueTxt: "Strict mathematical grid. Strategic use of negative space to guide the eye directly to the main offers.", z2ResTxt: "Increase in consumer reading speed. Higher traffic directed to hot promotional zones in-store.",
-                z3Meta1: "POP & Display", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Display designed to organize and sell better.", z3Summary: "Visual system applied to commercial display to order categories, reinforce signage, and improve brand visibility at point of sale.", z3RetoTxt: "A display was needed to help organize product, communicate benefits, and reinforce brand within a competitive environment.", z3EnfoqueTxt: "Category segmentation, visible signage, and a structure designed to operate as a commercial touchpoint.", z3ResTxt: "The display gained order, visibility, and commercial function, becoming a useful piece within the point of sale.",
-                hMeta1: "Premium POP", hTitle1: "Melodramatic · premium endcap", hDesc1: "Premium display architecture. A visual anchor designed to interrupt traffic in the most saturated supermarket aisle.", h1Reto: "Create a display that stands out in the saturated cosmetics environment without losing the brand's luxury essence.", h1Enfoque: "Use of dark tones, high contrast in typography and geometric architecture to capture attention.", h1Res: "Direct increase in attention capture. The display doesn't just show; it acts as a high-performance silent salesperson.",
-                hMeta2: "Promotional Editorial", hTitle2: "Advertising page for supermarket campaign 2025", hDesc2: "Editorial composition for print press with visual hierarchy oriented to reading and commercial trust.", h2Reto: "Communicate pricing aggressiveness without making the design feel cheap or chaotic.", h2Enfoque: "Strict grid system, balance of white space, and hierarchy of winning offers.", h2Res: "An insert that the consumer can scan in seconds, increasing traffic to key promotions.",
-                hMeta3: "Packaging Design", hTitle3: "Packaging design · Gold Selects", hDesc3: "Foolproof packaging system. Designed so the line can scale to 50+ products while maintaining absolute visual coherence.", h3Reto: "Homogenize a product family that had lost visual cohesion as new variants were added.", h3Enfoque: "Creation of a solid Master Graphic and a foolproof color coding system.", h3Res: "Total shelf dominance. The consumer doesn't see a product; they see an impossible-to-ignore brand block.",
-                hMeta4: "Retail POP", hTitle4: "Baby header · visual activation in retail", hDesc4: "Promotional piece developed to reinforce category visibility, commercial signage, and brand presence within the retail environment.", h4Reto: "Dominate a visually noisy category and guide parents directly to the product.", h4Enfoque: "Soft color psychology, friendly shapes, and hard info in the direct visual contact zone.", h4Res: "The aisle was organized, reducing search friction and accelerating the purchase decision.",
-                hMeta5: "Label Design", hTitle5: "Label design · Gold Selects Gourmet", hDesc5: "Visual proposal with gourmet codes oriented to perception of quality, tradition, and premium character.", h5Reto: "Elevate the perceived value of the product to justify a premium pricing positioning.", h5Enfoque: "Use of classic typography, clean visual finishes, and a minimalist European-inspired layout.", h5Res: "A product that defends itself visually against imported international brands.",
-                hMeta6: "POP", hTitle6: "Coco Dream Blend", hDesc6: "Display with soft and natural visual language to communicate hydration, freshness, and product origin.", h6Reto: "Connect emotionally with the consumer by appealing to natural ingredients in a split second.", h6Enfoque: "Immersive composition, tropical color palette, and hyper-realistic product photography.", h6Res: "An impossible-to-ignore display that communicates the main benefit instantly.",
-                reelsTitle: "Motion & Social", vaultTitle: "Operational Archive", 
-                vMeta1: "Beauty Editorial", vTitle1: "Beauty Promotion 2025", vDesc1: "Promotional insert with a refined tone for cosmetics and personal care, balancing elegance and commercial clarity.", v1R: "Create an insert that evokes luxury in a mass format.", v1E: "Refined tone, white balance, and editorial typography.", v1Re: "Increase in premium perception and higher conversion in the personal care category.",
-                vMeta2: "Social Media", vTitle2: "Retail IG & FB", vDesc2: "Promotional pieces focused on clarity, contrast, and fast reading for competitive digital environments.", v2R: "Stand out in the feed without losing the commercial pricing message.", v2E: "High contrast, reading hierarchy in 3 seconds, and giant product.", v2Re: "Higher click rate and interaction in social media advertising.",
-                vMeta5: "Packaging Design", vTitle5: "Pet Food Concept", vDesc5: "Packaging design proposal oriented to benefits, recall, and product presence within the pet category.", v5R: "Position a new product in a highly saturated category.", v5E: "Highlight nutritional benefits visually with a distinctive color palette.", v5Re: "Visually validated concept for physical production start.",
-                vMeta3: "Video & Social", vMeta4: "Motion",
-                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Capturing the raw, natural experience of the jump. The edit prioritizes ambient sound and dynamic cuts that convey the adrenaline of the moment, designed to generate high organic shareability.",
-                vT_Ballenas: "Humpback Whales", vD_Ballenas: "Visual documentation of open-ocean whale watching. The editing pace adapts to the majesty of the moment, using a deep, cold color palette to highlight the ocean's vastness and capture attention from the first second.",
-                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "A narrative of contrast: from mud and extreme trails to the nightlife energy of Congo Bar. A piece structured to showcase the full tour experience, keeping the viewer hooked until the party climax.",
-                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Aesthetic and aspirational focus. Stabilized shots and vibrant color correction highlight the crystal-clear water and white sand. The goal is to trigger immediate travel desire in the user.",
-                vT_BuggyEspuma: "Buggy Foam Party", vD_BuggyEspuma: "Pure visual energy. Fast cuts synced to the musical beat capture the fun chaos of the buggies and the explosion of the foam party. Native format for maximum retention on TikTok and Reels.",
-                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Total first-person immersion. The camera closely follows the action through mud and speed, stripping away unnecessary filters to show a real, dirty, and authentic adventure that connects with a young audience.",
-                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "A visual tour of the facilities highlighting the comfort and exclusivity of the destination. Fluid camera movements and smooth transitions build an atmosphere of relaxation and status.",
-                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Tactical promotional piece. High-impact typography, kinetic animations, and a straight-to-the-point message. Visually structured to guide the user's eye directly to the participation instructions.",
-                procTitle: "Process", p1T: "Diagnosis", p1D: "Identification of hierarchy, saturation, reading, and visual fragmentation problems according to the application context.", p2T: "System", p2D: "Definition of visual rules for hierarchy, contrast, coding, and repeatability between pieces and formats.", p3T: "Application", p3D: "Implementation in retail, packaging design, POP, promotional editorial, and visual support respecting context and brand coherence.", p4T: "Control", p4D: "Review of continuity and consistency to ensure the system continues to work as it grows.",
-                profLabel: "Profile", profTitle: "Commercial design with a systems approach, not isolated pieces.", profP1: "I work in contexts where a brand must be sustained across campaigns, packaging, promotions, display, promotional editorial, and point of sale without losing clarity or coherence.", profP2: "That demands visual judgment, system capacity, and decisions designed for real performance: reading, operational consistency, and brand presence in competitive environments.", profP3: "My focus is on building pieces that work within solid, useful, and sustainable visual systems for real commercial operation.", focLabel: "Focus", f1T: "Retail campaigns", f1D: "Promotional pieces with high visual density built for clarity, rhythm, and fast commercial reading.", f2T: "Packaging design", f2D: "Packaging systems with hierarchy, variant differentiation, and visual continuity when growing without losing order.", f3T: "POP & display", f3D: "Point of sale materials with functional signage, visibility, and reading by category in a real environment.", f4T: "Multi-format execution", f4D: "Ability to sustain the same visual logic across editorial, packaging, signage, display, and visual support.",
-                conLabel: "Contact", conTitle: "Available for projects and roles where design has real commercial impact.", conDesc: "If your team or brand needs more visual clarity, more consistency across formats, and a better-resolved execution in retail, packaging design, or POP, let's talk.", locLabel: "Location", specLabel: "Specialty", dispLabel: "Availability", specVal: "Retail, Packaging & POP", dispVal: "Projects / Remote & On-site",
-                btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved.", curExp: "Explore", curAmp: "Expand", curClic: "Click"
+                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", role: "Senior Commercial Designer", loc: "Commercial Design", country: "Dominican Republic", hero1: "COMMERCIAL", hero2: "DESIGN.", heroDesc: "Strategic design for brands that want to sell more. From packaging and displays to digital campaigns, I create visual solutions that make your product stand out in any market.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", navCta: "START PROJECT",
+                z1Meta1: "Packaging", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design for Cheese Sticks.", z1Summary: "Packaging design for cheese sticks, highlighting the product to make it look appetizing and stand out in the snack aisle.", z1RetoTxt: "Make the product catch the eye in an aisle full of colors and snack brands, where the customer buys on impulse.", z1EnfoqueTxt: "Large and provocative photography, bright colors that open the appetite, and clear letters that say exactly what it is.", z1ResTxt: "A packaging that provokes instant purchase and competes head-to-head with traditional brands.",
+                z2Meta1: "Supermarkets", z2Meta2: "Plaza Lama", z2Title: "Promotional insert for supermarket.", z2Summary: "Insert design focused on organizing a large number of offers without making the page look cluttered or messy.", z2RetoTxt: "Show many products and aggressive prices in the same space, maintaining a comfortable reading experience for the customer.", z2EnfoqueTxt: "Creation of clean visual blocks, highlighting hook products with strong contrast to guide the eye.", z2ResTxt: "An easy-to-read insert that helps the consumer find the best offers in seconds, driving traffic to the store.",
+                z3Meta1: "Displays", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Commercial display for Gold Care.", z3Summary: "Display furniture designed to organize shoe care products and gain presence in the aisle.", z3RetoTxt: "Group shoe polishes, brushes, and cleaners in a single place that looks neat and attractive.", z3EnfoqueTxt: "Design by categories, strong brand colors, and a space where the customer finds what they are looking for without wandering.", z3ResTxt: "A display that organizes the merchandise and acts as a silent salesperson.",
+                hMeta1: "Premium Display", hTitle1: "Premium endcap for Melodramatic wine", hDesc1: "High-impact display design to highlight this wine line in the supermarket's liquor area.", h1Reto: "Make the wine brand stand out in an aisle full of options, conveying elegance and quality.", h1Enfoque: "Use of dark tones, suggested lighting, and an imposing structure that elevates the product's perception.", h1Res: "A display that stops the customer in the aisle, increasing curiosity and brand sales.",
+                hMeta2: "Press & Offers", hTitle2: "Advertising page for Plaza Lama", hDesc2: "Press and print media design structured to communicate low prices with clarity and trust.", h2Reto: "Announce strong discounts without the brand losing its level or the design looking sloppy.", h2Enfoque: "Smart space distribution, large typography for prices, and a logical reading order.", h2Res: "Direct and effective communication that ensures the savings message reaches the customer without confusion.",
+                hMeta3: "Packaging Design", hTitle3: "Packaging design for Gold Selects Oatmeal", hDesc3: "Oatmeal bag redesign to organize information and make the product stand out on the shelf.", h3Reto: "Modernize the image without losing the brand's essence or confusing the regular customer.", h3Enfoque: "Clean colors to differentiate varieties and a direct design that shows nutritional benefits straight to the point.", h3Res: "A packaging that immediately catches the eye and makes it easier for the customer to find their favorite oatmeal.",
+                hMeta4: "Displays", hTitle4: "Endcap header for baby area", hDesc4: "Display material designed to signal and highlight the children's category in the supermarket.", h4Reto: "Catch the attention of parents in an aisle that is usually full of competing colors and brands.", h4Enfoque: "Use of soft colors, tender images, and direct messages that connect emotionally with the buyer.", h4Res: "A much more attractive and easy-to-locate area, improving the shopping experience for parents.",
+                hMeta5: "Label Design", hTitle5: "Label design for Gold Selects Salami", hDesc5: "Premium label design for deli meat, focused on projecting high quality and freshness in the supermarket fridge.", h5Reto: "Compete against traditional brands in the country, making the customer perceive this salami as a superior option.", h5Enfoque: "Use of black and gold to give status, strong typography, and a large transparent window to show the meat.", h5Res: "A product that immediately stands out in the deli area, conveying trust and quality.",
+                hMeta6: "Displays", hTitle6: "Display for Coco Dream Blend", hDesc6: "Display furniture with a fresh and tropical design to highlight this coconut-based drink.", h6Reto: "Convey the freshness and naturalness of the product in the few seconds the customer spends walking by.", h6Enfoque: "Use of bright colors, natural textures, and high-quality photos that provoke thirst and craving.", h6Res: "A striking point of sale that communicates the flavor and benefits of the product immediately.",
+                reelsTitle: "Videos & Social", vaultTitle: "More Projects", 
+                vMeta1: "Beauty Offers", vTitle1: "Beauty Insert 2025", vDesc1: "Promotional insert with a refined tone for cosmetics and personal care, balancing elegance and commercial clarity.", v1R: "Show beauty offers while maintaining an image of luxury and care.", v1E: "Clean design, white backgrounds, and elegant letters.", v1Re: "Better presentation of the category and higher purchase interest.",
+                vMeta2: "Social Media", vTitle2: "Social Media Arts", vDesc2: "Promotional pieces focused on clarity, contrast, and fast reading for mobile.", v2R: "Catch attention quickly on Instagram and Facebook without losing the offer's message.", v2E: "Large texts, striking colors, and the product as the protagonist.", v2Re: "More clicks and store visits from digital ads.",
+                vMeta5: "Packaging Design", vTitle5: "Dog Food Packaging", vDesc5: "Packaging design created to highlight benefits and gain presence in the pet aisle.", v5R: "Highlight a new product among so many dog food brands in the supermarket.", v5E: "Strong colors and clear nutritional benefits at a glance.", v5Re: "A solid design that competes strongly in the market.",
+                vMeta3: "Video & Social", vMeta4: "Promo Video",
+                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Video for social media showing the real experience of the jump. Fast cuts and ambient sound so people feel the adrenaline and want to share it.",
+                vT_Ballenas: "Humpback Whales", vD_Ballenas: "Video of the whale watching tour. Deep colors and a rhythm that captures attention from the first second to achieve more interaction.",
+                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "A video showing the complete adventure: from the mud in the buggies to the party at night. Made to keep people watching until the end.",
+                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Attractive video with bright colors that highlight the crystal clear water. The goal is for whoever sees it to feel the immediate desire to go.",
+                vT_BuggyEspuma: "Buggy Foam Party", vD_BuggyEspuma: "Pure energy. Fast cuts to the rhythm of the music showing the fun mess of the foam party. Ideal format for TikTok and Instagram Reels.",
+                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Recorded in first person so you can feel the speed and the mud. A video without filters that connects directly with the young audience.",
+                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "A visual tour that highlights the comfort and exclusivity of the place. Smooth camera movements that convey relaxation.",
+                vT_Giveaway: "Giveaway Semana Santa", vD_Giveaway: "Straight to the point promotional video. Large and striking letters so people quickly understand how to participate and win.",
+                procTitle: "Process", p1T: "Diagnosis", p1D: "Identification of visual, reading, or clutter problems in the brand's current designs.", p2T: "System", p2D: "Definition of clear rules for colors, letters, and information order so everything looks like the same family.", p3T: "Application", p3D: "Creation of final designs for packaging, displays, social media, or inserts, ensuring the brand looks impeccable.", p4T: "Control", p4D: "Review of all materials to ensure the design maintains its quality as the brand grows.",
+                profLabel: "Profile", profTitle: "Strategic commercial design for any format.", profP1: "I work on projects where a brand must look good and sell, whether in a supermarket, on social media, or on the street.", profP2: "This requires a good eye and making decisions based on results: that the customer understands quickly, that the brand looks impeccable, and that it stands out from the competition.", profP3: "My focus is to create versatile designs that solve real problems and help your business grow, whatever the format.", focLabel: "Focus", f1T: "Campaigns & Promotions", f1D: "Pieces with a lot of information designed to be read quickly and clearly.", f2T: "Packaging Design", f2D: "Attractive packaging that stands out on the shelf and maintains the brand's visual order.", f3T: "Displays & Materials", f3D: "Point of sale materials that catch the eye and guide the customer to buy.", f4T: "Global Design", f4D: "Ability to adapt the same visual quality to social media, print, and any other medium.",
+                conLabel: "Contact", conTitle: "Available for projects where design really helps sell more.", conDesc: "If your brand needs to look better, stand out from the competition, and have materials that catch the eye, let's talk.", locLabel: "Location", specLabel: "Specialty", dispLabel: "Availability", specVal: "Supermarkets, Packaging & Displays", dispVal: "Projects / Remote & On-site",
+                btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved."
             }
         };
 
@@ -987,6 +987,7 @@
                     renderer.setSize(window.innerWidth, window.innerHeight);
                     cameraDark.aspect = window.innerWidth / window.innerHeight; cameraDark.updateProjectionMatrix();
                     cameraLight.aspect = window.innerWidth / window.innerHeight; cameraLight.updateProjectionMatrix();
+                    if(typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
                 });
 
                 const renderWebGL = () => {
@@ -1032,7 +1033,6 @@
                 if(hWrapperEl) hRect = hWrapperEl.getBoundingClientRect();
 
                 if(window.innerWidth > 768) {
-                    const cp = document.getElementById('cursor-progress'); if(cp) cp.style.strokeDashoffset = 125 - (progress / 100) * 125;
                     const skew = Math.max(-5, Math.min(5, globalScrollVelocity * 0.2)); 
                     skewTargets.forEach(el => {
                         const rect = el.getBoundingClientRect(); 
@@ -1079,6 +1079,12 @@
                 let getScrollAmount = () => reelsTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.05);
                 gsap.to(reelsTrack, { x: () => -getScrollAmount(), ease: "none", scrollTrigger: { trigger: ".reels-wrapper", pin: true, scrub: 1, end: () => "+=" + (reelsTrack.scrollWidth) } });
             }
+
+            // FUNCIÓN DE LIMPIEZA PARA EVITAR BUGS AL REDIMENSIONAR
+            return () => {
+                gsap.killTweensOf('.z-layer, .layer-hero, .h-panel, .h-card, .parallax-img, .reels-track');
+                gsap.set('.z-layer, .layer-hero, .h-panel, .h-card, .parallax-img, .reels-track', { clearProps: "all" });
+            };
         });
 
         document.querySelectorAll('.magnetic-target').forEach(btn => {
@@ -1101,12 +1107,7 @@
                 setDotX(e.clientX); setDotY(e.clientY); setRingX(e.clientX); setRingY(e.clientY); 
             }, {passive: true});
             document.querySelectorAll('.hover-target').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    ring.classList.add('active');
-                    if(el.classList.contains('lb-trigger')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curAmp;
-                    else if(el.classList.contains('magnetic-target') || el.classList.contains('nav-link') || el.classList.contains('btn-cta-nav')) document.getElementById('cursor-text-ui').textContent = dict[currentLang].curClic;
-                    else document.getElementById('cursor-text-ui').textContent = dict[currentLang].curExp;
-                });
+                el.addEventListener('mouseenter', () => ring.classList.add('active'));
                 el.addEventListener('mouseleave', () => ring.classList.remove('active'));
             });
         }
@@ -1309,29 +1310,11 @@
 
         /* SMART HEADER LOGIC & DYNAMIC INVERSION */
         const navEl = document.getElementById('main-nav');
-        let lastScrollY = window.scrollY;
 
         window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            // 1. Lógica de Ocultar/Mostrar (Smart Header)
-            if (currentScrollY < 50) {
-                navEl.classList.remove('nav-hidden');
-            } else {
-                if (currentScrollY > lastScrollY) {
-                    navEl.classList.add('nav-hidden'); // Oculta al bajar
-                } else {
-                    navEl.classList.remove('nav-hidden'); // Muestra al subir
-                }
-            }
-            lastScrollY = currentScrollY;
-
-            // 2. Lógica de Inversión de Color (Adaptativo)
             let invert = false;
-            // Detectar si el header está sobre la sección clara (.h-wrapper)
             document.querySelectorAll('.h-wrapper').forEach(sec => {
                 const rect = sec.getBoundingClientRect();
-                // Si la sección clara está tocando la parte superior de la pantalla (donde está el header)
                 if(rect.top <= 40 && rect.bottom >= 40) {
                     invert = true;
                 }
