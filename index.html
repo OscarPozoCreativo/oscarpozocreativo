@@ -96,7 +96,7 @@
         .cursor-ring.active .cursor-text { opacity: 1; }
 
         /* HUD NAVEGACIÓN */
-        nav { position: fixed; top: 0; width: 100%; padding: clamp(20px, 3vh, 30px) clamp(20px, 4vw, 40px); display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; transform: translateZ(0); mix-blend-mode: difference; color: #fff; transition: opacity 0.4s ease;}
+        nav { position: fixed; top: 0; width: 100%; padding: clamp(20px, 3vh, 30px) clamp(20px, 4vw, 40px); display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; transform: translateZ(0); mix-blend-mode: difference; color: #fff;}
         .hud-left { display: flex; flex-direction: row; align-items: center; gap: 40px; pointer-events: auto; }
         .hud-logo { display: flex; align-items: center; }
         .hud-logo img { width: 40px; height: 40px; transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), filter 0.5s; filter: var(--logo-filter); transform: translateZ(0); }
@@ -139,7 +139,7 @@
         .scroll-indicator span { font-family: var(--font-display); font-size: 7px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 3px; }
         @keyframes scrollDrop { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
 
-        /* MONOLITOS RESPONSIVE */
+        /* MONOLITOS RESPONSIVE (AJUSTADOS PARA LAPTOPS) */
         .monolith { 
             width: 85vw; max-width: 1200px; 
             height: clamp(350px, 60vh, 600px); 
@@ -208,7 +208,7 @@
         .click-hint { margin-top: clamp(10px, 2vh, 20px); font-family: var(--font-display); font-weight: 700; font-size: 7px; color: var(--accent-dark); letter-spacing: 2px; text-transform: uppercase; }
 
         /* ==========================================================================
-           SECCIÓN REELS / VIDEOS VERTICALES
+           SECCIÓN REELS / VIDEOS VERTICALES (FULL HEIGHT PARA SCROLLJACKING)
            ========================================================================== */
         .reels-wrapper { 
             height: 100vh; 
@@ -268,10 +268,9 @@
         .video-badge svg { width: 10px; height: 10px; fill: var(--accent); }
         .video-badge span { font-family: var(--font-display); font-size: 7px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
         
-        .target-img, .reel-bg { z-index: 1; }
         .hover-video {
             position: absolute; inset: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: 2; opacity: 0; pointer-events: none;
+            object-fit: cover; z-index: 1; opacity: 0; pointer-events: none;
             transform: scale(1.05); transition: transform 0.5s;
         }
         .reel-item:hover .hover-video { transform: scale(1); }
@@ -298,7 +297,7 @@
         .p-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; }
         .p-desc { color: var(--muted); font-size: 0.95rem; line-height: 1.6; }
 
-        .profile-wrapper { padding: 120px 5vw; border-top: 1px solid var(--border); overflow: hidden; }
+        .profile-wrapper { padding: 120px 5vw; border-top: 1px solid var(--border); }
         .profile-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; max-width: 1400px; margin: 0 auto; }
         .profile-main .t-eyebrow { margin-bottom: 20px; display: block; font-family: var(--font-display); font-size: 8px; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 700;}
         .profile-main .t-title { font-size: clamp(1.5rem, 3vw, 2.2rem); margin-bottom: 30px; font-family: var(--font-display); text-transform: uppercase; }
@@ -339,54 +338,25 @@
         .ai-typing { display: inline-block; width: 8px; height: 16px; background: var(--accent); animation: blink 1s infinite; margin-left: 5px; vertical-align: middle; transform: translateZ(0); }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        /* ==========================================================================
-           LIGHTBOX CINEMÁTICO (AMBILIGHT + GLASSMORPHISM OPTIMIZADO)
-           ========================================================================== */
-        .lightbox { position: fixed; inset: 0; background: #050505; z-index: 1000000; display: none; opacity: 0; align-items: center; justify-content: center; overflow: hidden; will-change: opacity; }
+        /* LIGHTBOX NATIVO ACTUALIZADO PARA VIDEO */
+        .lightbox { position: fixed; inset: 0; background: var(--modal-bg); z-index: 1000000; display: none; opacity: 0; transition: opacity 0.4s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(20px); align-items: center; justify-content: center; transform: translateZ(0); }
+        .lightbox.active { display: flex; opacity: 1; }
+        .lightbox__dialog { width: 95vw; height: clamp(500px, 85vh, 900px); max-width: 1400px; display: grid; grid-template-columns: 1fr clamp(300px, 30vw, 400px); background: var(--modal-panel); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; box-shadow: 0 30px 100px rgba(0,0,0,0.5); transform: scale(0.95); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .lightbox.active .lightbox__dialog { transform: scale(1); }
+        .lightbox__main { display: flex; align-items: center; justify-content: center; background: #050505; padding: clamp(15px, 3vw, 40px); position: relative; overflow: hidden; }
         
-        /* El Aura Cinemática de fondo (Optimizado para GPU) */
-        .lightbox__ambient {
-            position: absolute; inset: -10%; width: 120%; height: 120%;
-            background-size: cover; background-position: center;
-            filter: blur(60px) saturate(150%); opacity: 0;
-            z-index: 0; pointer-events: none;
-            transform: translateZ(0); will-change: opacity, background-image;
-        }
-
-        .lightbox__dialog { 
-            position: relative; z-index: 1;
-            width: 95vw; height: clamp(500px, 85vh, 900px); max-width: 1400px; 
-            display: grid; grid-template-columns: 1fr clamp(300px, 30vw, 400px); 
-            background: rgba(10, 10, 10, 0.4); 
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; overflow: hidden; 
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8); 
-            will-change: transform, opacity;
-        }
+        .lightbox__img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s; transform: translateZ(0); outline: none; }
         
-        .lightbox__main { display: flex; align-items: center; justify-content: center; background: transparent; padding: clamp(15px, 3vw, 40px); position: relative; overflow: hidden; }
-        
-        .lightbox__img { 
-            max-width: 100%; max-height: 100%; object-fit: contain; 
-            border-radius: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.6); 
-            transform: translateZ(0); outline: none; 
-        }
-        
-        .lightbox__side { 
-            padding: clamp(20px, 3vw, 50px); 
-            border-left: 1px solid rgba(255,255,255,0.05); 
-            background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0.4)); 
-            overflow-y: auto; display: flex; flex-direction: column; 
-        }
+        .lightbox__side { padding: clamp(20px, 3vw, 50px); border-left: 1px solid var(--border); background: var(--modal-panel); overflow-y: auto; display: flex; flex-direction: column; }
         .lightbox__side h3 { font-family: var(--font-display); font-size: clamp(1.1rem, 1.5vw, 1.4rem); font-weight: 700; margin: 0 0 clamp(15px, 2vh, 20px); line-height: 1.3; color: var(--text); text-transform: uppercase; }
-        .lightbox__side .project-details { font-size: clamp(0.85rem, 1vw, 1.05rem); line-height: 1.5; color: rgba(255,255,255,0.7); }
+        .lightbox__side .project-details { font-size: clamp(0.85rem, 1vw, 1.05rem); line-height: 1.5; color: var(--muted); }
         
-        .lb-nav { position: absolute; top: 50%; transform: translate3d(0, -50%, 0); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: var(--text); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; pointer-events: auto; }
+        .lb-nav { position: absolute; top: 50%; transform: translate3d(0, -50%, 0); background: var(--border); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; pointer-events: auto; }
         .lb-nav:hover { background: var(--text); color: #000; scale: 1.1; }
         .lb-nav svg { width: 24px; height: 24px; fill: currentColor; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         .lb-prev { left: 20px; }
         .lb-next { right: 20px; }
-        .lb-close { position: absolute; top: 30px; right: 30px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); color: var(--text); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-display); font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto; transform: translateZ(0); }
+        .lb-close { position: absolute; top: 30px; right: 30px; background: var(--border); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; font-family: var(--font-display); font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1); z-index: 10; display: flex; align-items: center; justify-content: center; pointer-events: auto; transform: translateZ(0); }
         .lb-close:hover { background: var(--text); color: #000; transform: scale(1.1) translateZ(0); }
 
         /* FOOTER FIX */
@@ -394,24 +364,13 @@
         .footer-container { width: 100%; max-width: 1400px; margin: 0 auto; }
         .footer-grid { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
         .footer-logo-wrap { display: block; pointer-events: auto; }
-        .footer-logo { max-height: 95px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
+        .footer-logo { max-height: 55px; width: auto; filter: var(--logo-filter); transform: translateZ(0); }
         .footer-grid span { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
         .footer-links { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
         .footer-links a, .footer-links button { appearance: none; border: 0; background: transparent; padding: 0; color: var(--muted); font-family: var(--font-display); font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; text-decoration: none; pointer-events: auto; text-transform: uppercase; letter-spacing: 1px; }
         .footer-links a:hover, .footer-links button:hover { color: var(--text); transform: translateY(-2px); }
 
         /* DISEÑO MÓVIL ESTRICTO */
-        @media (max-width: 1024px) {
-            .hud-cmd, .hud-status { display: none; }
-            .monolith, .h-card { grid-template-columns: 1fr; height: auto; max-height: 85vh; overflow-y: auto; }
-            .m-img-wrap, .h-img-wrap { height: 35vh; }
-            .m-content, .h-info { padding: 30px; }
-            .profile-grid, .terminal-grid { grid-template-columns: 1fr; }
-            .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 95vh; }
-            .lightbox__side { border-left: none; border-top: 1px solid rgba(255,255,255,0.1); padding: 30px; }
-            .reels-wrapper { height: auto; padding: 80px 0 80px 5vw; }
-        }
-        
         @media (max-width: 768px) {
             nav { padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
             .hud-left { gap: 0; }
@@ -419,40 +378,51 @@
             .btn-cta-nav { padding: 0 16px; font-size: 8px; }
             .cursor-dot, .cursor-ring { display: none !important; }
             body.custom-cursor * { cursor: auto !important; }
+            
             #webgl-canvas { display: none !important; } 
             body { background: #050505; }
+            
             .z-wrapper { height: auto; display: flex; flex-direction: column; overflow: visible; padding: 0 15px 30px; pointer-events: auto; background: #050505 !important; }
             .z-layer { position: relative; height: auto; margin-bottom: 30px; visibility: visible !important; pointer-events: auto !important; display: block; }
             .layer-hero { min-height: 100vh; min-height: 100svh; padding: 60px 0 0 0; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 40px; }
             .reveal-text { transform: none !important; } 
             .scroll-indicator { display: none; } 
+
             .m-img-wrap, .h-img-wrap { height: auto; aspect-ratio: 4/3; width: 100%; border-radius: 12px; overflow: hidden; background: #000 !important; }
             .target-img, .h-img, .v-bg { width: 100% !important; height: 100% !important; left: 0 !important; top: 0 !important; object-fit: cover !important; transform: scale(1) !important; filter: grayscale(0) brightness(1) !important; }
+            
             .h-wrapper { height: auto; overflow: visible; padding: 30px 15px; pointer-events: auto; background: #f0f1fa !important; color: #050505;}
             .h-container { width: 100%; height: auto; flex-direction: column; gap: 25px; }
             .h-panel { width: 100%; height: auto; padding: 0; }
             .h-card { background: #fff; border: 1px solid rgba(0,0,0,0.1); backdrop-filter: none; -webkit-backdrop-filter: none; height: auto;}
+            
             .m-content, .h-info { padding: 20px; }
             .m-title, .h-info h3 { font-size: 1.1rem; margin: 10px 0; }
             .m-summary { font-size: 0.85rem; margin-bottom: 15px; padding-bottom: 10px; }
             .m-item { margin-bottom: 15px; }
+            
             .reels-wrapper { padding: 60px 0 60px 15px; height: auto; }
             .reels-wrapper .section-header { margin-bottom: 20px; }
             .reels-track { padding: 10px 15px 30px 0; gap: 15px; overflow-x: auto; width: auto; scroll-snap-type: x mandatory; }
-            .reel-item { width: 75vw; border-radius: 16px; transform: none !important; scroll-snap-align: center; }
+            .reel-item { width: 75vw; border-radius: 16px; scroll-snap-align: center; }
+
             .vault-wrapper, .process-wrapper, .profile-wrapper, .terminal-wrapper { padding: 50px 15px; pointer-events: auto; background: #050505 !important; }
             .vault-grid { gap: 15px; }
             .p-card, .profile-sidebar, .t-panel { padding: 20px; background: #111; backdrop-filter: none;}
             .t-meta-grid { grid-template-columns: 1fr; }
-            .tilt-target, .skew-target { transform: none !important; } 
+            
+            /* Se eliminaron los overrides agresivos para permitir animaciones GSAP en móvil */
+            .tilt-target, .skew-target { transform: none !important; } /* Solo desactiva el tilt 3D en móvil */
             .monolith { background: #111; backdrop-filter: none; -webkit-backdrop-filter: none; pointer-events: auto !important; height: auto;}
+            
             .lightbox__dialog { grid-template-columns: 1fr; grid-template-rows: 55% 45%; height: 95vh; border-radius: 12px; }
             .lightbox__main { padding: 15px; }
-            .lightbox__side { padding: 20px; border-left: none; border-top: 1px solid rgba(255,255,255,0.1); }
+            .lightbox__side { padding: 20px; border-left: none; border-top: 1px solid var(--border); }
             .lb-close { top: 10px; right: 10px; width: 35px; height: 35px; font-size: 14px; background: rgba(0,0,0,0.5); border:none; z-index: 20; color: #fff;}
             .lb-nav { width: 35px; height: 35px; background: rgba(0,0,0,0.5); border: none; color: #fff;}
             .lb-prev { left: 10px; }
             .lb-next { right: 10px; }
+            
             .footer-grid { flex-direction: column; text-align: center; gap: 30px; }
             .footer-links { justify-content: center; }
             .site-footer { background: #050505 !important; }
@@ -461,41 +431,83 @@
 </head>
 <body>
 
-    <div id="system-init"><div class="loader-terminal"><span data-i18n="bootInit">ESTABLECIENDO CONEXIÓN ASÍNCRONA...</span><span class="loader-pct" id="loader-pct">[000%]</span></div></div>
+    <!-- PRELOADER -->
+    <div id="system-init">
+        <div class="loader-terminal">
+            <span data-i18n="bootInit">ESTABLECIENDO CONEXIÓN ASÍNCRONA...</span>
+            <span class="loader-pct" id="loader-pct">[000%]</span>
+        </div>
+    </div>
+
+    <!-- EFECTOS BASE -->
     <div id="progress-bar"></div>
     <canvas id="webgl-canvas"></canvas>
     <div class="noise-overlay"></div>
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" id="cursor-progress"></circle></svg><span class="cursor-text" id="cursor-text-ui">Explorar</span></div>
 
-    <nav id="main-nav">
+    <!-- CURSOR BIOMÉTRICO -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-ring">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" id="cursor-progress"></circle></svg>
+        <span class="cursor-text" id="cursor-text-ui">Explorar</span>
+    </div>
+
+    <!-- HUD NAVEGACIÓN -->
+    <nav>
         <div class="hud-left">
-            <a href="#" class="hud-logo hover-target magnetic-target" tabindex="0" aria-label="Inicio"><img src="assets/favicon-light.png" alt="Oscar Pozo Logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI1IiBmaWxsPSJub25lIi8+PC9zdmc+'"></a>
-            <div class="hud-controls"><button class="ctrl-btn hover-target magnetic-target" id="btn-lang" data-lang="es" tabindex="0">ES / EN</button><button class="ctrl-btn hover-target active magnetic-target" id="btn-audio" tabindex="0">SFX: ON</button></div>
+            <a href="#" class="hud-logo hover-target magnetic-target" tabindex="0" aria-label="Inicio">
+                <img src="assets/favicon-light.png" alt="Oscar Pozo Logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0MCIgc3Ryb2tlPSJ3aGl0ZSIgc3Ryb2tlLXdpZHRoPSI1IiBmaWxsPSJub25lIi8+PC9zdmc+'">
+            </a>
+            <div class="hud-controls">
+                <button class="ctrl-btn hover-target magnetic-target" id="btn-lang" data-lang="es" tabindex="0">ES / EN</button>
+                <button class="ctrl-btn hover-target active magnetic-target" id="btn-audio" tabindex="0">SFX: ON</button>
+            </div>
         </div>
-        <div class="hud-cmd"><button class="btn-cmd magnetic-target hover-target" id="btn-cmd" data-i18n="cmdAsk" tabindex="0">Preguntar a la IA <span>⌘K</span></button></div>
+        <div class="hud-cmd">
+            <button class="btn-cmd magnetic-target hover-target" id="btn-cmd" data-i18n="cmdAsk" tabindex="0">Preguntar a la IA <span>⌘K</span></button>
+        </div>
         <div class="hud-right">
-            <div class="hud-status"><strong data-i18n="role">Diseñador Comercial Senior</strong><br><span data-i18n="loc">Sistemas Comerciales</span></div>
+            <div class="hud-status">
+                <strong data-i18n="role">Diseñador Comercial Senior</strong><br>
+                <span data-i18n="loc">Sistemas Comerciales</span>
+            </div>
             <a href="#contacto" class="btn-cta-nav magnetic-target hover-target" data-i18n="navCta">INICIAR PROYECTO</a>
         </div>
     </nav>
 
+    <!-- PALETA DE COMANDOS -->
     <div id="cmd-palette">
         <div class="cmd-dialog">
-            <div class="cmd-header"><svg class="cmd-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg><input type="text" class="cmd-input" id="cmd-input" placeholder="Haz una pregunta sobre Oscar Pozo..." autocomplete="off"></div>
-            <div class="cmd-body" id="cmd-body"><span data-i18n="cmdStart">Escribe cualquier duda sobre mi experiencia, servicios o costos. La inteligencia artificial integrada analizará la intención y te responderá al instante.</span></div>
+            <div class="cmd-header">
+                <svg class="cmd-icon" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 14z"/></svg>
+                <input type="text" class="cmd-input" id="cmd-input" placeholder="Haz una pregunta sobre Oscar Pozo..." autocomplete="off">
+            </div>
+            <div class="cmd-body" id="cmd-body">
+                <span data-i18n="cmdStart">Escribe cualquier duda sobre mi experiencia, servicios o costos. La inteligencia artificial integrada analizará la intención y te responderá al instante.</span>
+            </div>
         </div>
     </div>
 
+    <!-- MOTOR Z-SCROLL -->
     <section class="z-wrapper">
         <div class="z-layer layer-hero">
-            <h1 class="hero-title"><span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">SISTEMAS</span></span><br><span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIALES.</span></span></h1>
+            <h1 class="hero-title">
+                <span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">SISTEMAS</span></span><br>
+                <span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIALES.</span></span>
+            </h1>
             <p class="hero-desc" data-i18n="heroDesc" style="opacity:0; transform:translateY(20px);">Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.</p>
-            <div class="scroll-indicator"><div class="scroll-line"></div><span data-i18n="scrollDown">SCROLL</span></div>
+            
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span data-i18n="scrollDown">SCROLL</span>
+            </div>
         </div>
+
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque para crecer sin perder orden." data-i18n-title="z1Title">
-                <div class="m-img-wrap"><img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img" decoding="async"><img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only" decoding="async"></div>
+                <div class="m-img-wrap">
+                    <img data-src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page4.webp" alt="Diseño de empaque Gold Selects Plaza Lama" class="sr-only" decoding="async">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z1Meta1">Empaque</span><span data-i18n="z1Meta2">Gold Selects / Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z1Title">Diseño de empaque para crecer sin perder orden.</h2>
@@ -508,9 +520,13 @@
                 </div>
             </article>
         </div>
+
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Campaña editorial diseñada para soportar densidad promocional sin perder claridad." data-i18n-title="z2Title">
-                <div class="m-img-wrap"><img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img" decoding="async"><img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only" decoding="async"></div>
+                <div class="m-img-wrap">
+                    <img data-src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page11.webp" alt="Campaña editorial Plaza Lama" class="sr-only" decoding="async">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z2Meta1">Retail</span><span data-i18n="z2Meta2">Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z2Title">Campaña editorial diseñada para soportar densidad.</h2>
@@ -523,9 +539,13 @@
                 </div>
             </article>
         </div>
+
         <div class="z-layer">
             <article class="monolith hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Exhibición diseñada para organizar, señalar y vender mejor." data-i18n-title="z3Title">
-                <div class="m-img-wrap"><img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img" decoding="async"><img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only" decoding="async"></div>
+                <div class="m-img-wrap">
+                    <img data-src="assets/page13.webp" alt="Exhibición POP Gold Care" class="m-img target-img lazy-img" decoding="async">
+                    <img src="assets/page13.webp" alt="Exhibición POP Gold Care" class="sr-only" decoding="async">
+                </div>
                 <div class="m-content">
                     <div class="m-meta"><span data-i18n="z3Meta1">POP y exhibición</span><span data-i18n="z3Meta2">Gold Care / Plaza Lama</span></div>
                     <h2 class="m-title" data-i18n="z3Title">Exhibición diseñada para organizar y vender mejor.</h2>
@@ -540,12 +560,16 @@
         </div>
     </section>
 
+    <!-- MOTOR HORIZONTAL -->
     <section class="h-wrapper" id="casos">
         <div class="h-container">
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Melodramatic · punta de góndola premium" data-i18n-title="hTitle1">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page1.webp" alt="Melodramatic punta de góndola premium" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta1">POP premium</span><span>Melodramatic</span></div>
                         <h3 data-i18n="hTitle1">Melodramatic · punta de góndola premium</h3>
@@ -562,7 +586,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Página publicitaria para campaña supermercado 2025" data-i18n-title="hTitle2">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page3.webp" alt="Página publicitaria campaña supermercado 2025" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta2">Editorial promocional</span><span>Plaza Lama</span></div>
                         <h3 data-i18n="hTitle2">Página publicitaria para campaña supermercado 2025</h3>
@@ -579,7 +606,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · Gold Selects" data-i18n-title="hTitle3">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page5.webp" alt="Diseño de empaque Gold Selects" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta3">Diseño de empaque</span><span>Gold Selects / Plaza Lama</span></div>
                         <h3 data-i18n="hTitle3">Diseño de empaque · Gold Selects</h3>
@@ -596,7 +626,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cabezal de bebé · activación visual en retail" data-i18n-title="hTitle4">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page15.webp" alt="Cabezal de bebé activación visual en retail" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta4">POP retail</span><span>Plaza Lama</span></div>
                         <h3 data-i18n="hTitle4">Cabezal de bebé · activación visual en retail</h3>
@@ -613,7 +646,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de etiqueta · Gold Selects Gourmet" data-i18n-title="hTitle5">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page6.webp" alt="Diseño de etiqueta Gold Selects Gourmet" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta5">Diseño de etiqueta</span><span>Gold Selects Gourmet / Plaza Lama</span></div>
                         <h3 data-i18n="hTitle5">Diseño de etiqueta · Gold Selects Gourmet</h3>
@@ -630,7 +666,10 @@
             <div class="h-panel">
                 <article class="h-card hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Coco Dream Blend" data-i18n-title="hTitle6">
                     <div class="card-glare"></div>
-                    <div class="h-img-wrap"><img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img" decoding="async"><img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only" decoding="async"></div>
+                    <div class="h-img-wrap">
+                        <img data-src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="h-img target-img parallax-img lazy-img" decoding="async">
+                        <img src="assets/page12.webp" alt="Coco Dream Blend exhibición POP" class="sr-only" decoding="async">
+                    </div>
                     <div class="h-info">
                         <div class="m-meta"><span data-i18n="hMeta6">POP</span><span>Coco Dream Blend / Plaza Lama</span></div>
                         <h3 data-i18n="hTitle6">Coco Dream Blend</h3>
@@ -647,97 +686,181 @@
         </div>
     </section>
 
+    <!-- ===================================================================================
+         NUEVO: CARRUSEL HORIZONTAL DE VIDEOS VERTICALES (APPLE/VERCEL 3D STYLE)
+         =================================================================================== -->
     <section class="reels-wrapper" id="audiovisual">
         <div class="section-header"><h2 class="has-reveal" data-i18n="reelsTitle">Motion & Social</h2></div>
+        
         <div class="reels-track">
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Salto Alto de Bayaguana" data-i18n-title="vT_Bayaguana" data-video-full="assets/Salto-Alto-De-Bayaguana-full.mp4">
+            
+            <!-- VIDEO 1: Salto Alto De Bayaguana -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Salto Alto de Bayaguana" data-i18n-title="vT_Bayaguana"
+                data-video-full="assets/Salto-Alto-De-Bayaguana-full.mp4" 
+                data-video-hover="assets/Salto-Alto-De-Bayaguana-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-bayaguana.webp" alt="Salto Alto de Bayaguana" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Salto-Alto-De-Bayaguana-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Bayaguana">Salto Alto de Bayaguana</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Bayaguana">Captura de la experiencia cruda y natural del salto. La edición prioriza el sonido ambiente y cortes dinámicos que transmiten la adrenalina del momento, diseñado para generar un alto índice de compartidos (shareability) orgánicos.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_Bayaguana">Cinematografía de aventura y naturaleza. Edición dinámica enfocada en retención de audiencia para plataformas verticales.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Ballenas Jorobadas Cayo Levantado" data-i18n-title="vT_Ballenas" data-video-full="assets/Ballenas-Jorobadas-Cayo-Levantado-full.mp4">
+
+            <!-- VIDEO 2: Ballenas Jorobadas Cayo Levantado -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Ballenas Jorobadas Cayo Levantado" data-i18n-title="vT_Ballenas"
+                data-video-full="assets/Ballenas-Jorobadas-Cayo-Levantado-full.mp4" 
+                data-video-hover="assets/Ballenas-Jorobadas-Cayo-Levantado-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-ballenas.webp" alt="Ballenas Jorobadas Cayo Levantado" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Ballenas-Jorobadas-Cayo-Levantado-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Ballenas">Ballenas Jorobadas</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Ballenas">Documentación visual del avistamiento en mar abierto. El ritmo de edición se adapta a la majestuosidad del momento, utilizando una paleta de colores fríos y profundos para resaltar la inmensidad del océano y captar la atención desde el primer segundo.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_Ballenas">Experiencia inmersiva de naturaleza. Color grading y diseño sonoro optimizado para maximizar el CTR en pauta publicitaria.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Buggy Punta Cana Congo Bar" data-i18n-title="vT_BuggyCongo" data-video-full="assets/Buggy-De-Punta-Cana-Con-Congo-Bar-full.mp4">
+
+            <!-- VIDEO 3: Buggy De Punta Cana Con Congo Bar -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Buggy Punta Cana Congo Bar" data-i18n-title="vT_BuggyCongo"
+                data-video-full="assets/Buggy-De-Punta-Cana-Con-Congo-Bar-full.mp4" 
+                data-video-hover="assets/Buggy-De-Punta-Cana-Con-Congo-Bar-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-congo.webp" alt="Buggy Punta Cana Congo Bar" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Buggy-De-Punta-Cana-Con-Congo-Bar-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_BuggyCongo">Buggy Congo Bar</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyCongo">Narrativa de contraste: del lodo y la ruta extrema a la energía nocturna del Congo Bar. Una pieza estructurada para mostrar la experiencia completa del tour, manteniendo al espectador enganchado hasta el clímax de la fiesta.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_BuggyCongo">Transición de aventura diurna a energía nocturna. Edición de alto impacto visual para captar atención en los primeros 3 segundos.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Cayo Arena" data-i18n-title="vT_CayoArena" data-video-full="assets/Cayo-Arena-full.mp4">
+
+            <!-- VIDEO 4: Cayo Arena -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Cayo Arena" data-i18n-title="vT_CayoArena"
+                data-video-full="assets/Cayo-Arena-full.mp4" 
+                data-video-hover="assets/Cayo-Arena-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-arena.webp" alt="Cayo Arena" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Cayo-Arena-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_CayoArena">Cayo Arena</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_CayoArena">Enfoque estético y aspiracional. Tomas estabilizadas y corrección de color vibrante que resaltan la transparencia del agua y la arena blanca. El objetivo es despertar el deseo inmediato de viaje (FOMO) en el usuario.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_CayoArena">Estética tropical premium. Tomas aéreas y corrección de color avanzada para posicionar el destino como una experiencia de alto valor.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Buggy Punta Cana Espuma Party" data-i18n-title="vT_BuggyEspuma" data-video-full="assets/Buggy-De-Punta-Cana-Con-Espuma-Party-2-full.mp4">
+
+            <!-- VIDEO 5: Buggy De Punta Cana Con Espuma Party 2 -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Buggy Punta Cana Espuma Party" data-i18n-title="vT_BuggyEspuma"
+                data-video-full="assets/Buggy-De-Punta-Cana-Con-Espuma-Party-2-full.mp4" 
+                data-video-hover="assets/Buggy-De-Punta-Cana-Con-Espuma-Party-2-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-espuma.webp" alt="Buggy Punta Cana Espuma Party" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Buggy-De-Punta-Cana-Con-Espuma-Party-2-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_BuggyEspuma">Buggy Espuma Party</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_BuggyEspuma">Pura energía visual. Cortes rápidos sincronizados con el beat musical que capturan el caos divertido de los buggys y la explosión de la fiesta de espuma. Formato nativo para retención máxima en TikTok y Reels.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_BuggyEspuma">Pieza diseñada para interacción masiva. Cortes rápidos y sincronización musical pensada específicamente para el algoritmo de TikTok y Reels.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Four Wheels Boca Chica" data-i18n-title="vT_FourWheels" data-video-full="assets/Four-Wheels-Boca-Chica-Amigosxsiempretours-full.mp4">
+
+            <!-- VIDEO 6: Four Wheels Boca Chica -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Four Wheels Boca Chica" data-i18n-title="vT_FourWheels"
+                data-video-full="assets/Four-Wheels-Boca-Chica-Amigosxsiempretours-full.mp4" 
+                data-video-hover="assets/Four-Wheels-Boca-Chica-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-fourwheels.webp" alt="Four Wheels Boca Chica" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Four-Wheels-Boca-Chica-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_FourWheels">Four Wheels Boca Chica</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_FourWheels">Inmersión total en primera persona. La cámara sigue la acción de cerca a través del lodo y la velocidad, eliminando filtros innecesarios para mostrar una aventura real, sucia y auténtica que conecta con el público joven.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_FourWheels">Acción en primera persona. Narrativa visual cruda y directa para transmitir adrenalina y acelerar la decisión de reserva del usuario.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Fricolandia" data-i18n-title="vT_Fricolandia" data-video-full="assets/Fricolandia-full.mp4">
+
+            <!-- VIDEO 7: Fricolandia -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Fricolandia" data-i18n-title="vT_Fricolandia"
+                data-video-full="assets/Fricolandia-full.mp4" 
+                data-video-hover="assets/Fricolandia-hover.mp4">
+                <div class="reel-glare"></div>
+                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
                 <img data-src="assets/thumb-fricolandia.webp" alt="Fricolandia" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Fricolandia-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
-                <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta3">Video y redes</span><h4 data-i18n="vT_Fricolandia">Fricolandia</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Fricolandia">Recorrido visual por las instalaciones destacando el confort y la exclusividad del destino. Movimientos de cámara fluidos y transiciones suaves que construyen una atmósfera de relajación y estatus.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_Fricolandia">Turismo de lujo accesible. Composición visual limpia y tomas estratégicas para elevar la percepción de marca del destino.</p>
+                </div>
             </article>
-            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Giveaway Semana Santa" data-i18n-title="vT_Giveaway" data-video-full="assets/Giveaway-Semana-Santa-full.mp4">
-                <img data-src="assets/thumb-giveaway.webp" alt="Giveaway Semana Santa" class="reel-bg target-img lazy-img" decoding="async">
-                <video class="hover-video" src="assets/Giveaway-Semana-Santa-hover.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="reel-overlay"></div><div class="reel-glare"></div>
+
+            <!-- VIDEO 8: Giveaway Semana Santa -->
+            <article class="reel-item hover-target lb-trigger" tabindex="0" role="button" aria-label="Abrir proyecto" 
+                data-title="Giveaway Semana Santa" data-i18n-title="vT_Giveaway"
+                data-video-full="assets/Giveaway-Semana-Santa-full.mp4" 
+                data-video-hover="assets/Giveaway-Semana-Santa-hover.mp4">
+                <div class="reel-glare"></div>
                 <div class="video-badge"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span>Play</span></div>
+                <img data-src="assets/thumb-giveaway.webp" alt="Giveaway Semana Santa" class="reel-bg target-img lazy-img" decoding="async">
+                <div class="reel-overlay"></div>
                 <div class="reel-info"><span data-i18n="vMeta4">Motion</span><h4 data-i18n="vT_Giveaway">Giveaway SS25</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vD_Giveaway">Pieza promocional táctica. Tipografía de alto impacto, animaciones cinéticas y un mensaje directo al grano. Estructurado visualmente para guiar el ojo del usuario directamente hacia las instrucciones de participación.</p></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vD_Giveaway">Motion Graphics táctico. Animación cinética y CTAs ultra claros diseñados específicamente para generar viralidad y conversión orgánica.</p>
+                </div>
             </article>
+
         </div>
     </section>
 
+    <!-- LA BÓVEDA FINAL (ESTÁTICOS) -->
     <section class="vault-wrapper" id="mas-trabajo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="vaultTitle">Archivo Operativo</h2></div>
         <div class="vault-grid">
+            
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promoción de Belleza 2025" data-i18n-title="vTitle1">
-                <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only" decoding="async">
+                <img data-src="assets/page14.webp" alt="Promoción de Belleza 2025" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page14.webp" alt="Promoción de Belleza 2025" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta1">Editorial belleza</span><h4 data-i18n="vTitle1">Promoción de Belleza 2025</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v1R">Crear un encarte que evoque lujo en un formato masivo.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v1E">Tono refinado, balance de blancos y tipografía editorial.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v1Re">Aumento en percepción premium y mayor conversión en la categoría cuidado personal.</p></div></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vDesc1">Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.</p>
+                    <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v1R">Crear un encarte que evoque lujo en un formato masivo.</p></div>
+                    <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v1E">Tono refinado, balance de blancos y tipografía editorial.</p></div>
+                    <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v1Re">Aumento en percepción premium y mayor conversión en la categoría cuidado personal.</p></div>
+                </div>
             </article>
+            
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Promociones retail para Instagram y Facebook" data-i18n-title="vTitle2">
-                <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only" decoding="async">
+                <img data-src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page2.webp" alt="Promociones retail para Instagram y Facebook" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta2">Redes sociales</span><h4 data-i18n="vTitle2">Retail IG & FB</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v2R">Sobresalir en el feed sin perder el mensaje comercial de precio.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v2E">Alto contraste, jerarquía de lectura en 3 segundos y producto gigante.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v2Re">Mayor CTR (Click Through Rate) en pauta publicitaria de redes.</p></div></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vDesc2">Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.</p>
+                    <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v2R">Sobresalir en el feed sin perder el mensaje comercial de precio.</p></div>
+                    <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v2E">Alto contraste, jerarquía de lectura en 3 segundos y producto gigante.</p></div>
+                    <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v2Re">Mayor CTR (Click Through Rate) en pauta publicitaria de redes.</p></div>
+                </div>
             </article>
+
             <article class="v-item hover-target lb-trigger tilt-target skew-target" tabindex="0" role="button" aria-label="Abrir proyecto" data-title="Diseño de empaque · alimento para perros" data-i18n-title="vTitle5">
-                <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img" decoding="async"><img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only" decoding="async">
+                <img data-src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="v-bg target-img lazy-img" decoding="async">
+                <img src="assets/page7.webp" alt="Diseño de empaque alimento para perros" class="sr-only" decoding="async">
                 <div class="v-info"><span data-i18n="vMeta5">Diseño de empaque</span><h4 data-i18n="vTitle5">Concepto Alimento para Perros</h4></div>
-                <div class="project-details" style="display:none;"><p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p><div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v5R">Posicionar un nuevo producto en una categoría altamente saturada.</p></div><div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v5E">Resaltar beneficios nutricionales visualmente con paleta de colores distintiva.</p></div><div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v5Re">Concepto visual sólidamente validado para inicio de producción física.</p></div></div>
+                <div class="project-details" style="display:none;">
+                    <p class="m-summary" data-i18n="vDesc5">Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.</p>
+                    <div class="m-item"><strong data-i18n="reto">Reto</strong><p data-i18n="v5R">Posicionar un nuevo producto en una categoría altamente saturada.</p></div>
+                    <div class="m-item"><strong data-i18n="enfoque">Enfoque</strong><p data-i18n="v5E">Resaltar beneficios nutricionales visualmente con paleta de colores distintiva.</p></div>
+                    <div class="m-item"><strong data-i18n="resultado">Resultado</strong><p data-i18n="v5Re">Concepto visual sólidamente validado para inicio de producción física.</p></div>
+                </div>
             </article>
         </div>
     </section>
 
+    <!-- PROCESO OPERATIVO -->
     <section class="process-wrapper" id="metodo">
         <div class="section-header"><h2 class="has-reveal" data-i18n="procTitle">Proceso</h2></div>
         <div class="process-grid">
@@ -754,31 +877,15 @@
             <div class="profile-main">
                 <span class="t-eyebrow" data-i18n="profLabel">Perfil</span>
                 <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño comercial con criterio de sistema, no de pieza aislada.</h2>
-                
-                <!-- NUEVO: CONTENEDOR DE FOTO INTEGRADA -->
-<div class="profile-bio-wrap" style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap;">
-    
-    <!-- LA FOTO (Filtros corregidos para recuperar detalle en sombras) -->
-    <div class="profile-avatar tilt-target" style="flex: 0 0 220px; height: 250px; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--border); background: #050505;">
-        <img src="assets/oscar-profile.webp" alt="Oscar Pozo" style="width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.05) brightness(1.1);">
-        <!-- Gradiente para fundir la parte inferior de la foto -->
-        <div style="position: absolute; inset: 0; background: linear-gradient(to top, #020202 0%, transparent 30%); pointer-events: none;"></div>
-    </div>
-
-    <div style="flex: 1; min-width: 250px;">
-        <p data-i18n="profP1">Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.</p>
-        <p data-i18n="profP2">Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.</p>
-    </div>
-</div>
-                
+                <p data-i18n="profP1">Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.</p>
+                <p data-i18n="profP2">Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.</p>
                 <p data-i18n="profP3">Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.</p>
             </div>
-            
             <div class="profile-sidebar tilt-target">
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
                     <div class="t-focus-item"><strong data-i18n="f1T">Campañas retail</strong><span data-i18n="f1D">Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuity visual al crecer sin perder orden.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de empaque</strong><span data-i18n="f2D">Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f3T">POP y exhibición</strong><span data-i18n="f3D">Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.</span></div>
                     <div class="t-focus-item"><strong data-i18n="f4T">Ejecución multiformato</strong><span data-i18n="f4D">Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, display y soporte visual.</span></div>
                 </div>
@@ -786,6 +893,7 @@
         </div>
     </section>
 
+    <!-- TERMINAL DE CONTACTO -->
     <section class="terminal-wrapper" id="contacto">
         <div class="terminal-grid">
             <div class="t-panel tilt-target">
@@ -808,18 +916,32 @@
         </div>
     </section>
 
+    <!-- FOOTER FIX -->
     <footer class="site-footer">
         <div class="footer-container footer-grid">
-            <div><a href="#" class="footer-logo-wrap hover-target magnetic-target"><img src="assets/logo.png" alt="Oscar Pozo Creativo" class="footer-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMjAiPjx0ZXh0IHg9IjAiIHk9IjE1IiBmaWxsPSIjNDBCNUU1IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+T3NjYXIgUG96byBDcmVhdGl2bzwvdGV4dD48L3N2Zz4='"></a></div>
-            <div class="footer-links"><button type="button" id="backToTop" class="hover-target magnetic-target" data-i18n="btnTop">Volver arriba</button><a href="#casos" class="hover-target nav-link magnetic-target" data-i18n="navPort">Portafolio</a><a href="#metodo" class="hover-target nav-link magnetic-target" data-i18n="navProc">Proceso</a></div>
+            <div>
+                <a href="#" class="footer-logo-wrap hover-target magnetic-target">
+                    <img src="assets/logo.png" alt="Oscar Pozo Creativo" class="footer-logo" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMjAiPjx0ZXh0IHg9IjAiIHk9IjE1IiBmaWxsPSIjNDBCNUU1IiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCI+T3NjYXIgUG96byBDcmVhdGl2bzwvdGV4dD48L3N2Zz4='">
+                </a>
+            </div>
+            <div class="footer-links">
+                <button type="button" id="backToTop" class="hover-target magnetic-target" data-i18n="btnTop">Volver arriba</button>
+                <a href="#casos" class="hover-target nav-link magnetic-target" data-i18n="navPort">Portafolio</a>
+                <a href="#metodo" class="hover-target nav-link magnetic-target" data-i18n="navProc">Proceso</a>
+            </div>
             <div><span data-i18n="footRights">© 2026 Oscar Pozo Creativo. Todos los derechos reservados.</span></div>
         </div>
     </footer>
 
+    <!-- LIGHTBOX NATIVO ACTUALIZADO -->
     <div class="lightbox" id="lightbox">
-        <div class="lightbox__ambient" id="lb-ambient"></div>
-        <button class="lb-nav lb-prev hover-target magnetic-target" id="lb-prev" aria-label="Anterior"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="lb-nav lb-next hover-target magnetic-target" id="lb-next" aria-label="Siguiente"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+        <button class="lb-nav lb-prev hover-target magnetic-target" id="lb-prev" aria-label="Anterior">
+            <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="lb-nav lb-next hover-target magnetic-target" id="lb-next" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+
         <button class="lb-close hover-target magnetic-target" id="lb-close" aria-label="Cerrar">X</button>
         <div class="lightbox__dialog">
             <div class="lightbox__main" id="lb-media-container"></div>
@@ -827,89 +949,145 @@
         </div>
     </div>
 
+    <!-- SCRIPTS CORE -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+    <!-- SCRIPT MAESTRO BLINDADO -->
     <script>
     document.addEventListener("DOMContentLoaded", () => {
         
-        // FORZAR SCROLL AL INICIO AL RECARGAR
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-
-        try { gsap.registerPlugin(ScrollTrigger); gsap.ticker.fps(0); gsap.ticker.lagSmoothing(0, 0); } catch(e){}
+        try { 
+            gsap.registerPlugin(ScrollTrigger); 
+            gsap.ticker.fps(0); 
+            gsap.ticker.lagSmoothing(0, 0); 
+        } catch(e){}
+        
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
         let currentLang = 'es';
         const dict = {
             es: {
-                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", cmdAsk: "Preguntar a la IA <span>⌘K</span>", cmdStart: "Escribe cualquier duda sobre mi experiencia, tarifas o disponibilidad. Mi motor lógico responderá al instante.", role: "Diseñador Comercial Senior", loc: "Sistemas Comerciales", country: "República Dominicana", hero1: "SISTEMAS", hero2: "COMERCIALES.", heroDesc: "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", clickHint: "[ Clic para visualizar pantalla completa ]", navCta: "INICIAR PROYECTO",
+                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...",
+                cmdAsk: "Preguntar a la IA <span>⌘K</span>", cmdStart: "Escribe cualquier duda sobre mi experiencia, tarifas o disponibilidad. Mi motor lógico responderá al instante.",
+                role: "Diseñador Comercial Senior", loc: "Sistemas Comerciales", country: "República Dominicana",
+                hero1: "SISTEMAS", hero2: "COMERCIALES.", heroDesc: "Arquitectura visual, diseño de empaque y campañas de retail estructuradas para dominar el anaquel y multiplicar tu facturación.",
+                scrollDown: "SCROLL",
+                reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", clickHint: "[ Clic para visualizar pantalla completa ]",
+                navCta: "INICIAR PROYECTO",
+                
                 z1Meta1: "Empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para crecer sin perder orden.", z1Summary: "Sistema visual desarrollado para ordenar variantes, beneficios y categorías, manteniendo reconocimiento de marca y consistencia en anaquel.", z1RetoTxt: "La línea necesitaba diferenciar productos y beneficios sin romper unidad visual ni perder legibilidad en un contexto de compra rápida.", z1EnfoqueTxt: "Jerarquía de marca dominante, codificación por categoría y reglas visuales listas para escalar a nuevas referencias.", z1ResTxt: "La línea ganó orden, diferenciación y continuity, dejando un sistema más sólido para competir en anaquel.",
                 z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Campaña editorial diseñada para soportar densidad.", z2Summary: "Sistema editorial promocional desarrollado para organizar ofertas, precios, categorías y mensajes dentro de campaigns de alta rotación.", z2RetoTxt: "Condensar promociones y categorías sin convertir la comunicación en ruido gráfico ni sacrificar comprensión inmediata.", z2EnfoqueTxt: "Jerarquía editorial, bloques delimitados y una estructura modular capaz de repetirse con consistencia.", z2ResTxt: "La comunicación ganó orden, velocidad de lectura y una campaña más confiable para operación promocional intensiva.",
                 z3Meta1: "POP y exhibición", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibición diseñada para organizar y vender mejor.", z3Summary: "Sistema visual aplicado a exhibición comercial para ordenar categorías, reforzar señalización y mejorar visibilidad de marca en punto de venta.", z3RetoTxt: "Se necesitaba una exhibición que ayudara a organizar producto, comunicar beneficios y reforzar marca dentro de un entorno competitivo.", z3EnfoqueTxt: "Segmentación por categoría, señalización visible y una estructura pensada para operar como punto de contacto comercial.", z3ResTxt: "La exhibición ganó orden, visibilidad y función comercial, convirtiéndose en una pieza útil dentro del punto de venta.",
+                
                 hMeta1: "POP premium", hTitle1: "Melodramatic · punta de góndola premium", hDesc1: "Concepto visual oscuro y elegante para reforzar presencia de marca y visibilidad en exhibición comercial.", h1Reto: "Crear una exhibición que destaque en el saturado entorno de cosméticos sin perder la esencia de lujo de la marca.", h1Enfoque: "Uso de tonos oscuros, alto contraste en la tipografía y arquitectura geométrica para captar la atención.", h1Res: "Una pieza de POP que funciona como un ancla visual, aumentando la tasa de interacción del comprador en el pasillo.",
                 hMeta2: "Editorial promocional", hTitle2: "Página publicitaria para campaña supermercado 2025", hDesc2: "Composición editorial para prensa escrita con jerarquía visual orientada a lectura y confianza comercial.", h2Reto: "Comunicar agresividad en precios sin que el diseño se perciba barato o caótico.", h2Enfoque: "Sistema de retícula estricta, balance de espacios en blanco y jerarquización de ofertas ganadoras.", h2Res: "Un encarte que el consumidor puede escanear en segundos, incrementando el tráfico hacia las promociones clave.",
                 hMeta3: "Diseño de empaque", hTitle3: "Diseño de empaque · Gold Selects", hDesc3: "Sistema visual de empaque desarrollado para reforzar diferenciación, lectura rápida y consistencia de línea.", h3Reto: "Homogeneizar una familia de productos que había perdido cohesión visual a medida que se añadían nuevas variantes.", h3Enfoque: "Creación de un Master Graphic sólido y un sistema de codificación por color a prueba de fallos.", h3Res: "Bloqueo de marca impecable en el anaquel. El consumidor identifica la línea inmediatamente.",
                 hMeta4: "POP retail", hTitle4: "Cabezal de bebé · activación visual en retail", hDesc4: "Pieza promocional desarrollada para reforzar visibilidad de categoría, señalización comercial y presencia de marca dentro del entorno retail.", h4Reto: "Dominar una categoría visualmente ruidosa y guiar a los padres directamente al producto.", h4Enfoque: "Psicología del color suave, formas amigables e información dura en la zona de contacto visual directo.", h4Res: "El pasillo se organizó, reduciendo la fricción de búsqueda y acelerando la decisión de compra.",
                 hMeta5: "Diseño de etiqueta", hTitle5: "Diseño de etiqueta · Gold Selects Gourmet", hDesc5: "Propuesta visual con códigos gourmet orientada a percepción de calidad, tradición y carácter premium.", h5Reto: "Elevar el valor percibido del producto para justify un posicionamiento de precio superior (Premiumization).", h5Enfoque: "Uso de tipografías clásicas, acabados visuales limpios y un layout minimalista de inspiración europea.", h5Res: "Un producto que se defiende visualmente contra marcas internacionales importadas.",
                 hMeta6: "POP", hTitle6: "Coco Dream Blend", hDesc6: "Exhibidor con lenguaje visual suave y natural para comunicar hidratación, frescura y origen del producto.", h6Reto: "Conectar emocionalmente con el consumidor apelando a los ingredientes naturales en un segundo de visualización.", h6Enfoque: "Composición inmersiva, paleta de colores tropicales y fotografía de producto hiperrealista.", h6Res: "Un display imposible de ignorar que comunica el beneficio principal de manera instantánea.",
-                reelsTitle: "Motion & Social", vaultTitle: "Archivo Operativo", 
+                
+                reelsTitle: "Motion & Social",
+                vaultTitle: "Archivo Operativo", 
                 vMeta1: "Editorial belleza", vTitle1: "Promoción de Belleza 2025", vDesc1: "Encarte promocional con tono refinado para cosmética y cuidado personal, equilibrando elegancia y claridad comercial.", v1R: "Crear un encarte que evoque lujo en un formato masivo.", v1E: "Tono refinado, balance de blancos y tipografía editorial.", v1Re: "Aumento en percepción premium y mayor conversión en la categoría cuidado personal.",
                 vMeta2: "Redes sociales", vTitle2: "Retail IG & FB", vDesc2: "Piezas promocionales con foco en claridad, contraste y lectura rápida para entornos digitales competitivos.", v2R: "Sobresalir en el feed sin perder el mensaje comercial de precio.", v2E: "Alto contraste, jerarquía de lectura en 3 segundos y producto gigante.", v2Re: "Mayor CTR (Click Through Rate) en pauta publicitaria de redes.",
                 vMeta5: "Diseño de empaque", vTitle5: "Concepto Alimento para Perros", vDesc5: "Propuesta de diseño de empaque orientada a beneficios, recordación y presencia de producto dentro de la categoría mascotas.", v5R: "Posicionar un nuevo producto en una categoría altamente saturada.", v5E: "Resaltar beneficios nutricionales visualmente con paleta de colores distintiva.", v5Re: "Concepto visual sólidamente validado para inicio de producción física.",
+                
                 vMeta3: "Video y redes", vMeta4: "Motion",
-                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Captura de la experiencia cruda y natural del salto. La edición prioriza el sonido ambiente y cortes dinámicos que transmiten la adrenalina del momento, diseñado para generar un alto índice de compartidos (shareability) orgánicos.",
-                vT_Ballenas: "Ballenas Jorobadas", vD_Ballenas: "Documentación visual del avistamiento en mar abierto. El ritmo de edición se adapta a la majestuosidad del momento, utilizando una paleta de colores fríos y profundos para resaltar la inmensidad del océano y captar la atención desde el primer segundo.",
-                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "Narrativa de contraste: del lodo y la ruta extrema a la energía nocturna del Congo Bar. Una pieza estructurada para mostrar la experiencia completa del tour, manteniendo al espectador enganchado hasta el clímax de la fiesta.",
-                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Enfoque estético y aspiracional. Tomas estabilizadas y corrección de color vibrante que resaltan la transparencia del agua y la arena blanca. El objetivo es despertar el deseo inmediato de viaje (FOMO) en el usuario.",
-                vT_BuggyEspuma: "Buggy Espuma Party", vD_BuggyEspuma: "Pura energía visual. Cortes rápidos sincronizados con el beat musical que capturan el caos divertido de los buggys y la explosión de la fiesta de espuma. Formato nativo para retención máxima en TikTok y Reels.",
-                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Inmersión total en primera persona. La cámara sigue la acción de cerca a través del lodo y la velocidad, eliminando filtros innecesarios para mostrar una aventura real, sucia y auténtica que conecta con el público joven.",
-                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Recorrido visual por las instalaciones destacando el confort y la exclusividad del destino. Movimientos de cámara fluidos y transiciones suaves que construyen una atmósfera de relajación y estatus.",
-                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Pieza promocional táctica. Tipografía de alto impacto, animaciones cinéticas y un mensaje directo al grano. Estructurado visualmente para guiar el ojo del usuario directamente hacia las instrucciones de participación.",
+                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Cinematografía de aventura y naturaleza. Edición dinámica enfocada en retención de audiencia para plataformas verticales.",
+                vT_Ballenas: "Ballenas Jorobadas", vD_Ballenas: "Experiencia inmersiva de naturaleza. Color grading y diseño sonoro optimizado para maximizar el CTR en pauta publicitaria.",
+                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "Transición de aventura diurna a energía nocturna. Edición de alto impacto visual para captar atención en los primeros 3 segundos.",
+                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Estética tropical premium. Tomas aéreas y corrección de color avanzada para posicionar el destino como una experiencia de alto valor.",
+                vT_BuggyEspuma: "Buggy Espuma Party", vD_BuggyEspuma: "Pieza diseñada para interacción masiva. Cortes rápidos y sincronización musical pensada específicamente para el algoritmo de TikTok y Reels.",
+                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Acción en primera persona. Narrativa visual cruda y directa para transmitir adrenalina y acelerar la decisión de reserva del usuario.",
+                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Turismo de lujo accesible. Composición visual limpia y tomas estratégicas para elevar la percepción de marca del destino.",
+                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Motion Graphics táctico. Animación cinética y CTAs ultra claros diseñados específicamente para generar viralidad y conversión orgánica.",
+
                 procTitle: "Proceso", p1T: "Diagnóstico", p1D: "Identificación de problemas de jerarquía, saturación, lectura y fragmentación visual según el contexto de aplicación.", p2T: "Sistema", p2D: "Definición de reglas visuales para jerarquía, contraste, codificación y repetibilidad entre piezas y formatos.", p3T: "Aplicación", p3D: "Implementación en retail, diseño de empaque, POP, editorial promocional y soporte visual respetando contexto y coherencia de marca.", p4T: "Control", p4D: "Revisión de continuity y consistencia para asegurar que el sistema siga funcionando a medida que crece.",
                 profLabel: "Perfil", profTitle: "Diseño comercial con criterio de sistema, no de pieza aislada.", profP1: "Trabajo en contextos donde una marca debe sostenerse entre campañas, empaques, promociones, exhibición, editorial promocional y punto de venta sin perder claridad ni coherencia.", profP2: "Eso exige criterio visual, capacidad de sistema y decisiones pensadas para rendimiento real: lectura, consistencia operativa y presencia de marca en entornos competitivos.", profP3: "Mi enfoque está en construir piezas que funcionen dentro de sistemas visuales sólidos, útiles y sostenibles para operación comercial real.", focLabel: "Enfoque", f1T: "Campañas retail", f1D: "Piezas promocionales con alta densidad visual construidas para claridad, ritmo y lectura comercial rápida.", f2T: "Diseño de empaque", f2D: "Sistemas de empaque con jerarquía, diferenciación por variante y continuidad visual al crecer sin perder orden.", f3T: "POP y exhibición", f3D: "Materiales de punto de venta con señalización funcional, visibilidad y lectura por categoría en entorno real.", f4T: "Ejecución multiformato", f4D: "Capacidad para sostener una misma lógica visual entre editorial, empaque, señalización, display y soporte visual.",
                 conLabel: "Contacto", conTitle: "Disponible para proyectos y roles donde el diseño tenga impacto comercial real.", conDesc: "Si tu equipo o tu marca necesita más claridad visual, más consistencia entre formatos y una ejecución mejor resuelta en retail, diseño de empaque o POP, conversemos.", locLabel: "Ubicación", specLabel: "Especialidad", dispLabel: "Disponibilidad", specVal: "Retail, Empaque & POP", dispVal: "Senior / Colaboración Híbrida",
-                btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados.", curExp: "Explorar", curAmp: "Ampliar", curClic: "Clic"
+                btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados.",
+                curExp: "Explorar", curAmp: "Ampliar", curClic: "Clic"
             },
             en: {
-                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", cmdAsk: "Ask AI <span>⌘K</span>", cmdStart: "Type any question about my experience, rates, or availability. The logical engine will answer instantly.", role: "Senior Commercial Designer", loc: "Commercial Systems", country: "Dominican Republic", hero1: "COMMERCIAL", hero2: "SYSTEMS.", heroDesc: "Visual architecture, packaging design, and retail campaigns structured to dominate the shelf and multiply your revenue.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", clickHint: "[ Click to view fullscreen ]", navCta: "START PROJECT",
+                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...",
+                cmdAsk: "Ask AI <span>⌘K</span>", cmdStart: "Type any question about my experience, rates, or availability. The logical engine will answer instantly.",
+                role: "Senior Commercial Designer", loc: "Commercial Systems", country: "Dominican Republic",
+                hero1: "COMMERCIAL", hero2: "SYSTEMS.", heroDesc: "Visual architecture, packaging design, and retail campaigns structured to dominate the shelf and multiply your revenue.",
+                scrollDown: "SCROLL",
+                reto: "Challenge", enfoque: "Approach", resultado: "Result", clickHint: "[ Click to view fullscreen ]",
+                navCta: "START PROJECT",
+                
                 z1Meta1: "Packaging", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design to scale without losing order.", z1Summary: "Visual system developed to order variants, benefits, and categories, maintaining brand recognition and shelf consistency.", z1RetoTxt: "The line needed to differentiate products and benefits without breaking visual unity or losing legibility in a fast-purchase context.", z1EnfoqueTxt: "Dominant brand hierarchy, category coding, and visual rules ready to scale to new references.", z1ResTxt: "The line gained order, differentiation, and continuity, leaving a more solid system to compete on the shelf.",
                 z2Meta1: "Retail", z2Meta2: "Plaza Lama", z2Title: "Editorial campaign designed to handle density.", z2Summary: "Promotional editorial system developed to organize offers, prices, categories, and messages within high-rotation campaigns.", z2RetoTxt: "Condense promotions and categories without turning the communication into graphic noise or sacrificing immediate understanding.", z2EnfoqueTxt: "Editorial hierarchy, delimited blocks, and a modular structure capable of repeating with consistency.", z2ResTxt: "The communication gained order, reading speed, and a more reliable campaign for intensive promotional operation.",
                 z3Meta1: "POP & Display", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Display designed to organize and sell better.", z3Summary: "Visual system applied to commercial display to order categories, reinforce signage, and improve brand visibility at point of sale.", z3RetoTxt: "A display was needed to help organize product, communicate benefits, and reinforce brand within a competitive environment.", z3EnfoqueTxt: "Category segmentation, visible signage, and a structure designed to operate as a commercial touchpoint.", z3ResTxt: "The display gained order, visibility, and commercial function, becoming a useful piece within the point of sale.",
+                
                 hMeta1: "Premium POP", hTitle1: "Melodramatic · premium endcap", hDesc1: "Dark and elegant visual concept to reinforce brand presence and visibility in commercial display.", h1Reto: "Create a display that stands out in the saturated cosmetics environment without losing the brand's luxury essence.", h1Enfoque: "Use of dark tones, high contrast in typography and geometric architecture to capture attention.", h1Res: "A POP piece that functions as a visual anchor, increasing the shopper's interaction rate in the aisle.",
                 hMeta2: "Promotional Editorial", hTitle2: "Advertising page for supermarket campaign 2025", hDesc2: "Editorial composition for print press with visual hierarchy oriented to reading and commercial trust.", h2Reto: "Communicate pricing aggressiveness without making the design feel cheap or chaotic.", h2Enfoque: "Strict grid system, balance of white space, and hierarchy of winning offers.", h2Res: "An insert that the consumer can scan in seconds, increasing traffic to key promotions.",
                 hMeta3: "Packaging Design", hTitle3: "Packaging design · Gold Selects", hDesc3: "Packaging visual system developed to reinforce differentiation, fast reading, and line consistency.", h3Reto: "Homogenize a product family that had lost visual cohesion as new variants were added.", h3Enfoque: "Creation of a solid Master Graphic and a foolproof color coding system.", h3Res: "Impeccable brand blocking on the shelf. The consumer identifies the line immediately.",
                 hMeta4: "Retail POP", hTitle4: "Baby header · visual activation in retail", hDesc4: "Promotional piece developed to reinforce category visibility, commercial signage, and brand presence within the retail environment.", h4Reto: "Dominate a visually noisy category and guide parents directly to the product.", h4Enfoque: "Soft color psychology, friendly shapes, and hard info in the direct visual contact zone.", h4Res: "The aisle was organized, reducing search friction and accelerating the purchase decision.",
                 hMeta5: "Label Design", hTitle5: "Label design · Gold Selects Gourmet", hDesc5: "Visual proposal with gourmet codes oriented to perception of quality, tradition, and premium character.", h5Reto: "Elevate the perceived value of the product to justify a premium pricing positioning.", h5Enfoque: "Use of classic typography, clean visual finishes, and a minimalist European-inspired layout.", h5Res: "A product that defends itself visually against imported international brands.",
                 hMeta6: "POP", hTitle6: "Coco Dream Blend", hDesc6: "Display with soft and natural visual language to communicate hydration, freshness, and product origin.", h6Reto: "Connect emotionally with the consumer by appealing to natural ingredients in a split second.", h6Enfoque: "Immersive composition, tropical color palette, and hyper-realistic product photography.", h6Res: "An impossible-to-ignore display that communicates the main benefit instantly.",
-                reelsTitle: "Motion & Social", vaultTitle: "Operational Archive", 
-                vMeta1: "Beauty Editorial", vTitle1: "Beauty Promotion 2025", vDesc1: "Promotional insert with a refined tone for cosmetics and personal care, balancing elegance and commercial clarity.", v1R: "Create an insert that evokes luxury in a mass format.", v1E: "Refined tone, white balance, and editorial typography.", v1Re: "Increase in premium perception and higher conversion in the personal care category.",
+                
+                reelsTitle: "Motion & Social",
+                vaultTitle: "Operational Archive", vMeta1: "Beauty Editorial", vTitle1: "Beauty Promotion 2025", vDesc1: "Promotional insert with a refined tone for cosmetics and personal care, balancing elegance and commercial clarity.", v1R: "Create an insert that evokes luxury in a mass format.", v1E: "Refined tone, white balance, and editorial typography.", v1Re: "Increase in premium perception and higher conversion in the personal care category.",
                 vMeta2: "Social Media", vTitle2: "Retail IG & FB", vDesc2: "Promotional pieces focused on clarity, contrast, and fast reading for competitive digital environments.", v2R: "Stand out in the feed without losing the commercial pricing message.", v2E: "High contrast, reading hierarchy in 3 seconds, and giant product.", v2Re: "Higher CTR (Click Through Rate) in social media advertising.",
                 vMeta5: "Packaging Design", vTitle5: "Pet Food Concept", vDesc5: "Packaging design proposal oriented to benefits, recall, and product presence within the pet category.", v5R: "Position a new product in a highly saturated category.", v5E: "Highlight nutritional benefits visually with a distinctive color palette.", v5Re: "Visually validated concept for physical production start.",
+                
                 vMeta3: "Video & Social", vMeta4: "Motion",
-                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Capturing the raw, natural experience of the jump. The edit prioritizes ambient sound and dynamic cuts that convey the adrenaline of the moment, designed to generate high organic shareability.",
-                vT_Ballenas: "Humpback Whales", vD_Ballenas: "Visual documentation of open-ocean whale watching. The editing pace adapts to the majesty of the moment, using a deep, cold color palette to highlight the ocean's vastness and capture attention from the first second.",
-                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "A narrative of contrast: from mud and extreme trails to the nightlife energy of Congo Bar. A piece structured to showcase the full tour experience, keeping the viewer hooked until the party climax.",
-                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Aesthetic and aspirational focus. Stabilized shots and vibrant color correction highlight the crystal-clear water and white sand. The goal is to trigger immediate travel desire (FOMO) in the user.",
-                vT_BuggyEspuma: "Buggy Foam Party", vD_BuggyEspuma: "Pure visual energy. Fast cuts synced to the musical beat capture the fun chaos of the buggies and the explosion of the foam party. Native format for maximum retention on TikTok and Reels.",
-                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "Total first-person immersion. The camera closely follows the action through mud and speed, stripping away unnecessary filters to show a real, dirty, and authentic adventure that connects with a young audience.",
-                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "A visual tour of the facilities highlighting the comfort and exclusivity of the destination. Fluid camera movements and smooth transitions build an atmosphere of relaxation and status.",
-                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Tactical promotional piece. High-impact typography, kinetic animations, and a straight-to-the-point message. Visually structured to guide the user's eye directly to the participation instructions.",
+                vT_Bayaguana: "Salto Alto de Bayaguana", vD_Bayaguana: "Adventure and nature cinematography. Dynamic editing focused on audience retention for vertical platforms.",
+                vT_Ballenas: "Humpback Whales", vD_Ballenas: "Immersive nature experience. Color grading and sound design optimized to maximize CTR in advertising.",
+                vT_BuggyCongo: "Buggy Congo Bar", vD_BuggyCongo: "Transition from daytime adventure to nighttime energy. High-impact visual editing to capture attention in the first 3 seconds.",
+                vT_CayoArena: "Cayo Arena", vD_CayoArena: "Premium tropical aesthetics. Aerial shots and advanced color correction to position the destination as a high-value experience.",
+                vT_BuggyEspuma: "Buggy Foam Party", vD_BuggyEspuma: "Piece designed for massive interaction. Fast cuts and musical synchronization specifically designed for the TikTok and Reels algorithm.",
+                vT_FourWheels: "Four Wheels Boca Chica", vD_FourWheels: "First-person action. Raw and direct visual narrative to convey adrenaline and accelerate the user's booking decision.",
+                vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Accessible luxury tourism. Clean visual composition and strategic shots to elevate the destination's brand perception.",
+                vT_Giveaway: "Giveaway SS25", vD_Giveaway: "Tactical Motion Graphics. Kinetic animation and ultra-clear CTAs specifically designed to generate virality and organic conversion.",
+
                 procTitle: "Process", p1T: "Diagnosis", p1D: "Identification of hierarchy, saturation, reading, and visual fragmentation problems according to the application context.", p2T: "System", p2D: "Definition of visual rules for hierarchy, contrast, coding, and repeatability between pieces and formats.", p3T: "Application", p3D: "Implementation in retail, packaging design, POP, promotional editorial, and visual support respecting context and brand coherence.", p4T: "Control", p4D: "Review of continuity and consistency to ensure the system continues to work as it grows.",
                 profLabel: "Profile", profTitle: "Commercial design with a systems approach, not isolated pieces.", profP1: "I work in contexts where a brand must be sustained across campaigns, packaging, promotions, display, promotional editorial, and point of sale without losing clarity or coherence.", profP2: "That demands visual judgment, system capacity, and decisions designed for real performance: reading, operational consistency, and brand presence in competitive environments.", profP3: "My focus is on building pieces that work within solid, useful, and sustainable visual systems for real commercial operation.", focLabel: "Focus", f1T: "Retail campaigns", f1D: "Promotional pieces with high visual density built for clarity, rhythm, and fast commercial reading.", f2T: "Packaging design", f2D: "Packaging systems with hierarchy, variant differentiation, and visual continuity when growing without losing order.", f3T: "POP & display", f3D: "Point of sale materials with functional signage, visibility, and reading by category in a real environment.", f4T: "Multi-format execution", f4D: "Ability to sustain the same visual logic across editorial, packaging, signage, display, and visual support.",
                 conLabel: "Contact", conTitle: "Available for projects and roles where design has real commercial impact.", conDesc: "If your team or brand needs more visual clarity, more consistency across formats, and a better-resolved execution in retail, packaging design, or POP, let's talk.", locLabel: "Location", specLabel: "Specialty", dispLabel: "Availability", specVal: "Retail, Packaging & POP", dispVal: "Senior / Hybrid Collaboration",
-                btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved.", curExp: "Explore", curAmp: "Expand", curClic: "Click"
+                btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved.",
+                curExp: "Explore", curAmp: "Expand", curClic: "Click"
             }
         };
 
-        let isAnimDone = false; let isImgDone = false;
+        const aiDB = {
+            es:[
+                { id: "compliment", keys:['bonit', 'genial', 'excelente', 'increible', 'wow', 'cool', 'nice', 'hermoso', 'lindo'], res: "Aprecio tu agudeza visual. El diseño de alto nivel se reconoce de inmediato. ¿Te gustaría aplicar este estándar a tu marca? <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>Hablemos de negocios.</a>" },
+                { id: "tech", keys:['hecho', 'tecnologia', 'codigo', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "Este sistema corre sobre una arquitectura Vanilla JS, WebGL Shaders (Three.js) y CSS paramétrico a 120FPS. Rendimiento GPU puro. ¿Necesitas un sistema así para tu corporación?" },
+                { id: "insult", keys:['feo', 'malo', 'basura', 'mierda'], res: "La estética es subjetiva; las métricas de conversión no lo son. Mi arquitectura está diseñada para maximizar impacto en facturación. Si quieres debatir sobre rendimiento, <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>escribe a Oscar</a>." },
+                { id: "who", keys:['quien', 'quién eres', 'tu', 'tú', 'robot', 'ia', 'inteligencia'], res: "Soy el motor lógico detrás de esta interfaz. Mi objetivo es procesar tu solicitud y conectarte con Oscar Pozo si buscas diseño comercial escalable. ¿En qué te ayudo hoy?" },
+                { id: "design", keys:['diseño', 'arte', 'creatividad', 'que es', 'opinion', 'opinas'], res: "El diseño sin métricas es solo decoración. Aquí construimos sistemas visuales que dominan el anaquel y reducen la fricción de compra. ¿Deseas ver cómo lo aplicamos en Retail o Empaque?" },
+                { id: "joke", keys:['chiste', 'broma', 'gracioso', 'reir', 'divierteme'], res: "Mi algoritmo no tiene sentido del humor, pero te diré un chiste del sector: 'Haremos el logo un poco más grande'. Bromas aparte, ¿buscas optimizar la presencia visual de tu marca?" },
+                { id: "pricing", keys:['precio', 'costo', 'tarifa', 'cotizar', 'presupuesto', 'cobras', 'pagar', 'cuesta', 'cuanto', 'inversión'], res: "No manejo tarifas estándar. Como Diseñador Comercial Senior, evalúo cada sistema comercial según su escala, complejidad y el impacto en facturación esperado. Si tienes un proyecto serio, escríbeme a <a href='mailto:oscarpozo072@gmail.com' style='color:var(--accent)'>oscarpozo072@gmail.com</a>." },
+                { id: "contact", keys:['contacto', 'email', 'correo', 'whatsapp', 'hablar', 'reunión', 'llama', 'contactar'], res: "La vía más rápida para ejecutivos es escribirme un email a <a href='mailto:oscarpozo072@gmail.com' style='color:var(--accent)'>oscarpozo072@gmail.com</a>. También puedes enviarme un WhatsApp usando el botón al final del sitio." },
+                { id: "experience", keys:['experiencia', 'clientes', 'marcas', 'plaza', 'lama', 'años', 'portfolio', 'trabajos'], res: "Me especializo en marcas de alto volumen. He liderado estrategias comerciales y arquitectura visual para operaciones como Plaza Lama y Gold Selects, resolviendo problemas de anaquel y retail a gran escala." },
+                { id: "services", keys:['servicios', 'hacer', 'haces', 'empaque', 'pop', 'retail', 'ofreces', 'sabes', 'puedes', 'habilidades'], res: "Mis pilares de operación son: 1. Sistemas de Empaque Escalables. 2. Campañas de Retail de alta densidad. 3. Exhibición y POP táctico. Construyo ventaja competitiva, no solo estética." },
+                { id: "greeting", keys:['hola', 'buenas', 'saludos', 'buenos días', 'hey', 'que tal'], res: "Hola. Soy el asistente de datos de Oscar. Escribe términos clave como 'servicios', 'experiencia' o 'costos' y extraeré la información comercial que necesitas." }
+            ],
+            en:[
+                { id: "compliment", keys:['beautiful', 'great', 'awesome', 'cool', 'nice', 'amazing', 'wow', 'love', 'good'], res: "I appreciate your sharp eye. High-level design is instantly recognizable. Would you like to apply this standard to your brand? <a href='#contacto' style='color:var(--accent)' onclick='toggleCmd()'>Let's talk business.</a>" },
+                { id: "tech", keys:['made', 'technology', 'code', 'stack', 'framework', 'react', 'next', 'js', 'webgl'], res: "This system runs on Vanilla JS, WebGL Shaders (Three.js), and structured CSS at 120FPS. Pure GPU performance. Do you need a system like this for your corporation?" },
+                { id: "who", keys:['who', 'are you', 'robot', 'ai', 'intelligence'], res: "I am the logical engine behind this interface. My goal is to process your request and connect you with Oscar Pozo if you're looking for scalable commercial design. How can I help?" },
+                { id: "design", keys:['design', 'art', 'creativity', 'what is', 'opinion', 'think'], res: "Design without metrics is just decoration. Here we build visual systems that dominate the shelf and reduce purchase friction. Would you like to see how we apply it in Retail or Packaging?" },
+                { id: "pricing", keys:['price', 'cost', 'rate', 'quote', 'budget', 'charge', 'how much', 'investment'], res: "I don't handle standard rates. As a Senior Commercial Designer, I evaluate each commercial system based on its scale, complexity, and expected revenue impact. Write to <a href='mailto:oscarpozo072@gmail.com' style='color:var(--accent)'>oscarpozo072@gmail.com</a> for serious inquiries." },
+                { id: "contact", keys:['contact', 'email', 'whatsapp', 'talk', 'meeting', 'call'], res: "The fastest channel is emailing <a href='mailto:oscarpozo072@gmail.com' style='color:var(--accent)'>oscarpozo072@gmail.com</a>. You can also use the WhatsApp button at the bottom of the site." },
+                { id: "experience", keys:['experience', 'clients', 'brands', 'years', 'portfolio', 'work'], res: "I specialize in high-volume brands. I've led commercial strategies and visual architecture for operations like Plaza Lama and Gold Selects, solving large-scale retail challenges." },
+                { id: "services", keys:['services', 'do', 'packaging', 'pop', 'retail', 'offer', 'skills', 'can', 'make'], res: "My core operations: 1. Scalable Packaging Systems. 2. High-density Retail Campaigns. 3. Tactical POP Display. I build competitive advantage, not just graphics." },
+                { id: "greeting", keys:['hello', 'hi', 'greetings', 'hey', 'morning'], res: "Hello. I'm Oscar's data assistant. Type keywords like 'services', 'experience', or 'pricing' and I'll extract the commercial data you need." }
+            ]
+        };
+
+        let isAnimDone = false;
+        let isImgDone = false;
         const lazyImages = document.querySelectorAll('.lazy-img');
         const totalPreload = Math.min(lazyImages.length, 3);
         const sysInit = document.getElementById('system-init');
-        let audioCtx; let audioEnabled = true;
+        let audioCtx;
+        let audioEnabled = true;
 
         function checkReady() {
             if(isAnimDone && isImgDone) {
@@ -930,10 +1108,10 @@
                 gsap.to('#system-init', { yPercent: -100, duration: 1.2, ease: "power4.inOut", onComplete: () => {
                     sysInit.style.display = 'none';
                     gsap.to('.hero-title .reveal-text', { y: '0%', opacity: 1, filter: "blur(0px)", duration: 1, ease: 'power3.out', stagger: 0.1 });
-                    gsap.to('.hero-desc', { y: 0, opacity: 1, duration: 1, delay: 0.5, ease: 'power3.out' }); 
+                    gsap.to('.hero-desc', { y: 0, opacity: 1, duration: 1, delay: 0.5, ease: 'power3.out' }); // Animación independiente para el Hero
                     gsap.to('.scroll-indicator', { opacity: 1, duration: 1, delay: 0.8 });
                     initTypographyChoreography();
-                    initReplayAnimations(); 
+                    initReplayAnimations(); // Iniciar animaciones de rejugabilidad
                 }});
             }
         }
@@ -962,9 +1140,11 @@
         const initInteraction = () => {
             if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if(audioCtx.state === 'suspended') audioCtx.resume();
+            
             if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                 DeviceOrientationEvent.requestPermission().then(p => { if (p === 'granted') initGyroscope(); }).catch(console.error);
             } else { initGyroscope(); }
+            
             document.removeEventListener('click', initInteraction);
             document.removeEventListener('keydown', initInteraction);
         };
@@ -984,7 +1164,12 @@
             audioEnabled = !audioEnabled; e.target.innerText = `SFX: ${audioEnabled ? 'ON' : 'OFF'}`; e.target.classList.toggle('active');
         });
 
-        let globalScrollVelocity = 0; let globalHScrollProgress = 0; let hRect = { top: 0, bottom: 0 };
+        /* =========================================================================================
+           MOTOR WEBGL SOTD EXTREMO
+           ========================================================================================= */
+        let globalScrollVelocity = 0;
+        let globalHScrollProgress = 0;
+        let hRect = { top: 0, bottom: 0 };
         const hWrapperEl = document.querySelector('.h-wrapper');
 
         if (window.innerWidth > 768) {
@@ -994,23 +1179,52 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
                 
-                const sceneDark = new THREE.Scene(); sceneDark.background = new THREE.Color('#050505');
-                const cameraDark = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000); cameraDark.position.z = 100;
+                const sceneDark = new THREE.Scene();
+                sceneDark.background = new THREE.Color('#050505');
+                const cameraDark = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+                cameraDark.position.z = 100;
 
-                const particleCount = 800; const posArray = new Float32Array(particleCount * 3);
-                for(let i=0; i<particleCount*3; i++) { posArray[i] = (Math.random() - 0.5) * 200; }
-                const particlesGeom = new THREE.BufferGeometry(); particlesGeom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-                const particlesMat = new THREE.PointsMaterial({ size: 0.8, color: '#ffffff', transparent: true, opacity: 0.15, blending: THREE.AdditiveBlending });
-                const particleSystem = new THREE.Points(particlesGeom, particlesMat); sceneDark.add(particleSystem);
+                const particleCount = 800; 
+                const posArray = new Float32Array(particleCount * 3);
+                for(let i=0; i<particleCount*3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 200;
+                }
+                const particlesGeom = new THREE.BufferGeometry();
+                particlesGeom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const particlesMat = new THREE.PointsMaterial({
+                    size: 0.8,
+                    color: '#ffffff',
+                    transparent: true,
+                    opacity: 0.15,
+                    blending: THREE.AdditiveBlending
+                });
+                const particleSystem = new THREE.Points(particlesGeom, particlesMat);
+                sceneDark.add(particleSystem);
 
-                const sceneLight = new THREE.Scene(); sceneLight.background = new THREE.Color('#f0f1fa');
-                const cameraLight = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000); cameraLight.position.z = 50;
-                sceneLight.add(new THREE.AmbientLight(0xffffff, 0.6));
-                const dirLight = new THREE.DirectionalLight(0xffffff, 1); dirLight.position.set(10, 20, 10); sceneLight.add(dirLight);
+                const sceneLight = new THREE.Scene();
+                sceneLight.background = new THREE.Color('#f0f1fa');
+                const cameraLight = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+                cameraLight.position.z = 50;
+
+                const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+                sceneLight.add(ambientLight);
+                const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+                dirLight.position.set(10, 20, 10);
+                sceneLight.add(dirLight);
 
                 const shapeGeom = new THREE.TorusGeometry(10, 3, 32, 64);
-                const shapeMat = new THREE.MeshPhysicalMaterial({ color: 0xffffff, metalness: 0.1, roughness: 0.2, transmission: 0.9, ior: 1.5, thickness: 2.0, clearcoat: 1.0, transparent: true });
-                const lightObject = new THREE.Mesh(shapeGeom, shapeMat); sceneLight.add(lightObject);
+                const shapeMat = new THREE.MeshPhysicalMaterial({
+                    color: 0xffffff,
+                    metalness: 0.1,
+                    roughness: 0.2,
+                    transmission: 0.9, 
+                    ior: 1.5,
+                    thickness: 2.0,
+                    clearcoat: 1.0,
+                    transparent: true
+                });
+                const lightObject = new THREE.Mesh(shapeGeom, shapeMat);
+                sceneLight.add(lightObject);
 
                 window.addEventListener('resize', () => { 
                     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1019,73 +1233,101 @@
                 });
 
                 const renderWebGL = () => {
-                    let hTop = Math.max(0, hRect.top); let hBottom = Math.min(window.innerHeight, hRect.bottom);
+                    let hTop = Math.max(0, hRect.top);
+                    let hBottom = Math.min(window.innerHeight, hRect.bottom);
                     let isHWrapperFullViewport = (hRect.top <= 0 && hRect.bottom >= window.innerHeight);
 
                     if (!isHWrapperFullViewport) {
                         const positions = particleSystem.geometry.attributes.position.array;
                         for(let i=1; i<particleCount*3; i+=3) {
                             positions[i] += globalScrollVelocity * 0.05 + 0.05; 
-                            if(positions[i] > 100) positions[i] = -100; if(positions[i] < -100) positions[i] = 100;
+                            if(positions[i] > 100) positions[i] = -100;
+                            if(positions[i] < -100) positions[i] = 100;
                         }
-                        particleSystem.geometry.attributes.position.needsUpdate = true; particleSystem.rotation.y += 0.001;
+                        particleSystem.geometry.attributes.position.needsUpdate = true;
+                        particleSystem.rotation.y += 0.001;
                     }
 
                     if (hBottom > hTop) {
-                        lightObject.rotation.x = globalHScrollProgress * Math.PI * 2; lightObject.rotation.y = globalHScrollProgress * Math.PI * 4; lightObject.position.y = Math.sin(Date.now() * 0.001) * 2;
+                        lightObject.rotation.x = globalHScrollProgress * Math.PI * 2;
+                        lightObject.rotation.y = globalHScrollProgress * Math.PI * 4;
+                        lightObject.position.y = Math.sin(Date.now() * 0.001) * 2;
                     }
 
                     renderer.setScissorTest(false);
-                    if (!isHWrapperFullViewport) { renderer.render(sceneDark, cameraDark); }
+                    
+                    if (!isHWrapperFullViewport) {
+                        renderer.render(sceneDark, cameraDark); 
+                    }
 
                     if (hBottom > hTop) {
                         renderer.setScissorTest(true);
-                        renderer.setScissor(0, window.innerHeight - hBottom, window.innerWidth, hBottom - hTop);
+                        let scissorY = window.innerHeight - hBottom;
+                        let scissorHeight = hBottom - hTop;
+                        renderer.setScissor(0, scissorY, window.innerWidth, scissorHeight);
                         renderer.render(sceneLight, cameraLight); 
                         renderer.setScissorTest(false);
                     }
+
                     requestAnimationFrame(renderWebGL);
                 };
                 requestAnimationFrame(renderWebGL);
+
             } catch(e) { console.error("WebGL SOTD falló:", e); }
         }
 
+        /* SCROLL PARAMÉTRICO */
         let lenis;
         try {
             lenis = new Lenis({ duration: 1.2, smooth: !prefersReducedMotion, smoothTouch: false });
-            const progressBar = document.getElementById('progress-bar'); const skewTargets = document.querySelectorAll('.skew-target');
+            const progressBar = document.getElementById('progress-bar');
+            const skewTargets = document.querySelectorAll('.skew-target');
+            
             lenis.on('scroll', (e) => {
                 const progress = (e.animatedScroll / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
                 if(progressBar) progressBar.style.width = `${progress}%`;
+                
                 globalScrollVelocity = e.velocity || 0;
                 if(hWrapperEl) hRect = hWrapperEl.getBoundingClientRect();
 
                 if(window.innerWidth > 768) {
-                    const cp = document.getElementById('cursor-progress'); if(cp) cp.style.strokeDashoffset = 125 - (progress / 100) * 125;
+                    const dashoffset = 125 - (progress / 100) * 125;
+                    const cp = document.getElementById('cursor-progress');
+                    if(cp) cp.style.strokeDashoffset = dashoffset;
+
                     const skew = Math.max(-5, Math.min(5, globalScrollVelocity * 0.2)); 
                     skewTargets.forEach(el => {
                         const rect = el.getBoundingClientRect(); 
-                        if(rect.top < window.innerHeight && rect.bottom > 0) { gsap.to(el, { skewY: skew, duration: 0.5, ease: "power2.out", overwrite: "auto" }); }
+                        if(rect.top < window.innerHeight && rect.bottom > 0) { 
+                            gsap.to(el, { skewY: skew, duration: 0.5, ease: "power2.out", overwrite: "auto" }); 
+                        }
                     });
                 }
             });
-            lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
+            lenis.on('scroll', ScrollTrigger.update); 
+            gsap.ticker.add((time) => { lenis.raf(time * 1000); }); 
             if(hWrapperEl) hRect = hWrapperEl.getBoundingClientRect();
         } catch(e){}
 
+        /* MOTOR GSAP DESKTOP */
         let mm = gsap.matchMedia();
+
         mm.add("(min-width: 769px)", () => {
             const zLayers = gsap.utils.toArray('.z-layer'); 
             if(zLayers.length) {
                 gsap.set(zLayers.slice(1), { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" });
+                
                 let zTl = gsap.timeline({ scrollTrigger: { trigger: ".z-wrapper", start: "top top", end: "+=400%", pin: true, scrub: 0.5 } });
                 zTl.to('.layer-hero', { autoAlpha: 0, scale: 0.8, filter: "blur(5px)", duration: 1, force3D: true }, 0);
+                
                 zLayers.forEach((layer, i) => {
                     if (i !== 0) { 
                         let start = (i * 3) - 2; 
                         zTl.fromTo(layer, { scale: 0.1, autoAlpha: 0, filter: "blur(5px)" }, { scale: 1, autoAlpha: 1, filter: "blur(0px)", duration: 1, force3D: true }, start); 
                         zTl.to(layer, { scale: 1, duration: 2 }, start + 1);
-                        if (i !== zLayers.length - 1) { zTl.to(layer, { scale: 5, autoAlpha: 0, filter: "blur(5px)", duration: 1, force3D: true }, start + 3); }
+                        if (i !== zLayers.length - 1) { 
+                            zTl.to(layer, { scale: 5, autoAlpha: 0, filter: "blur(5px)", duration: 1, force3D: true }, start + 3); 
+                        }
                     }
                 });
             }
@@ -1093,26 +1335,64 @@
             const hPanels = gsap.utils.toArray('.h-panel');
             if(hPanels.length) {
                 let hTween = gsap.to(hPanels, { 
-                    xPercent: -100 * (hPanels.length - 1), ease: "none", 
-                    scrollTrigger: { trigger: ".h-wrapper", pin: true, scrub: 1, snap: { snapTo: 1 / (hPanels.length - 1), duration: {min: 0.2, max: 0.5}, delay: 0, ease: "power1.inOut" }, end: () => "+=" + (document.querySelector(".h-container").offsetWidth), onUpdate: (self) => { globalHScrollProgress = self.progress; } } 
+                    xPercent: -100 * (hPanels.length - 1), 
+                    ease: "none", 
+                    scrollTrigger: { 
+                        trigger: ".h-wrapper", 
+                        pin: true, 
+                        scrub: 1, 
+                        snap: { snapTo: 1 / (hPanels.length - 1), duration: {min: 0.2, max: 0.5}, delay: 0, ease: "power1.inOut" },
+                        end: () => "+=" + (document.querySelector(".h-container").offsetWidth),
+                        onUpdate: (self) => { globalHScrollProgress = self.progress; }
+                    } 
                 });
+                
                 gsap.utils.toArray('.h-card').forEach((card, i) => {
                     let tl3D = gsap.timeline({ scrollTrigger: { trigger: card.closest('.h-panel'), containerAnimation: hTween, start: "left 100%", end: "right 0%", scrub: true } });
-                    tl3D.fromTo(card, { rotationY: 45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)" }, { rotationY: 0, rotationX: 0, z: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1, ease: "sine.inOut", force3D: true }).to(card, { rotationY: -45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)", duration: 1, ease: "sine.inOut", force3D: true });
+                    tl3D.fromTo(card, 
+                        { rotationY: 45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)" }, 
+                        { rotationY: 0, rotationX: 0, z: 0, scale: 1, opacity: 1, filter: "brightness(1) blur(0px)", duration: 1, ease: "sine.inOut", force3D: true }
+                    ).to(card, 
+                        { rotationY: -45, rotationX: 5, z: -800, scale: 0.6, opacity: 0, filter: "brightness(0.5) blur(5px)", duration: 1, ease: "sine.inOut", force3D: true }
+                    );
                 });
-                document.querySelectorAll('.parallax-img').forEach(img => { gsap.fromTo(img, { xPercent: -2 }, { xPercent: 2, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }); });
+
+                document.querySelectorAll('.parallax-img').forEach(img => { 
+                    gsap.fromTo(img, 
+                        { xPercent: -2 }, 
+                        { xPercent: 2, ease: "none", force3D: true, scrollTrigger: { trigger: img.closest('.h-panel'), containerAnimation: hTween, start: "left right", end: "right left", scrub: true } }
+                    ); 
+                });
             }
 
+            /* =========================================================================================
+               SCROLLJACKING HORIZONTAL PARA REELS (SOLO DESKTOP)
+               ========================================================================================= */
             const reelsTrack = document.querySelector('.reels-track');
             if(reelsTrack) {
-                let getScrollAmount = () => reelsTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.05);
-                gsap.to(reelsTrack, { x: () => -getScrollAmount(), ease: "none", scrollTrigger: { trigger: ".reels-wrapper", pin: true, scrub: 1, end: () => "+=" + (reelsTrack.scrollWidth) } });
+                let reelsScrollWidth = reelsTrack.scrollWidth - window.innerWidth + (window.innerWidth * 0.05);
+                gsap.to(reelsTrack, {
+                    x: -reelsScrollWidth,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: ".reels-wrapper",
+                        pin: true,
+                        scrub: 1,
+                        end: () => "+=" + reelsScrollWidth
+                    }
+                });
             }
         });
 
+        /* UTILIDADES Y EVENTOS */
         document.querySelectorAll('.magnetic-target').forEach(btn => {
-            const xTo = gsap.quickTo(btn, "x", {duration: 0.3, ease: "power2.out"}); const yTo = gsap.quickTo(btn, "y", {duration: 0.3, ease: "power2.out"});
-            btn.addEventListener('mousemove', (e) => { const rect = btn.getBoundingClientRect(); xTo((e.clientX - rect.left - rect.width / 2) * 0.3); yTo((e.clientY - rect.top - rect.height / 2) * 0.3); });
+            const xTo = gsap.quickTo(btn, "x", {duration: 0.3, ease: "power2.out"});
+            const yTo = gsap.quickTo(btn, "y", {duration: 0.3, ease: "power2.out"});
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect(); 
+                xTo((e.clientX - rect.left - rect.width / 2) * 0.3); 
+                yTo((e.clientY - rect.top - rect.height / 2) * 0.3);
+            });
             btn.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
         });
 
@@ -1140,39 +1420,83 @@
             });
         }
 
+        /* =========================================================================================
+           MOTOR FÍSICO 3D PARA REELS (APPLE TV EFFECT) + HOVER PREVIEW CON KILL SWITCH
+           ========================================================================================= */
         if(window.innerWidth > 768) {
+            
             document.querySelectorAll('.reel-item').forEach(item => {
                 const glare = item.querySelector('.reel-glare');
-                const hoverVid = item.querySelector('.hover-video'); 
-                let isHovering = false;
                 
                 item.addEventListener('mousemove', (e) => {
-                    const rect = item.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top;
-                    const xc = rect.width / 2; const yc = rect.height / 2; const dx = x - xc; const dy = y - yc;
-                    gsap.to(item, { rotationY: dx * 0.05, rotationX: -dy * 0.05, duration: 0.4, ease: "power2.out", transformPerspective: 1000, force3D: true });
-                    if(glare) { gsap.to(glare, { x: x - rect.width, y: y - rect.height, opacity: 1, duration: 0.4 }); }
-                });
-
-                item.addEventListener('mouseenter', () => {
-                    isHovering = true;
-                    if(hoverVid) {
-                        if(hoverVid.currentTime > 0) hoverVid.currentTime = 0;
-                        const playPromise = hoverVid.play();
-                        if (playPromise !== undefined) {
-                            playPromise.then(() => {
-                                if(isHovering) { gsap.to(hoverVid, {opacity: 1, duration: 0.4, ease: "power2.out", overwrite: true}); } 
-                                else { hoverVid.pause(); }
-                            }).catch(()=>{});
-                        }
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const xc = rect.width / 2;
+                    const yc = rect.height / 2;
+                    const dx = x - xc;
+                    const dy = y - yc;
+                    
+                    gsap.to(item, {
+                        rotationY: dx * 0.05,
+                        rotationX: -dy * 0.05,
+                        duration: 0.4,
+                        ease: "power2.out",
+                        transformPerspective: 1000,
+                        force3D: true
+                    });
+                    
+                    if(glare) {
+                        gsap.to(glare, {
+                            x: x - rect.width,
+                            y: y - rect.height,
+                            opacity: 1,
+                            duration: 0.4
+                        });
                     }
                 });
                 
                 item.addEventListener('mouseleave', () => {
-                    isHovering = false;
                     gsap.to(item, { rotationY: 0, rotationX: 0, duration: 0.7, ease: "power2.out" });
                     if(glare) gsap.to(glare, { opacity: 0, duration: 0.7 });
+                });
+            });
+
+            document.querySelectorAll('[data-video-hover]').forEach(item => {
+                let hoverVid;
+                item.addEventListener('mouseenter', () => {
+                    if(!hoverVid) {
+                        hoverVid = document.createElement('video');
+                        hoverVid.src = item.getAttribute('data-video-hover');
+                        hoverVid.className = 'hover-video';
+                        hoverVid.muted = true;
+                        hoverVid.loop = true;
+                        hoverVid.playsInline = true;
+                        
+                        const bgImg = item.querySelector('.v-bg') || item.querySelector('.target-img') || item.querySelector('.reel-bg');
+                        if(bgImg && bgImg.parentNode === item) {
+                            item.insertBefore(hoverVid, bgImg.nextSibling);
+                        } else {
+                            item.appendChild(hoverVid);
+                        }
+                    }
+                    
+                    const playPromise = hoverVid.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            gsap.to(hoverVid, {opacity: 1, duration: 0.5, ease: "power2.out"});
+                        }).catch(error => {
+                            console.warn("Hover video no encontrado o bloqueado:", item.getAttribute('data-video-hover'));
+                        });
+                    }
+                });
+                
+                item.addEventListener('mouseleave', () => {
                     if(hoverVid) {
-                        gsap.to(hoverVid, {opacity: 0, duration: 0.3, ease: "power2.in", overwrite: true, onComplete: () => { hoverVid.pause(); hoverVid.currentTime = 0; }});
+                        gsap.to(hoverVid, {opacity: 0, duration: 0.4, ease: "power2.in", onComplete: () => {
+                            hoverVid.pause();
+                            hoverVid.currentTime = 0; // KILL SWITCH: Libera memoria y evita congelamientos
+                        }});
                     }
                 });
             });
@@ -1195,8 +1519,13 @@
             const rawVal = e.target.value.trim();
             if(rawVal.length > 2) {
                 cmdBody.innerHTML = `<span class="ai-typing"></span> Procesando cognitivamente...`;
-                aiTimeout = setTimeout(async () => { const responseHTML = await fetchAILogic(rawVal, currentLang); streamAIResponse(responseHTML, cmdBody); }, 400);
-            } else if (rawVal.length === 0) { cmdBody.innerHTML = `<span data-i18n="cmdStart">${dict[currentLang].cmdStart}</span>`; }
+                aiTimeout = setTimeout(async () => {
+                    const responseHTML = await fetchAILogic(rawVal, currentLang);
+                    streamAIResponse(responseHTML, cmdBody);
+                }, 400);
+            } else if (rawVal.length === 0) {
+                cmdBody.innerHTML = `<span data-i18n="cmdStart">${dict[currentLang].cmdStart}</span>`;
+            }
         });
 
         async function streamAIResponse(htmlContent, el) {
@@ -1211,7 +1540,9 @@
 
         async function fetchAILogic(query, lang) {
             await new Promise(r => setTimeout(r, Math.random() * 200 + 100));
-            let finalResponse = lang === 'es' ? `Analizando consulta: "${query}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. Explora el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o escribe a <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.` : `Analyzing query: "${query}". My neural network detects interest, but I prioritize conversion and strategic design. Explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or email <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.`;
+            let finalResponse = lang === 'es' 
+                ? `Analizando consulta: "${query}". Mi red neuronal detecta interés, pero priorizo la conversión y el diseño estratégico. Explora el <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portafolio</a> o escribe a <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.` 
+                : `Analyzing query: "${query}". My neural network detects interest, but I prioritize conversion and strategic design. Explore the <a href="#casos" style="color:var(--accent)" onclick="toggleCmd()">Portfolio</a> or email <a href="mailto:oscarpozo072@gmail.com" style="color:var(--accent)">oscarpozo072@gmail.com</a>.`;
             const db = aiDB[lang]; const words = query.toLowerCase().split(/\s+/);
             let scores = { compliment: 0, tech: 0, insult: 0, who: 0, design: 0, joke: 0, pricing: 0, contact: 0, experience: 0, services: 0, greeting: 0 };
             words.forEach(word => { db.forEach(intentData => { if(intentData.keys.some(kw => word.includes(kw) || kw.includes(word))) { scores[intentData.id]++; } }); });
@@ -1231,29 +1562,53 @@
             });
         }
 
+        /* =========================================================================================
+           REJUGABILIDAD (REPLAY) DE ANIMACIONES PARA DESKTOP Y MÓVIL
+           ========================================================================================= */
         function initTypographyChoreography() {
             splitTextForReveal('.has-reveal');
             document.querySelectorAll('.has-reveal').forEach(title => {
                 gsap.set(title, { opacity: 1 }); 
                 const chars = title.querySelectorAll('.reveal-text');
                 if(chars.length > 0) { 
-                    gsap.to(chars, { y: '0%', opacity: 1, filter: "blur(0px)", duration: 0.8, ease: 'power3.out', stagger: 0.05, scrollTrigger: { trigger: title, start: "top 85%", toggleActions: "play none none reverse" }, force3D: true }); 
+                    gsap.to(chars, { 
+                        y: '0%', opacity: 1, filter: "blur(0px)", duration: 0.8, ease: 'power3.out', stagger: 0.05, 
+                        scrollTrigger: { 
+                            trigger: title, 
+                            start: "top 85%",
+                            toggleActions: "play reverse play reverse" // REPLAY
+                        }, 
+                        force3D: true 
+                    }); 
                 }
             });
         }
 
         function initReplayAnimations() {
-            gsap.fromTo('.v-item', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ".vault-grid", start: "top 85%", toggleActions: "play none none reverse" } });
-            gsap.fromTo('.p-card', { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out", scrollTrigger: { trigger: ".process-grid", start: "top 85%", toggleActions: "play none none reverse" } });
-            gsap.fromTo('.profile-main p', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ".profile-main", start: "top 80%", toggleActions: "play none none reverse" } });
-            gsap.fromTo('.profile-sidebar', { x: 50, opacity: 0 }, { x: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".profile-grid", start: "top 80%", toggleActions: "play none none reverse" } });
-            gsap.fromTo('.t-focus-item', { x: 20, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ".t-focus-list", start: "top 85%", toggleActions: "play none none reverse" } });
-            gsap.fromTo('.t-panel > *', { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out", scrollTrigger: { trigger: ".terminal-grid", start: "top 85%", toggleActions: "play none none reverse" } });
-
-            if(window.innerWidth <= 768) {
-                gsap.utils.toArray('.monolith, .h-card, .reel-item').forEach(el => {
-                    gsap.fromTo(el, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%", toggleActions: "play none none reverse" } });
+            const animateElements = (selector) => {
+                gsap.utils.toArray(selector).forEach(el => {
+                    gsap.fromTo(el, 
+                        { y: 50, opacity: 0 }, 
+                        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", 
+                          scrollTrigger: { 
+                              trigger: el, 
+                              start: "top 90%", 
+                              toggleActions: "play reverse play reverse" // REPLAY
+                          } 
+                        }
+                    );
                 });
+            };
+            
+            animateElements('.v-item');
+            animateElements('.p-card');
+            animateElements('.t-panel');
+            animateElements('.reel-item');
+            
+            // En móvil, animamos también los monolitos y h-cards porque se apilan verticalmente
+            if(window.innerWidth <= 768) {
+                animateElements('.monolith');
+                animateElements('.h-card');
             }
         }
 
@@ -1266,98 +1621,93 @@
             }, {passive: true});
         }
 
+        /* =========================================================================================
+           LIGHTBOX DINÁMICO (SOPORTA IMAGEN Y VIDEO)
+           ========================================================================================= */
         const lightbox = document.getElementById('lightbox'); 
         const lbMediaContainer = document.getElementById('lb-media-container');
-        const lbAmbient = document.getElementById('lb-ambient');
+        let currentTargetImg = null; 
         let currentLbIndex = 0;
         const allLbTriggers = Array.from(document.querySelectorAll('.lb-trigger'));
 
-        function populateLightbox(index) {
+        function openLightbox(index) {
+            currentLbIndex = index; 
             const item = allLbTriggers[index];
+            
             const title = item.getAttribute('data-title');
             const videoFullSrc = item.getAttribute('data-video-full');
             
-            const imgNode = item.querySelector('img');
+            const imgNode = item.querySelector('.target-img') || item.querySelector('.v-bg') || item.querySelector('.reel-bg');
             let imgSrc = '';
-            if(imgNode) { imgSrc = imgNode.getAttribute('src') || imgNode.getAttribute('data-src'); }
+            if(imgNode) {
+                imgSrc = imgNode.getAttribute('src') || imgNode.getAttribute('data-src'); 
+                if(!imgSrc) { const bg = imgNode.style.backgroundImage; if(bg) imgSrc = bg.slice(5, -2); }
+            }
             
             document.getElementById('lb-title').textContent = title; 
             const projectDetails = item.querySelector('.project-details');
             if(projectDetails) { document.getElementById('lb-desc').innerHTML = projectDetails.innerHTML; } 
             else { document.getElementById('lb-desc').innerHTML = `<p>${item.getAttribute('data-desc')}</p>`; }
             
-            if(imgSrc) { lbAmbient.style.backgroundImage = `url('${imgSrc}')`; } 
-            else { lbAmbient.style.backgroundImage = 'none'; }
-
-            lbMediaContainer.innerHTML = ''; let mediaEl;
+            lbMediaContainer.innerHTML = '';
+            let mediaEl;
 
             if (videoFullSrc) {
-                mediaEl = document.createElement('video'); mediaEl.src = videoFullSrc; mediaEl.className = 'lightbox__img'; mediaEl.autoplay = true; mediaEl.loop = true; mediaEl.controls = true; mediaEl.playsInline = true;
+                mediaEl = document.createElement('video');
+                mediaEl.src = videoFullSrc;
+                mediaEl.className = 'lightbox__img';
+                mediaEl.autoplay = true;
+                mediaEl.loop = true;
+                mediaEl.controls = true;
+                mediaEl.playsInline = true;
             } else {
-                mediaEl = document.createElement('img'); mediaEl.src = imgSrc; mediaEl.className = 'lightbox__img'; mediaEl.alt = title;
+                mediaEl = document.createElement('img');
+                mediaEl.src = imgSrc;
+                mediaEl.className = 'lightbox__img';
+                mediaEl.alt = title;
             }
+            
             lbMediaContainer.appendChild(mediaEl);
-        }
 
-        function openLightbox(index) {
-            currentLbIndex = index; 
-            populateLightbox(index);
-
-            lightbox.style.display = 'flex';
-            if(typeof lenis !== 'undefined') lenis.stop();
-            
-            gsap.killTweensOf([lightbox, '.lightbox__dialog', lbAmbient, '#main-nav']);
-            
-            gsap.to('#main-nav', { opacity: 0, duration: 0.3, ease: "power2.out" });
-            gsap.fromTo(lightbox, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" });
-            gsap.fromTo('.lightbox__dialog', 
-                { scale: 0.95, y: 20, opacity: 0 }, 
-                { scale: 1, y: 0, opacity: 1, duration: 0.6, ease: "expo.out", force3D: true }
-            );
-            
-            if(lbAmbient.style.backgroundImage !== 'none') {
-                gsap.fromTo(lbAmbient, { opacity: 0, scale: 0.9 }, { opacity: 0.4, scale: 1.2, duration: 1, ease: "expo.out" });
-            }
-        }
-
-        function changeLightboxItem(direction) {
-            const newIndex = (currentLbIndex + direction + allLbTriggers.length) % allLbTriggers.length;
-            currentLbIndex = newIndex;
-            
-            gsap.to(['#lb-media-container', '.lightbox__side'], {
-                x: direction * -30, opacity: 0, duration: 0.3, ease: "power2.inOut",
-                onComplete: () => {
-                    populateLightbox(newIndex);
-                    gsap.fromTo(['#lb-media-container', '.lightbox__side'], 
-                        { x: direction * 30, opacity: 0 },
-                        { x: 0, opacity: 1, duration: 0.5, ease: "expo.out" }
-                    );
-                    if(lbAmbient.style.backgroundImage !== 'none') {
-                        gsap.fromTo(lbAmbient, { opacity: 0, scale: 0.9 }, { opacity: 0.4, scale: 1.2, duration: 1, ease: "expo.out" });
-                    }
+            if (!lightbox.classList.contains('active')) {
+                if (document.startViewTransition && imgNode && !videoFullSrc) {
+                    currentTargetImg = imgNode; currentTargetImg.style.viewTransitionName = 'active-image';
+                    const transition = document.startViewTransition(() => { mediaEl.style.viewTransitionName = 'active-image'; lightbox.classList.add('active'); if(typeof lenis !== 'undefined') lenis.stop(); });
+                    transition.finished.then(() => { currentTargetImg.style.viewTransitionName = 'none'; });
+                } else { 
+                    lightbox.classList.add('active'); 
+                    if(typeof lenis !== 'undefined') lenis.stop(); 
                 }
-            });
+            } else {
+                gsap.fromTo(mediaEl, { opacity: 0 }, { opacity: 1, duration: 0.3, force3D: true });
+            }
         }
 
         allLbTriggers.forEach((item, index) => { item.addEventListener('click', () => openLightbox(index)); item.addEventListener('keydown', (e) => { if(e.key === 'Enter') { e.preventDefault(); openLightbox(index); } }); });
-        document.getElementById('lb-prev').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); changeLightboxItem(-1); });
-        document.getElementById('lb-next').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); changeLightboxItem(1); });
+        document.getElementById('lb-prev').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); openLightbox((currentLbIndex - 1 + allLbTriggers.length) % allLbTriggers.length); });
+        document.getElementById('lb-next').addEventListener('click', (e) => { e.stopPropagation(); playHoverSFX(); openLightbox((currentLbIndex + 1) % allLbTriggers.length); });
 
-        const closeLightbox = () => {
-            gsap.killTweensOf([lightbox, '.lightbox__dialog', lbAmbient, '#main-nav']);
+        const closeLightbox = async () => {
+            const mediaEl = lbMediaContainer.firstChild;
             
-            gsap.to('#main-nav', { opacity: 1, duration: 0.4, ease: "power2.out" });
-            gsap.to('.lightbox__dialog', { scale: 0.95, y: 20, opacity: 0, duration: 0.3, ease: "power2.in" });
-            gsap.to(lbAmbient, { opacity: 0, scale: 0.9, duration: 0.3, ease: "power2.in" });
-            gsap.to(lightbox, { opacity: 0, duration: 0.3, ease: "power2.in", onComplete: () => {
-                lightbox.style.display = 'none';
-                lbMediaContainer.innerHTML = ''; 
-                lbAmbient.style.backgroundImage = 'none'; 
-                if(typeof lenis !== 'undefined') lenis.start();
-            }});
+            if (!document.startViewTransition || (mediaEl && mediaEl.tagName === 'VIDEO')) { 
+                lightbox.classList.remove('active'); 
+                setTimeout(() => { 
+                    lbMediaContainer.innerHTML = ''; // DESTRUIR VIDEO PARA LIBERAR RAM/GPU
+                    if(typeof lenis !== 'undefined') lenis.start(); 
+                }, 300); 
+                return; 
+            }
+            
+            if(currentTargetImg) currentTargetImg.style.viewTransitionName = 'active-image';
+            const transition = document.startViewTransition(() => { lightbox.classList.remove('active'); if(mediaEl) mediaEl.style.viewTransitionName = 'none'; if(typeof lenis !== 'undefined') lenis.start(); });
+            await transition.finished; 
+            if(currentTargetImg) currentTargetImg.style.viewTransitionName = 'none'; 
+            currentTargetImg = null; 
+            lbMediaContainer.innerHTML = '';
         };
 
-        document.getElementById('lb-close').addEventListener('click', closeLightbox); lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); }); document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && lightbox.style.display === 'flex') closeLightbox(); if(e.key === 'ArrowRight' && lightbox.style.display === 'flex') { document.getElementById('lb-next').click(); } if(e.key === 'ArrowLeft' && lightbox.style.display === 'flex') { document.getElementById('lb-prev').click(); }});
+        document.getElementById('lb-close').addEventListener('click', closeLightbox); lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); }); document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); if(e.key === 'ArrowRight' && lightbox.classList.contains('active')) { document.getElementById('lb-next').click(); } if(e.key === 'ArrowLeft' && lightbox.classList.contains('active')) { document.getElementById('lb-prev').click(); }});
 
         document.getElementById('backToTop').addEventListener('click', () => { if(typeof lenis !== 'undefined') lenis.scrollTo(0, { duration: 1.5, ease: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) }); });
         document.querySelectorAll('.nav-link').forEach(anchor => { anchor.addEventListener('click', function(e) { e.preventDefault(); const targetEl = document.querySelector(this.getAttribute('href')); if(targetEl && typeof lenis !== 'undefined') lenis.scrollTo(targetEl, { offset: 0, duration: 1.5 }); }); });
@@ -1380,21 +1730,6 @@
             });
             const placeholderTxt = currentLang === 'es' ? 'Haz una pregunta sobre Oscar Pozo...' : 'Ask a question sobre Oscar Pozo...';
             document.getElementById('cmd-input').setAttribute('placeholder', placeholderTxt);
-        });
-
-        /* =========================================================================================
-           PROTECCIÓN DE ASSETS (ANTI-CLICK DERECHO Y DRAG)
-           ========================================================================================= */
-        document.addEventListener('contextmenu', (e) => {
-            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO' || e.target.classList.contains('v-bg') || e.target.classList.contains('target-img') || e.target.classList.contains('reel-bg')) {
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.tagName === 'IMG' || e.target.tagName === 'VIDEO') {
-                e.preventDefault();
-            }
         });
 
     });
