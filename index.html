@@ -10,9 +10,9 @@
         window.onbeforeunload = function () { window.scrollTo(0, 0); }
     </script>
 
-    <title>Oscar Pozo | Diseñador Comercial Senior</title>
+    <title>Oscar Pozo | Diseñador Gráfico Senior</title>
     
-    <meta name="description" content="Diseño estratégico para marcas que quieren vender más. Empaques, exhibidores y campañas visuales.">
+    <meta name="description" content="Diseño gráfico enfocado en resultados. Empaques, exhibidores y campañas visuales para marcas que compiten en serio.">
     <meta name="author" content="Oscar Pozo Creativo">
     <meta name="theme-color" content="#020202">
     
@@ -21,8 +21,8 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Oscar Pozo Creativo">
     <meta property="og:url" content="https://oscarpozocreativo.github.io/oscarpozocreativo/">
-    <meta property="og:title" content="Oscar Pozo | Diseñador Comercial Senior">
-    <meta property="og:description" content="Diseño estratégico para marcas que quieren vender más. Empaques, exhibidores y campañas visuales.">
+    <meta property="og:title" content="Oscar Pozo | Diseñador Gráfico Senior">
+    <meta property="og:description" content="Diseño gráfico enfocado en resultados. Empaques, exhibidores y campañas visuales para marcas que compiten en serio.">
     <meta property="og:image" content="https://oscarpozocreativo.github.io/oscarpozocreativo/assets/og-image.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -71,7 +71,6 @@
         *:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent); border-radius: 4px; }
         .monolith:focus-visible, .h-card:focus-visible, .v-item:focus-visible, .reel-item:focus-visible { box-shadow: 0 0 0 4px var(--bg), 0 0 0 8px var(--accent); border-radius: 20px; }
 
-        body.custom-cursor * { cursor: none !important; }
         .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
 
         #progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--accent); z-index: 1000000; width: 0%; pointer-events: none; transform: translateZ(0); will-change: width; }
@@ -97,14 +96,6 @@
 
         #webgl-canvas { position: fixed; inset: 0; z-index: -2; pointer-events: none; width: 100vw; height: 100vh; }
         .noise-overlay { position: fixed; inset: 0; z-index: -1; opacity: 0.03; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); mix-blend-mode: overlay; }
-
-        /* CURSOR PERSONALIZADO */
-        .cursor-dot { position: fixed; left: 0; top: 0; width: 6px; height: 6px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 50%; pointer-events: none; z-index: 10000001; opacity: 0; will-change: transform; mix-blend-mode: difference;}
-        .cursor-ring { position: fixed; left: 0; top: 0; width: 44px; height: 44px; pointer-events: none; z-index: 10000000; transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), height 0.3s cubic-bezier(0.19, 1, 0.22, 1); display: flex; justify-content: center; align-items: center; opacity: 0; will-change: transform; }
-        .cursor-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); transition: all 0.3s; }
-        .cursor-ring circle { fill: rgba(0,0,0,0.1); stroke: rgba(255,255,255,0.7); stroke-width: 1px; stroke-dasharray: 125; stroke-dashoffset: 125; transition: stroke-dashoffset 0.1s ease; backdrop-filter: blur(2px); }
-        .cursor-ring.active { width: 80px; height: 80px; }
-        .cursor-ring.active circle { fill: rgba(255,255,255,0.1); stroke: var(--accent); backdrop-filter: none; }
 
         /* HUD NAVEGACIÓN GOOGLE FLOW STYLE */
         nav { 
@@ -392,8 +383,6 @@
             .hud-status { display: none; }
             nav { padding: 15px 20px !important; height: auto !important; min-height: 80px !important; }
             .btn-cta-nav { padding: 0 16px !important; font-size: 8px !important; }
-            .cursor-dot, .cursor-ring { display: none !important; }
-            body.custom-cursor * { cursor: auto !important; }
             
             /* Z-WRAPPER (NATIVE SCROLL) */
             .z-wrapper { height: auto !important; display: flex !important; flex-direction: column !important; overflow: visible !important; padding: 0 15px 40px !important; pointer-events: auto !important; background: transparent !important; }
@@ -461,10 +450,6 @@
     <div id="progress-bar"></div>
     <canvas id="webgl-canvas"></canvas>
     <div class="noise-overlay"></div>
-    
-    <!-- CURSOR PERSONALIZADO -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" id="cursor-progress"></circle></svg></div>
 
     <nav id="main-nav">
         <div class="hud-left">
@@ -472,15 +457,15 @@
             <div class="hud-controls"><button class="ctrl-btn hover-target magnetic-target" id="btn-lang" data-lang="es" tabindex="0">ES / EN</button><button class="ctrl-btn hover-target active magnetic-target" id="btn-audio" tabindex="0">SFX: ON</button></div>
         </div>
         <div class="hud-right">
-            <div class="hud-status"><strong data-i18n="role">Diseñador Comercial Senior</strong><br><span data-i18n="loc">Diseño Comercial</span></div>
+            <div class="hud-status"><strong data-i18n="role">Diseñador Gráfico Senior</strong><br><span data-i18n="loc">Diseño Gráfico</span></div>
             <a href="#contacto" class="btn-cta-nav magnetic-target hover-target" data-i18n="navCta">INICIAR PROYECTO</a>
         </div>
     </nav>
 
     <section class="z-wrapper">
         <div class="z-layer layer-hero">
-            <h1 class="hero-title"><span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">DISEÑO</span></span><br><span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">COMERCIAL.</span></span></h1>
-            <p class="hero-desc" data-i18n="heroDesc" style="opacity:0; transform:translateY(20px);">Diseño estratégico para marcas que quieren vender más. Desde empaques y exhibidores hasta campañas digitales, creo soluciones visuales que destacan tu producto en cualquier mercado.</p>
+            <h1 class="hero-title"><span class="reveal-wrap"><span class="reveal-text" data-i18n="hero1">DISEÑO</span></span><br><span class="reveal-wrap"><span class="reveal-text glow-text" data-i18n="hero2">VISUAL.</span></span></h1>
+            <p class="hero-desc" data-i18n="heroDesc" style="opacity:0; transform:translateY(20px);">Soluciones gráficas pensadas para vender. Desde empaques que resaltan en la góndola hasta campañas digitales claras y directas.</p>
             <div class="scroll-indicator"><div class="scroll-line"></div><span data-i18n="scrollDown">SCROLL</span></div>
         </div>
         <div class="z-layer">
@@ -737,7 +722,7 @@
         <div class="profile-grid">
             <div class="profile-main">
                 <span class="t-eyebrow" data-i18n="profLabel">Perfil</span>
-                <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño comercial estratégico para cualquier formato.</h2>
+                <h2 class="t-title has-reveal" data-i18n="profTitle">Diseño gráfico pensado para que tu negocio crezca.</h2>
                 
                 <div class="profile-bio-wrap" style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 30px; flex-wrap: wrap;">
                     <div class="profile-avatar tilt-target" style="flex: 0 0 220px; height: 250px; border-radius: 10px; overflow: hidden; position: relative; border: 1px solid var(--border); background: #050505;">
@@ -745,20 +730,20 @@
                         <div style="position: absolute; inset: 0; background: linear-gradient(to top, #020202 0%, transparent 20%); pointer-events: none;"></div>
                     </div>
                     <div style="flex: 1; min-width: 250px;">
-                        <p data-i18n="profP1">Trabajo en proyectos donde una marca debe verse bien y vender, sin importar si es en un supermercado, en redes sociales o en la calle.</p>
-                        <p data-i18n="profP2">Esto exige buen ojo y tomar decisiones basadas en resultados: que el cliente entienda rápido, que la marca se vea impecable y que destaque frente a la competencia.</p>
+                        <p data-i18n="profP1">Hola, soy Oscar. Llevo años trabajando como diseñador gráfico, ayudando a marcas a verse profesionales y a conectar mejor con sus clientes.</p>
+                        <p data-i18n="profP2">Entiendo cómo funciona el mercado: no basta con hacer un diseño bonito. El cliente necesita entender rápido qué le ofreces, ya sea viendo un producto en el supermercado o un anuncio en su celular.</p>
                     </div>
                 </div>
-                <p data-i18n="profP3">Mi enfoque es crear diseños versátiles que resuelvan problemas reales y ayuden a tu negocio a crecer, sea cual sea el formato.</p>
+                <p data-i18n="profP3">Mi trabajo es quitarte dolores de cabeza. Organizo tus ideas y las convierto en diseños claros, directos y que realmente funcionen para vender.</p>
             </div>
             
             <div class="profile-sidebar tilt-target">
                 <span class="t-eyebrow" data-i18n="focLabel">Enfoque</span>
                 <div class="t-focus-list">
-                    <div class="t-focus-item"><strong data-i18n="f1T">Campañas y Promociones</strong><span data-i18n="f1D">Piezas con mucha información diseñadas para que se lean rápido y claro.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de Empaques</strong><span data-i18n="f2D">Empaques atractivos que resaltan en la góndola y mantienen el orden visual de la marca.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f3T">Exhibidores y Materiales</strong><span data-i18n="f3D">Materiales de punto de venta que llaman la atención y guían al cliente a comprar.</span></div>
-                    <div class="t-focus-item"><strong data-i18n="f4T">Diseño Global</strong><span data-i18n="f4D">Capacidad para adaptar la misma calidad visual a redes sociales, impresos y cualquier otro medio.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f1T">Campañas y Ofertas</strong><span data-i18n="f1D">Diseño de encartes y promociones. Organizo la información para que los precios destaquen y la gente compre.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f2T">Diseño de Empaques</strong><span data-i18n="f2D">Etiquetas y empaques que hacen que tu producto llame la atención en la góndola frente a la competencia.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f3T">Exhibidores y POP</strong><span data-i18n="f3D">Materiales para supermercados y tiendas que frenan al cliente mientras camina por el pasillo.</span></div>
+                    <div class="t-focus-item"><strong data-i18n="f4T">Redes Sociales</strong><span data-i18n="f4D">Llevo la calidad visual de tu marca a Instagram y Facebook para que mantengas una imagen profesional en internet.</span></div>
                 </div>
             </div>
         </div>
@@ -821,7 +806,7 @@
         let currentLang = 'es';
         const dict = {
             es: {
-                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", role: "Diseñador Comercial Senior", loc: "Diseño Comercial", country: "República Dominicana", hero1: "DISEÑO", hero2: "COMERCIAL.", heroDesc: "Diseño estratégico para marcas que quieren vender más. Desde empaques y exhibidores hasta campañas digitales, creo soluciones visuales que destacan tu producto en cualquier mercado.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", navCta: "INICIAR PROYECTO",
+                bootInit: "ESTABLECIENDO CONEXIÓN ASÍNCRONA...", role: "Diseñador Gráfico Senior", loc: "Diseño Gráfico", country: "República Dominicana", hero1: "DISEÑO", hero2: "VISUAL.", heroDesc: "Soluciones gráficas pensadas para vender. Desde empaques que resaltan en la góndola hasta campañas digitales claras y directas.", scrollDown: "SCROLL", reto: "Reto", enfoque: "Enfoque", resultado: "Resultado", navCta: "INICIAR PROYECTO",
                 z1Meta1: "Diseño de empaque", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Diseño de empaque para Avena Gold Selects", z1Summary: "Rediseño de la funda de avena para organizar la información y hacer que el producto resalte en la góndola.", z1RetoTxt: "Modernizar la imagen sin perder la esencia de la marca ni confundir al cliente de siempre.", z1EnfoqueTxt: "Colores limpios para diferenciar las variedades y un diseño directo que muestra los beneficios nutricionales al grano.", z1ResTxt: "Un empaque que llama la atención de inmediato y facilita que el cliente encuentre su avena favorita.",
                 z2Meta1: "Supermercados", z2Meta2: "Plaza Lama", z2Title: "Encarte de ofertas para supermercado.", z2Summary: "Diseño de encarte enfocado en organizar una gran cantidad de ofertas sin que la página se vea saturada o desordenada.", z2RetoTxt: "Mostrar muchos productos y precios agresivos en un mismo espacio, manteniendo una lectura cómoda para el cliente.", z2EnfoqueTxt: "Creación de bloques visuales limpios, destacando los productos gancho con un contraste fuerte para guiar la vista.", z2ResTxt: "Un encarte fácil de leer que ayuda al consumidor a encontrar las mejores ofertas en segundos, impulsando las visitas a la tienda.",
                 z3Meta1: "Exhibidores", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Exhibidor comercial para Gold Care.", z3Summary: "Mueble de exhibición diseñado para organizar la línea de cuidado capilar y ganar presencia destacada en el pasillo de belleza.", z3RetoTxt: "Agrupar champús, acondicionadores y tratamientos en un solo lugar que se vea ordenado, premium y atractivo para la clienta.", z3EnfoqueTxt: "Diseño estructurado por tipo de cabello, uso de colores elegantes de la marca y un espacio donde la consumidora encuentra su rutina ideal sin dar vueltas.", z3ResTxt: "Un exhibidor que organiza la mercancía, eleva la percepción de la marca y actúa como un vendedor silencioso.",
@@ -845,12 +830,12 @@
                 vT_Fricolandia: "Fricolandia", vD_Fricolandia: "Un recorrido visual que resalta la comodidad y exclusividad del lugar. Movimientos suaves de cámara que transmiten relajación.",
                 vT_Giveaway: "Giveaway Semana Santa", vD_Giveaway: "Video promocional directo al grano. Letras grandes y llamativas para que la gente entienda rápido cómo participar y ganar.",
                 procTitle: "Proceso", p1T: "Diagnóstico", p1D: "Identificación de problemas visuales, de lectura o de desorden en los diseños actuales de la marca.", p2T: "Sistema", p2D: "Definición de reglas claras para los colores, letras y el orden de la información para que todo se vea como una misma familia.", p3T: "Aplicación", p3D: "Creación de los diseños finales para empaques, exhibidores, redes o encartes, asegurando que la marca se vea impecable.", p4T: "Control", p4D: "Revisión de todos los materiales para garantizar que el diseño mantenga su calidad a medida que la marca crece.",
-                profLabel: "Perfil", profTitle: "Diseño comercial estratégico para cualquier formato.", profP1: "Trabajo en proyectos donde una marca debe verse bien y vender, sin importar si es en un supermercado, en redes sociales o en la calle.", profP2: "Esto exige buen ojo y tomar decisiones basadas en resultados: que el cliente entienda rápido, que la marca se vea impecable y que destaque frente a la competencia.", profP3: "Mi enfoque es crear diseños versátiles que resuelvan problemas reales y ayuden a tu negocio a crecer, sea cual sea el formato.", focLabel: "Enfoque", f1T: "Campañas y Promociones", f1D: "Piezas con mucha información diseñadas para que se lean rápido y claro.", f2T: "Diseño de Empaques", f2D: "Empaques atractivos que resaltan en la góndola y mantienen el orden visual de la marca.", f3T: "Exhibidores y Materiales", f3D: "Materiales de punto de venta que llaman la atención y guían al cliente a comprar.", f4T: "Diseño Global", f4D: "Capacidad para adaptar la misma calidad visual a redes sociales, impresos y cualquier otro medio.",
+                profLabel: "Perfil", profTitle: "Diseño gráfico pensado para que tu negocio crezca.", profP1: "Hola, soy Oscar. Llevo años trabajando como diseñador gráfico, ayudando a marcas a verse profesionales y a conectar mejor con sus clientes.", profP2: "Entiendo cómo funciona el mercado: no basta con hacer un diseño bonito. El cliente necesita entender rápido qué le ofreces, ya sea viendo un producto en el supermercado o un anuncio en su celular.", profP3: "Mi trabajo es quitarte dolores de cabeza. Organizo tus ideas y las convierto en diseños claros, directos y que realmente funcionen para vender.", focLabel: "Enfoque", f1T: "Campañas y Ofertas", f1D: "Diseño de encartes y promociones. Organizo la información para que los precios destaquen y la gente compre.", f2T: "Diseño de Empaques", f2D: "Etiquetas y empaques que hacen que tu producto llame la atención en la góndola frente a la competencia.", f3T: "Exhibidores y POP", f3D: "Materiales para supermercados y tiendas que frenan al cliente mientras camina por el pasillo.", f4T: "Redes Sociales", f4D: "Llevo la calidad visual de tu marca a Instagram y Facebook para que mantengas una imagen profesional en internet.",
                 conLabel: "Contacto", conTitle: "Disponible para proyectos donde el diseño realmente ayude a vender más.", conDesc: "Si tu marca necesita verse mejor, destacar frente a la competencia y tener materiales que llamen la atención, hablemos.", locLabel: "Ubicación", specLabel: "Especialidad", dispLabel: "Disponibilidad", specVal: "Supermercados, Empaques y Exhibidores", dispVal: "Proyectos / Remoto y Presencial",
                 btnTop: "Volver arriba", navPort: "Portafolio", navProc: "Proceso", footRights: "© 2026 Oscar Pozo Creativo. Todos los derechos reservados."
             },
             en: {
-                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", role: "Senior Commercial Designer", loc: "Commercial Design", country: "Dominican Republic", hero1: "COMMERCIAL", hero2: "DESIGN.", heroDesc: "Strategic design for brands that want to sell more. From packaging and displays to digital campaigns, I create visual solutions that make your product stand out in any market.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", navCta: "START PROJECT",
+                bootInit: "ESTABLISHING ASYNCHRONOUS CONNECTION...", role: "Senior Graphic Designer", loc: "Graphic Design", country: "Dominican Republic", hero1: "VISUAL", hero2: "DESIGN.", heroDesc: "Graphic solutions designed to sell. From packaging that stands out on the shelf to clear and direct digital campaigns.", scrollDown: "SCROLL", reto: "Challenge", enfoque: "Approach", resultado: "Result", navCta: "START PROJECT",
                 z1Meta1: "Packaging Design", z1Meta2: "Gold Selects / Plaza Lama", z1Title: "Packaging design for Gold Selects Oatmeal", z1Summary: "Oatmeal bag redesign to organize information and make the product stand out on the shelf.", z1RetoTxt: "Modernize the image without losing the brand's essence or confusing the regular customer.", z1EnfoqueTxt: "Clean colors to differentiate varieties and a direct design that shows nutritional benefits straight to the point.", z1ResTxt: "A packaging that immediately catches the eye and makes it easier for the customer to find their favorite oatmeal.",
                 z2Meta1: "Supermarkets", z2Meta2: "Plaza Lama", z2Title: "Promotional insert for supermarket.", z2Summary: "Insert design focused on organizing a large number of offers without making the page look cluttered or messy.", z2RetoTxt: "Show many products and aggressive prices in the same space, maintaining a comfortable reading experience for the customer.", z2EnfoqueTxt: "Creation of clean visual blocks, highlighting hook products with strong contrast to guide the eye.", z2ResTxt: "An easy-to-read insert that helps the consumer find the best offers in seconds, driving traffic to the store.",
                 z3Meta1: "Displays", z3Meta2: "Gold Care / Plaza Lama", z3Title: "Commercial display for Gold Care.", z3Summary: "Display furniture designed to organize the hair care line and gain a prominent presence in the beauty aisle.", z3RetoTxt: "Group shampoos, conditioners, and treatments in a single place that looks neat, premium, and attractive to the customer.", z3EnfoqueTxt: "Structured design by hair type, use of elegant brand colors, and a space where the consumer finds her ideal routine without wandering.", z3ResTxt: "A display that organizes the merchandise, elevates brand perception, and acts as a silent salesperson.",
@@ -874,7 +859,7 @@
                 vT_Fricolandia: "Fricolandia", vD_Fricolandia: "A visual tour that highlights the comfort and exclusivity of the place. Smooth camera movements that convey relaxation.",
                 vT_Giveaway: "Giveaway Semana Santa", vD_Giveaway: "Straight to the point promotional video. Large and striking letters so people quickly understand how to participate and win.",
                 procTitle: "Process", p1T: "Diagnosis", p1D: "Identification of visual, reading, or clutter problems in the brand's current designs.", p2T: "System", p2D: "Definition of clear rules for colors, letters, and information order so everything looks like the same family.", p3T: "Application", p3D: "Creation of final designs for packaging, displays, social media, or inserts, ensuring the brand looks impeccable.", p4T: "Control", p4D: "Review of all materials to ensure the design maintains its quality as the brand grows.",
-                profLabel: "Profile", profTitle: "Strategic commercial design for any format.", profP1: "I work on projects where a brand must look good and sell, whether in a supermarket, on social media, or on the street.", profP2: "This requires a good eye and making decisions based on results: that the customer understands quickly, that the brand looks impeccable, and that it stands out from the competition.", profP3: "My focus is to create versatile designs that solve real problems and help your business grow, whatever the format.", focLabel: "Focus", f1T: "Campaigns & Promotions", f1D: "Pieces with a lot of information designed to be read quickly and clearly.", f2T: "Packaging Design", f2D: "Attractive packaging that stands out on the shelf and maintains the brand's visual order.", f3T: "Displays & Materials", f3D: "Point of sale materials that catch the eye and guide the customer to buy.", f4T: "Global Design", f4D: "Ability to adapt the same visual quality to social media, print, and any other medium.",
+                profLabel: "Profile", profTitle: "Graphic design tailored to help your business grow.", profP1: "Hi, I'm Oscar. I've spent years working as a graphic designer, helping brands look professional and connect better with their customers.", profP2: "I understand how the market works: a pretty design isn't enough. The customer needs to quickly understand what you offer, whether they're looking at a product in the supermarket or an ad on their phone.", profP3: "My job is to save you headaches. I organize your ideas and turn them into clear, direct designs that actually work to sell.", focLabel: "Focus", f1T: "Campaigns & Offers", f1D: "Insert and promotion design. I organize the information so prices stand out and people buy.", f2T: "Packaging Design", f2D: "Labels and packaging that make your product catch the eye on the shelf against the competition.", f3T: "Displays & POP", f3D: "Materials for supermarkets and stores that stop the customer while walking down the aisle.", f4T: "Social Media", f4D: "I bring your brand's visual quality to Instagram and Facebook so you maintain a professional image online.",
                 conLabel: "Contact", conTitle: "Available for projects where design really helps sell more.", conDesc: "If your brand needs to look better, stand out from the competition, and have materials that catch the eye, let's talk.", locLabel: "Location", specLabel: "Specialty", dispLabel: "Availability", specVal: "Supermarkets, Packaging & Displays", dispVal: "Projects / Remote & On-site",
                 btnTop: "Back to top", navPort: "Portfolio", navProc: "Process", footRights: "© 2026 Oscar Pozo Creativo. All rights reserved."
             }
@@ -1092,23 +1077,6 @@
         });
 
         document.querySelectorAll('.hover-target').forEach(el => el.addEventListener('mouseenter', playHoverSFX));
-
-        if(window.innerWidth > 768) {
-            document.body.classList.add('custom-cursor');
-            const dot = document.querySelector('.cursor-dot'); const ring = document.querySelector('.cursor-ring');
-            gsap.set([dot, ring], {xPercent: -50, yPercent: -50}); 
-            const setDotX = gsap.quickSetter(dot, "x", "px"); const setDotY = gsap.quickSetter(dot, "y", "px");
-            const setRingX = gsap.quickTo(ring, "x", {duration: 0.15, ease: "power2.out"}); const setRingY = gsap.quickTo(ring, "y", {duration: 0.15, ease: "power2.out"});
-            let cursorVisible = false;
-            window.addEventListener('mousemove', e => { 
-                if(!cursorVisible) { gsap.to([dot, ring], {opacity: 1, duration: 0.3}); cursorVisible = true; }
-                setDotX(e.clientX); setDotY(e.clientY); setRingX(e.clientX); setRingY(e.clientY); 
-            }, {passive: true});
-            document.querySelectorAll('.hover-target').forEach(el => {
-                el.addEventListener('mouseenter', () => ring.classList.add('active'));
-                el.addEventListener('mouseleave', () => ring.classList.remove('active'));
-            });
-        }
 
         if(window.innerWidth > 768) {
             document.querySelectorAll('.reel-item').forEach(item => {
